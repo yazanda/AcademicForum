@@ -9,6 +9,15 @@ export default function App() {
     setSidebarOpen(!isSidebarOpen);
   };
 
+  const handleLanguageChange = (language) => {
+    // Handle language change here
+    console.log('Selected language:', language);
+  };
+
+  const handleGoBack = () => {
+    setSidebarOpen(false);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -20,31 +29,44 @@ export default function App() {
             <FontAwesome name="bars" size={24} color="black" />
           )}
         </TouchableOpacity>
+
+        <View style={styles.languageContainer}>
+          <TouchableOpacity onPress={() => handleLanguageChange('English')} style={styles.languageButton}>
+            <Text style={styles.languageText}>EN</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => handleLanguageChange('Arabic')} style={styles.languageButton}>
+            <Text style={styles.languageText}>AR</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => handleLanguageChange('Hebrew')} style={styles.languageButton}>
+            <Text style={styles.languageText}>HE</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
-      <ScrollView style={styles.contentContainer}>
-        {/* Conditional rendering for logo */}
-        {!isSidebarOpen && (
+      <View style={styles.contentContainer}>
+        {/* Logo Container */}
+        <ScrollView style={styles.logoContainer} contentContainerStyle={styles.logoContentContainer}>
           <Image source={require('./assets/FinalLogo.png')} style={styles.logo} />
-        )}
+        </ScrollView>
 
         {/* Sidebar */}
         {isSidebarOpen && (
-          <View style={styles.sidebar}>
-            {/* Sidebar content */}
-            <Text>This is the sidebar</Text>
-          </View>
+          <ScrollView style={styles.sidebar} contentContainerStyle={styles.sidebarContentContainer}>
+            <TouchableOpacity style={styles.sidebarButton}>
+              <Text style={styles.sidebarButtonText}>Search</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.sidebarButton}>
+              <Text style={styles.sidebarButtonText}>Podcast</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.sidebarButton}>
+              <Text style={styles.sidebarButtonText}>Contact Us</Text>
+            </TouchableOpacity>
+          </ScrollView>
         )}
-
-        {/* Rest of your app's content */}
-        {/* Place additional items and content here */}
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }
-
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
@@ -52,37 +74,71 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 16,
-    // paddingTop: 16,
+    paddingTop: 16,
   },
   menuButton: {
-    marginRight: 8,
     padding: 8,
   },
-  menuIcon: {
-    width: 24,
-    height: 24,
-    resizeMode: 'contain',
+  languageContainer: {
+    flexDirection: 'row',
+  },
+  languageButton: {
+    paddingHorizontal: 8,
+  },
+  languageText: {
+    fontSize: 16,
   },
   contentContainer: {
     flex: 1,
+    position: 'relative',
+  },
+  logoContainer: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    zIndex: 1,
+    backgroundColor: 'white',
+  },
+  logoContentContainer: {
+    flex: 1,
+    alignItems: 'center',
+    // justifyContent: 'center',
   },
   logo: {
-    alignSelf: 'center',
-    marginTop: 8,
     width: 200,
     height: 200,
     resizeMode: 'contain',
   },
   sidebar: {
     position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '95%',
-    height: windowHeight,
-    backgroundColor: '#F5F5F5',
-    zIndex: 1,
+    width: '70%',
+    height: '100%',
+    zIndex: 2,
+    backgroundColor: 'rgba(245, 245, 245, 0.5)',
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+  },
+  sidebarContentContainer: {
+    flexGrow: 1,
+    // justifyContent: 'center',
+  },
+  sidebarButton: {
+    marginBottom: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    backgroundColor: 'orange',
+    borderRadius: 8,
+  },
+  sidebarButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'white',
   },
 });
+
+
+
+
