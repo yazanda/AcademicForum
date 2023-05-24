@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { StyleSheet, Text, View, SafeAreaView, Image, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Image, Dimensions, ScrollView, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 
 export default function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const sidebarRef = useRef(null);
+  const [sidebarLayout, setSidebarLayout] = useState(null);
 
   const handleMenuPress = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -16,6 +18,29 @@ export default function App() {
 
   const handleGoBack = () => {
     setSidebarOpen(false);
+  };
+
+  const handleOutsidePress = (event) => {
+    const { locationX, locationY } = event.nativeEvent;
+    if (sidebarLayout) {
+      const { x, y, width, height } = sidebarLayout;
+      if (
+        locationX < x ||
+        locationX > x + width ||
+        locationY < y ||
+        locationY > y + height
+      ) {
+        setSidebarOpen(false);
+      }
+    }
+  };
+
+  const handleSidebarLayout = () => {
+    if (sidebarRef.current) {
+      sidebarRef.current.measure((x, y, width, height, pageX, pageY) => {
+        setSidebarLayout({ x: pageX, y: pageY, width, height });
+      });
+    }
   };
 
   return (
@@ -43,27 +68,34 @@ export default function App() {
         </View>
       </View>
 
-      <View style={styles.contentContainer}>
-        {/* Logo Container */}
-        <ScrollView style={styles.logoContainer} contentContainerStyle={styles.logoContentContainer}>
-          <Image source={require('./assets/FinalLogo.png')} style={styles.logo} />
-        </ScrollView>
-
-        {/* Sidebar */}
-        {isSidebarOpen && (
-          <ScrollView style={styles.sidebar} contentContainerStyle={styles.sidebarContentContainer}>
-            <TouchableOpacity style={styles.sidebarButton}>
-              <Text style={styles.sidebarButtonText}>Search</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.sidebarButton}>
-              <Text style={styles.sidebarButtonText}>Podcast</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.sidebarButton}>
-              <Text style={styles.sidebarButtonText}>Contact Us</Text>
-            </TouchableOpacity>
+      <TouchableWithoutFeedback onPress={handleOutsidePress}>
+        <View style={styles.contentContainer}>
+          {/* Logo Container */}
+          <ScrollView style={styles.logoContainer} contentContainerStyle={styles.logoContentContainer}>
+            <Image source={require('./assets/FinalLogo.png')} style={styles.logo} />
           </ScrollView>
-        )}
-      </View>
+
+          {/* Sidebar */}
+          {isSidebarOpen && (
+            <ScrollView
+              ref={sidebarRef}
+              style={styles.sidebar}
+              contentContainerStyle={styles.sidebarContentContainer}
+              onLayout={handleSidebarLayout}
+            >
+              <TouchableOpacity style={styles.sidebarButton}>
+                <Text style={styles.sidebarButtonText}>Search</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.sidebarButton}>
+                <Text style={styles.sidebarButtonText}>Podcast</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.sidebarButton}>
+                <Text style={styles.sidebarButtonText}>Contact Us</Text>
+              </TouchableOpacity>
+            </ScrollView>
+          )}
+        </View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 }
@@ -105,7 +137,6 @@ const styles = StyleSheet.create({
   logoContentContainer: {
     flex: 1,
     alignItems: 'center',
-    // justifyContent: 'center',
   },
   logo: {
     width: 200,
@@ -123,7 +154,6 @@ const styles = StyleSheet.create({
   },
   sidebarContentContainer: {
     flexGrow: 1,
-    // justifyContent: 'center',
   },
   sidebarButton: {
     marginBottom: 16,
@@ -138,7 +168,3 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
-
-
-
-
