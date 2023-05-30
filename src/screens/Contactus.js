@@ -9,7 +9,7 @@ import {StyleSheet,
   TouchableWithoutFeedback,
   TextInput,
   Button, } from 'react-native';
-
+import Header from '../components/Header';
 export default function ContactUsScreen({ navigation }){
 
   // <BackButton goBack={navigation.goBack} />
@@ -19,6 +19,7 @@ export default function ContactUsScreen({ navigation }){
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const options = ["Option 1", "Option 2", "Option 3"];
   const [message, setMessage] = useState("");
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -37,66 +38,84 @@ export default function ContactUsScreen({ navigation }){
     console.log("Message:", message);
   };
 
-  return (
-    <ScrollView style={styles.pageContainer}>
-      <View style={styles.pageHeader}>
-        <TouchableOpacity onPress={()=>{navigation.goBack()}}>
-          <Image
-            source={require("../../assets/FinalLogo.png")}
-            style={styles.logo}
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.pageContentContainer}>
-        <Text style={styles.label}> Full Name</Text>
-        <TextInput
-          // placeholder="Enter Your Name"
-          style={styles.input}
-          value={name}
-          onChangeText={setName}
-        />
-        <Text style={styles.label}> Mail</Text>
-        <TextInput
-          // placeholder="Enter Your Mail"
-          style={styles.input}
-          value={mail}
-          onChangeText={setMail}
-        />
-        <Text style={styles.label}>Subject</Text>
-        <View style={styles.dropdownContainer}>
-          <TouchableOpacity style={styles.dropdown} onPress={toggleDropdown}>
-            <Text style={styles.dropdownText}>
-              {selectedSubject || "Select"}
-            </Text>
-          </TouchableOpacity>
-          {isDropdownOpen && (
-            <View style={styles.optionsContainer}>
-              {options.map((option) => (
-                <TouchableOpacity
-                  key={option}
-                  style={styles.option}
-                  onPress={() => handleOptionSelect(option)}
-                >
-                  <Text style={styles.optionText}>{option}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          )}
-        </View>
+  const handleMenuPress = () => {
+    setSidebarOpen(!isSidebarOpen);
+  };
 
-        <Text style={styles.label}> Message</Text>
-        <TextInput
-          // placeholder="Message"
-          style={[styles.input, styles.messageInput]}
-          value={message}
-          onChangeText={setMessage}
-          multiline
-        />
-        <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
-          <Text style={styles.sendButtonText}>Send</Text>
-        </TouchableOpacity>
-      </View>
+  const handleLanguageChange = (language) => {
+    console.log("Selected language:", language);
+  };
+
+  return (
+    <SafeAreaView>
+      <Header
+        isSidebarOpen={isSidebarOpen}
+        handleMenuPress={handleMenuPress}
+        handleLanguageChange={handleLanguageChange}
+      />
+      <ScrollView
+      style={styles.homeContainer}
+      contentContainerStyle={styles.homeContentContainer}
+    >
+      <TouchableOpacity onPress={()=>{navigation.goBack()}}>
+            <Image
+              source={require("../../assets/FinalLogo.png")}
+              style={styles.logo}
+            />
+      </TouchableOpacity>
+      <View style={styles.pageHeader}>
+        {/* <View style={styles.pageContentContainer}> */}
+          <Text style={styles.label}> Full Name</Text>
+          <TextInput
+            // placeholder="Enter Your Name"
+            style={styles.input}
+            value={name}
+            onChangeText={setName}
+          />
+          <Text style={styles.label}> Mail</Text>
+          <TextInput
+            // placeholder="Enter Your Mail"
+            style={styles.input}
+            value={mail}
+            onChangeText={setMail}
+          />
+          <Text style={styles.label}>Subject</Text>
+          <View style={styles.dropdownContainer}>
+            <TouchableOpacity style={styles.dropdown} onPress={toggleDropdown}>
+              <Text style={styles.dropdownText}>
+                {selectedSubject || "Select"}
+              </Text>
+            </TouchableOpacity>
+            {isDropdownOpen && (
+              <View style={styles.optionsContainer}>
+                {options.map((option) => (
+                  <TouchableOpacity
+                    key={option}
+                    style={styles.option}
+                    onPress={() => handleOptionSelect(option)}
+                  >
+                    <Text style={styles.optionText}>{option}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
+          </View>
+
+          <Text style={styles.label}> Message</Text>
+          <TextInput
+            // placeholder="Message"
+            style={[styles.input, styles.messageInput]}
+            value={message}
+            onChangeText={setMessage}
+            multiline
+          />
+          <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
+            <Text style={styles.sendButtonText}>Send</Text>
+          </TouchableOpacity>
+        {/* </View> */}
+        </View>
     </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -125,21 +144,20 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   pageHeader: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 16,
-  },
-  pageContentContainer: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    borderWidth: 2,
+    borderRadius: 50,
+    borderColor: 'orange',
+    // flexWrap: 'wrap',
+    width: '90%',
+    height: '70%',
   },
   label: {
     fontSize: 16,
     marginBottom: 8,
     paddingLeft: 8,
-    alignSelf: "flex-start",
+    // alignSelf: "flex-start",
   },
   input: {
     backgroundColor: "#f8f8f8",
@@ -183,7 +201,7 @@ const styles = StyleSheet.create({
     color: "#555555",
   },
   messageInput: {
-    width: "100%",
+    width: "70%",
     height: 120,
   },
   sendButton: {
@@ -191,11 +209,23 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingVertical: 12,
     paddingHorizontal: 16,
-    alignItems: "center",
+    // width: '50%',
+    // paddingBottom: 10,
+    // alignItems: "center",
   },
   sendButtonText: {
     fontSize: 16,
     fontWeight: "bold",
     color: "white",
+  },
+  homeContainer: {
+    // position: "absolute",
+    height: '100%',
+    // zIndex: 1,
+    backgroundColor: "white",
+  },
+  homeContentContainer: {
+    flex: 1,
+    alignItems: "center",
   },
 });

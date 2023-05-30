@@ -16,7 +16,7 @@ import ImagePicker from "react-native-image-picker";
 import { CheckBox } from 'react-native-elements';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
-import Background from '../../components/Background';
+import Background from '../components/Background';
 
 export default function RegisterScreen({ navigation }){
 
