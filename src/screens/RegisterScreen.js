@@ -1,4 +1,4 @@
-import {React,useState} from 'react';
+import {useState} from 'react';
 import {StyleSheet,
   Text,
   View,
@@ -11,10 +11,8 @@ import {StyleSheet,
   Button,} from 'react-native';
 
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-// import DatePicker from "react-native-datepicker";
 import ImagePicker from "react-native-image-picker";
 import { CheckBox } from 'react-native-elements';
-
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Background from '../components/Background';
 
@@ -23,10 +21,12 @@ export default function RegisterScreen({ navigation }){
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   //date
-  const [date, setDate] = useState(new Date());
-  const [showDatePicker, setShowDatePicker] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [showPicker, setShowPicker] = useState(false);
   //
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
+    const [isCityDropdownOpen, setCityDropdownOpen] = useState(false);
+    const [isDegreeDropdownOpen, setDegreeDropdownOpen] = useState(false);
+    const [isGenderDropdownOpen, setGenderDropdownOpen] = useState(false);
   const options = ["Option 1", "Option 2", "Option 3"];
   const [mail, setMail] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
@@ -62,40 +62,58 @@ export default function RegisterScreen({ navigation }){
     setChecked(!checked);
   };
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!isDropdownOpen);
+  const toggleDropdownCity = () => {
+      setCityDropdownOpen(!isCityDropdownOpen);
   };
 
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-    setDropdownOpen(false);
+    const toggleDropdownDegree = () => {
+        setDegreeDropdownOpen(!isDegreeDropdownOpen);
+    };
+    const toggleDropdownGender = () => {
+        setGenderDropdownOpen(!isGenderDropdownOpen);
+    };
+
+  const handleCitySelect = (option) => {
+    setSelectedCity(option);
+      setCityDropdownOpen(false);
   };
 
-  const handleDateChange = (event, selectedDate) => {
-    setShowDatePicker(false);
-    if (selectedDate) {
-      setDate(selectedDate);
-    }
-  };
+    const handleDegreeSelect = (option) => {
+        setSelectedDegree(option);
+        setDegreeDropdownOpen(false);
+    };
+    const handleGenderSelect = (option) => {
+        setSelectedGender(option);
+        setGenderDropdownOpen(false);
+    };
 
-  const showDatepicker = () => {
-    setShowDatePicker(true);
-  };
 
-  const handleSend = () => {
-    // Handle send functionality here
-    console.log("firstName:", firstName);
-    console.log("lastName:", lastName);
-    console.log("date:", selectedDate);
-    console.log("Mail:", mail);
-    console.log("Selected City:", selectedCity);
-    console.log("Selected Degree:", selectedDegree);
-    console.log("major:", major);
-    console.log("company:", companyName);
-    console.log("position:", position);
-    console.log("Selected Gender:", selectedGender);
-    console.log("phoneNumber:", phoneNumber);
-  };
+
+    const handleDateChange = (event, date) => {
+        if (date !== undefined) {
+            setSelectedDate(date);
+        }
+        setShowPicker(false);
+    };
+
+    const showDatePicker = () => {
+        setShowPicker(true);
+    };
+
+    const handleSend = () => {
+        // Handle send functionality here
+        console.log("firstName:", firstName);
+        console.log("lastName:", lastName);
+        console.log("date:", selectedDate.toISOString().split('T')[0]); // Extract date part from ISO 8601 string
+        console.log("Mail:", mail);
+        console.log("Selected City:", selectedCity);
+        console.log("Selected Degree:", selectedDegree);
+        console.log("major:", major);
+        console.log("company:", companyName);
+        console.log("position:", position);
+        console.log("Selected Gender:", selectedGender);
+        console.log("phoneNumber:", phoneNumber);
+    };
 
   return (
     <Background>
@@ -123,20 +141,23 @@ export default function RegisterScreen({ navigation }){
             value={lastName}
             onChangeText={setLastName}
           />
-  
-          <View style={styles.container}>
-        <TouchableOpacity onPress={showDatepicker} style={styles.dateInput}>
-          <Text style={styles.dateText}>{date.toDateString()}</Text>
-        </TouchableOpacity>
-        {showDatePicker && (
-          <DateTimePicker
-            value={date}
-            mode="date"
-            display="default"
-            onChange={handleDateChange}
-          />
-        )}
-          </View>
+
+            <View style={styles.container}>
+                <TouchableOpacity onPress={showDatePicker}>
+                    <Text style={styles.dateText}>
+                        {selectedDate.toDateString()} {/* Display the selected date */}
+                    </Text>
+                </TouchableOpacity>
+
+                {showPicker && (
+                    <DateTimePicker
+                        value={selectedDate}
+                        mode="date" // Set the mode to "date" to display only the date
+                        display="default"
+                        onChange={handleDateChange}
+                    />
+                )}
+            </View>
         
           <Text style={styles.label}> Mail</Text>
           <TextInput
@@ -147,16 +168,16 @@ export default function RegisterScreen({ navigation }){
           />
           <Text style={styles.label}>Select City</Text>
           <View style={styles.dropdownContainer}>
-            <TouchableOpacity style={styles.dropdown} onPress={toggleDropdown}>
+            <TouchableOpacity style={styles.dropdown} onPress={toggleDropdownCity}>
               <Text style={styles.dropdownText}>{selectedCity || "Select"}</Text>
             </TouchableOpacity>
-            {isDropdownOpen && (
+            {isCityDropdownOpen && (
               <View style={styles.optionsContainer}>
                 {options.map((option) => (
                   <TouchableOpacity
                     key={option}
                     style={styles.option}
-                    onPress={() => handleOptionSelect(option)}
+                    onPress={() => handleCitySelect(option)}
                   >
                     <Text style={styles.optionText}>{option}</Text>
                   </TouchableOpacity>
@@ -166,18 +187,18 @@ export default function RegisterScreen({ navigation }){
           </View>
           <Text style={styles.label}>Select Degree</Text>
           <View style={styles.dropdownContainer}>
-            <TouchableOpacity style={styles.dropdown} onPress={toggleDropdown}>
+            <TouchableOpacity style={styles.dropdown} onPress={toggleDropdownDegree}>
               <Text style={styles.dropdownText}>
                 {selectedDegree || "Select"}
               </Text>
             </TouchableOpacity>
-            {isDropdownOpen && (
+            {isDegreeDropdownOpen && (
               <View style={styles.optionsContainer}>
                 {options.map((option) => (
                   <TouchableOpacity
                     key={option}
                     style={styles.option}
-                    onPress={() => handleOptionSelect(option)}
+                    onPress={() => handleDegreeSelect(option)}
                   >
                     <Text style={styles.optionText}>{option}</Text>
                   </TouchableOpacity>
@@ -208,18 +229,18 @@ export default function RegisterScreen({ navigation }){
           />
           <Text style={styles.label}>Select Gender</Text>
           <View style={styles.dropdownContainer}>
-            <TouchableOpacity style={styles.dropdown} onPress={toggleDropdown}>
+            <TouchableOpacity style={styles.dropdown} onPress={toggleDropdownGender}>
               <Text style={styles.dropdownText}>
                 {selectedGender || "Select"}
               </Text>
             </TouchableOpacity>
-            {isDropdownOpen && (
+            {isGenderDropdownOpen && (
               <View style={styles.optionsContainer}>
                 {options.map((option) => (
                   <TouchableOpacity
                     key={option}
                     style={styles.option}
-                    onPress={() => handleOptionSelect(option)}
+                    onPress={() => handleGenderSelect(option)}
                   >
                     <Text style={styles.optionText}>{option}</Text>
                   </TouchableOpacity>
@@ -366,7 +387,10 @@ const styles = StyleSheet.create({
       marginBottom: 16,
     },
     dropdownContainer: {
-      marginTop: 10,
+        backgroundColor: "#f8f8f8",
+        width: "100%",
+        borderRadius: 8,
+        marginBottom: 16,
     },
     dropdown: {
       flexDirection: "row",
@@ -415,7 +439,8 @@ const styles = StyleSheet.create({
       color: "white",
     },
     datePicker: {
-      width: 200,
+      width: '100%',
+        marginBottom: 16,
     },
     dateInput: {
         borderWidth: 1,
@@ -424,6 +449,7 @@ const styles = StyleSheet.create({
         padding: 10,
       },
       dateText: {
+          alignItems: "center",
         fontSize: 16,
       },
   });
