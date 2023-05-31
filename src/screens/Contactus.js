@@ -168,6 +168,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   dropdownContainer: {
+    width: "70%",
     marginTop: 10,
   },
   dropdown: {
