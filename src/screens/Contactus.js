@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useRef} from 'react';
 import {StyleSheet,
   Text,
   View,
@@ -10,6 +10,7 @@ import {StyleSheet,
   TextInput,
   Button, } from 'react-native';
 import Header from '../components/Header';
+
 export default function ContactUsScreen({ navigation }){
 
   // <BackButton goBack={navigation.goBack} />
@@ -20,6 +21,10 @@ export default function ContactUsScreen({ navigation }){
   const options = ["Option 1", "Option 2", "Option 3"];
   const [message, setMessage] = useState("");
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  // const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [activePage, setActivePage] = useState("contact");
+  const sidebarRef = useRef(null);
+  const [sidebarLayout, setSidebarLayout] = useState(null)
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -46,6 +51,24 @@ export default function ContactUsScreen({ navigation }){
     console.log("Selected language:", language);
   };
 
+  const handleSidebarLayout = () => {
+    if (sidebarRef.current) {
+      sidebarRef.current.measure((x, y, width, height, pageX, pageY) => {
+        setSidebarLayout({ x: pageX, y: pageY, width, height });
+      });
+    }
+  };
+
+  const handlePageChange = (page) => {
+    setActivePage(page);
+    setSidebarOpen(false);
+  };
+
+  const handleGoBack = () => {
+    setSidebarOpen(false);
+    navigation.navigate("startScreen");
+  };
+
   return (
     <SafeAreaView>
       <Header
@@ -57,7 +80,40 @@ export default function ContactUsScreen({ navigation }){
       style={styles.homeContainer}
       contentContainerStyle={styles.homeContentContainer}
     >
-      <TouchableOpacity onPress={()=>{navigation.goBack()}}>
+      {isSidebarOpen && (
+        <ScrollView
+          ref={sidebarRef}
+          style={styles.sidebar}
+          contentContainerStyle={styles.sidebarContentContainer}
+          onLayout={handleSidebarLayout}
+        >
+          <TouchableOpacity
+            onPress={() => navigation.navigate("RegisterScreen")}
+            style={styles.sidebarButton}
+          >
+            <Text style={styles.sidebarButtonText}>Register</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("SearchScreen")}
+            style={styles.sidebarButton}
+          >
+            <Text style={styles.sidebarButtonText}>Search</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => handlePageChange("podcast")}
+            style={styles.sidebarButton}
+          >
+            <Text style={styles.sidebarButtonText}>Podcast</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("ContactUsScreen")}
+            style={styles.sidebarButton}
+          >
+            <Text style={styles.sidebarButtonText}>Contact Us</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      )}
+      <TouchableOpacity onPress={()=>{handleGoBack()}}>
             <Image
               source={require("../../assets/FinalLogo.png")}
               style={styles.logo}
@@ -206,7 +262,7 @@ const styles = StyleSheet.create({
     height: 120,
   },
   sendButton: {
-    backgroundColor: "#6cc070",
+    backgroundColor: "orange",
     borderRadius: 8,
     paddingVertical: 12,
     paddingHorizontal: 16,
@@ -228,5 +284,30 @@ const styles = StyleSheet.create({
   homeContentContainer: {
     flex: 1,
     alignItems: "center",
+  },
+  sidebar: {
+    position: "absolute",
+    width: "70%",
+    height: "100%",
+    zIndex: 2,
+    alignSelf: "flex-start",
+    backgroundColor: "rgba(245, 245, 245, 0.5)",
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+  },
+  sidebarContentContainer: {
+    flexGrow: 1,
+  },
+  sidebarButton: {
+    marginBottom: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    backgroundColor: "orange",
+    borderRadius: 8,
+  },
+  sidebarButtonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "white",
   },
 });

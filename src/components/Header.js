@@ -46,6 +46,7 @@ const styles = {
     alignItems: 'center',
     paddingHorizontal: 16,
     paddingTop: 30,
+    // backgroundColor: "orange",
   },
   menuButton: {
     padding: 8,

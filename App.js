@@ -8,6 +8,7 @@ import {
   startScreen,
   ContactUsScreen,
   RegisterScreen,
+  SearchScreen,
 } from "./src/screens";
 
 const Stack = createStackNavigator();
@@ -24,6 +25,7 @@ export default function App() {
           <Stack.Screen name="startScreen" component={startScreen} />
           <Stack.Screen name="ContactUsScreen" component={ContactUsScreen} />
           <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+          <Stack.Screen name="SearchScreen" component={SearchScreen} />
           
         </Stack.Navigator>
       </NavigationContainer>

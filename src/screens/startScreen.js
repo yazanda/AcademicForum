@@ -148,7 +148,7 @@ export default function App({ navigation }) {
                 <Text style={styles.sidebarButtonText}>Register</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => handlePageChange("search")}
+                onPress={() => navigation.navigate("SearchScreen")}
                 style={styles.sidebarButton}
               >
                 <Text style={styles.sidebarButtonText}>Search</Text>
