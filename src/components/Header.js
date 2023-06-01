@@ -77,7 +77,7 @@ const Header = ({navigation}) => {
                         <Text style={styles.sidebarButtonText}>Search</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('podcast')}
+                        onPress={() => navigation.navigate('PodcastScreen')}
                         style={styles.sidebarButton}
                     >
                         <Text style={styles.sidebarButtonText}>Podcast</Text>

@@ -3,6 +3,10 @@ import Header from "../components/Header";
 import {Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View,} from "react-native"
 
 export default function PodcastScreen({navigation}) {
+    const handleGoBack = () => {
+        // setSidebarOpen(false);
+        navigation.navigate("StartScreen");
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -11,9 +15,7 @@ export default function PodcastScreen({navigation}) {
                 navigation={navigation}
             />
             <View style={styles.pageContentContainer}>
-                <TouchableOpacity onPress={() => {
-                    navigation.goBack()
-                }}>
+                <TouchableOpacity onPress={()=>{handleGoBack()}}>
                     <Image
                         source={require("../../assets/FinalLogo.png")}
                         style={styles.logo}

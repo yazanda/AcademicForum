@@ -1,4 +1,5 @@
-export { default as startScreen } from "./startScreen";
-export { default as ContactUsScreen } from "./Contactus";
+export { default as StartScreen } from "./StartScreen";
+export { default as ContactUsScreen } from "./ContactusScreen";
 export { default as RegisterScreen } from "./RegisterScreen";
 export { default as SearchScreen } from "./SearchScreen";
+export { default as PodcastScreen } from "./PodcastScreen";

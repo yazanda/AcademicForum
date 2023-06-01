@@ -26,7 +26,7 @@ export default function SearchScreen({navigation}) {
 
     const handleGoBack = () => {
         // setSidebarOpen(false);
-        navigation.navigate("startScreen");
+        navigation.navigate("StartScreen");
     };
 
     return (

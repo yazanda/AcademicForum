@@ -66,7 +66,7 @@ export default function ContactUsScreen({ navigation }){
 
   const handleGoBack = () => {
     setSidebarOpen(false);
-    navigation.navigate("startScreen");
+    navigation.navigate("StartScreen");
   };
 
   return (
@@ -100,7 +100,7 @@ export default function ContactUsScreen({ navigation }){
             <Text style={styles.sidebarButtonText}>Search</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => handlePageChange("podcast")}
+            onPress={() => handlePageChange("PodcastScreen")}
             style={styles.sidebarButton}
           >
             <Text style={styles.sidebarButtonText}>Podcast</Text>
