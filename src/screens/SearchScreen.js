@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React from 'react';
 import {
     StyleSheet,
     Text,
@@ -9,25 +9,15 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import Header from '../components/Header';
+import Dropdown from "../components/DropDown";
 
-export default function SearchScreen({navigation}) {
-    const [selectedSubject, setSelectedOption] = useState("");
-    const [isDropdownOpen, setDropdownOpen] = useState(false);
-    const options = ["Option 1", "Option 2", "Option 3"];
+export default function SearchScreen({navigation}){
 
-    const toggleDropdown = () => {
-        setDropdownOpen(!isDropdownOpen);
-    };
-
-    const handleOptionSelect = (option) => {
-        setSelectedOption(option);
-        setDropdownOpen(false);
-    };
-
-    const handleGoBack = () => {
-        // setSidebarOpen(false);
-        navigation.navigate("StartScreen");
-    };
+    const data = [
+        { label: 'Item 1', value: '1' },
+        { label: 'Item 2', value: '2' },
+        { label: 'Item 3', value: '3' },
+    ];
 
     return (
         <SafeAreaView style={styles.container}>
@@ -35,64 +25,31 @@ export default function SearchScreen({navigation}) {
                 style={styles.header}
                 navigation={navigation}
             />
-            <ScrollView
-                style={styles.homeContainer}
-                contentContainerStyle={styles.homeContentContainer}>
-
-                <TouchableOpacity onPress={() => handleGoBack()}>
+            <ScrollView contentContainerStyle={styles.contentContainer}>
+                <TouchableOpacity onPress={() => navigation.navigate("StartScreen")}>
                     <Image
                         source={require("../../assets/FinalLogo.png")}
                         style={styles.logo}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => navigation.navigate('RegisterScreen')}
-                    style={styles.sidebarButton}
-                >
-                    <Text style={styles.sidebarButtonText}>Join Us</Text>
+                <TouchableOpacity onPress={() => navigation.navigate("RegisterScreen")} style={styles.joinButton} >
+                    <Text style={styles.joinButtonText}>Join Us</Text>
                 </TouchableOpacity>
-                <View style={styles.pageHeader}>
-                    <Text style={styles.label}>By Field</Text>
-                    <View style={styles.dropdownContainer}>
-                        <TouchableOpacity style={styles.dropdown} onPress={toggleDropdown}>
-                            <Text style={styles.dropdownText}>
-                                {selectedSubject || "Search by Field"}
-                            </Text>
+                <View>
+                    <Text style={styles.label}>Arab Academic List By Field & Area</Text>
+                    <View style={styles.dropDownContainer}>
+                        <TouchableOpacity>
+                            <Dropdown
+                                placeholder = 'By Field'
+                                label = 'By Field'
+                                data ={data}
+                            />
+                            <Dropdown
+                                placeholder = 'By Area'
+                                label = 'By Area'
+                                data ={data}
+                            />
                         </TouchableOpacity>
-                        {isDropdownOpen && (
-                            <View style={styles.optionsContainer}>
-                                {options.map((option) => (
-                                    <TouchableOpacity
-                                        key={option}
-                                        style={styles.option}
-                                        onPress={() => handleOptionSelect(option)}
-                                    >
-                                        <Text style={styles.optionText}>{option}</Text>
-                                    </TouchableOpacity>
-                                ))}
-                            </View>
-                        )}
-                    </View>
-                    <Text style={styles.label}>By Area</Text>
-                    <View style={styles.dropdownContainer}>
-                        <TouchableOpacity style={styles.dropdown} onPress={toggleDropdown}>
-                            <Text style={styles.dropdownText}>
-                                {selectedSubject || "Search by area"}
-                            </Text>
-                        </TouchableOpacity>
-                        {isDropdownOpen && (
-                            <View style={styles.optionsContainer}>
-                                {options.map((option) => (
-                                    <TouchableOpacity
-                                        key={option}
-                                        style={styles.option}
-                                        onPress={() => handleOptionSelect(option)}
-                                    >
-                                        <Text style={styles.optionText}>{option}</Text>
-                                    </TouchableOpacity>
-                                ))}
-                            </View>
-                        )}
                     </View>
                 </View>
             </ScrollView>
@@ -103,70 +60,42 @@ export default function SearchScreen({navigation}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
-    homeContentContainer: {
-        flex: 1,
-        alignItems: "center",
+        backgroundColor: 'white',
     },
     header: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        paddingHorizontal: 16,
-        paddingTop: 30,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    contentContainer: {
+        flex: 1,
+        alignItems: 'center',
     },
     logo: {
         width: 200,
         height: 75,
         resizeMode: "contain",
     },
-
-    //remove the border please
-    pageHeader: {
-        alignItems: "center",
-        borderWidth: 2,
-        borderRadius: 50,
-        borderColor: 'orange',
-        // flexWrap: 'wrap',
-        width: '90%',
-        height: '20%',
-    },
-    label: {
-        fontSize: 16,
-    },
-    dropdownContainer: {
-        width: "70%",
-        marginTop: 10,
-    },
-    dropdown: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
+    joinButton: {
+        backgroundColor: "#00008b",
+        borderRadius: 8,
+        paddingVertical: 12,
         paddingHorizontal: 16,
-        height: 40,
-        backgroundColor: "#F5F5F5",
-        borderRadius: 4,
     },
-    dropdownLabel: {
+    joinButtonText: {
         fontSize: 16,
         fontWeight: "bold",
+        color: "white",
     },
-    dropdownText: {
-        fontSize: 16,
-        color: "#555555",
+    label: {
+        paddingTop: 16,
+        fontSize: 22,
+        color: 'darkorange',
     },
-    optionsContainer: {
-        marginTop: 5,
-        backgroundColor: "#555555",
-        borderRadius: 4,
+    dropDownContainer: {
+        paddingTop: 16,
     },
-    option: {
-        paddingVertical: 8,
-        paddingHorizontal: 10,
+    dropDown: {
+        width: '100%',
     },
-    optionText: {
-        fontSize: 16,
-        color: "#555555",
-    },
-});
-  
+})
