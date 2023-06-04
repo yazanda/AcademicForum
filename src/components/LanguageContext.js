@@ -3,6 +3,7 @@ import React, { createContext, useState } from 'react';
 // Import your language translation files
 import en from '../translations/en.json';
 import ar from '../translations/ar.json';
+import he from '../translations/he.json';
 
 // Create the language context
 export const LanguageContext = createContext();
@@ -10,7 +11,7 @@ export const LanguageContext = createContext();
 // Define the language provider component
 export const LanguageProvider = ({ children }) => {
   // Initial language state
-  const [language, setLanguage] = useState('en'); // 'en' for English by default
+  const [language, setLanguage] = useState('ar'); // 'en' for Arabic by default
 
   // Get the translation object based on the selected language
   const getTranslation = () => {
@@ -19,9 +20,12 @@ export const LanguageProvider = ({ children }) => {
         return en;
       case 'ar':
         return ar;
+      case 'he':
+        return he;  
+      
       // Add more cases for other supported languages
       default:
-        return en; // Default to English if the selected language is not supported
+        return ar; // Default to Arabic if the selected language is not supported
     }
   };
 
