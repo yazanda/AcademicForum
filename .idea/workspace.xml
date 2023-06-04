@@ -8,8 +8,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/ContactusScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/ContactusScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/RegisterScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/RegisterScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/SearchScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/SearchScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/StartScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/StartScreen.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +60,7 @@
       <workItem from="1685633087296" duration="896000" />
       <workItem from="1685798809536" duration="7540000" />
       <workItem from="1685814890531" duration="1372000" />
+      <workItem from="1685830301776" duration="13284000" />
     </task>
     <servers />
   </component>

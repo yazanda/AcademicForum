@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
     StyleSheet,
     Text,
@@ -10,8 +10,13 @@ import {
 } from 'react-native';
 import Header from '../components/Header';
 import Dropdown from "../components/DropDown";
+import Modal from '../components/Modal'
 
 export default function SearchScreen({navigation}){
+    const [modalVisible, setModalVisible] = useState(false);
+    const toggleModal = () => {
+        setModalVisible(!modalVisible);
+    }
 
     const data = [
         { label: 'Item 1', value: '1' },
@@ -32,7 +37,7 @@ export default function SearchScreen({navigation}){
                         style={styles.logo}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate("RegisterScreen")} style={styles.joinButton} >
+                <TouchableOpacity onPress={toggleModal} style={styles.joinButton} >
                     <Text style={styles.joinButtonText}>Join Us</Text>
                 </TouchableOpacity>
                 <View>
@@ -52,6 +57,7 @@ export default function SearchScreen({navigation}){
                         </TouchableOpacity>
                     </View>
                 </View>
+                <Modal modalVisible={modalVisible} toggleModal={toggleModal}/>
             </ScrollView>
         </SafeAreaView>
     );
