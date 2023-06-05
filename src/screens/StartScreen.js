@@ -201,6 +201,7 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         alignItems: "center",
         paddingBottom: 20,
+        // zIndex: 1,
     },
     rightToLeft: {
         flexDirection: 'row-reverse',

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import { FontAwesome } from '@expo/vector-icons';
-import { useTranslation } from 'react-i18next';
+import {FontAwesome} from '@expo/vector-icons';
+import {useTranslation} from 'react-i18next';
 import LanguageContext from '../components/LanguageContext';
 import {
     StyleSheet,
@@ -15,17 +15,17 @@ import Header from '../components/Header';
 import Dropdown from "../components/DropDown";
 import Modal from '../components/Modal'
 
-export default function SearchScreen({navigation}){
-    const { t, i18n } = useTranslation();
+export default function SearchScreen({navigation}) {
+    const {t, i18n} = useTranslation();
     const [modalVisible, setModalVisible] = useState(false);
     const toggleModal = () => {
         setModalVisible(!modalVisible);
     }
 
     const data = [
-        { label: 'Item 1', value: '1' },
-        { label: 'Item 2', value: '2' },
-        { label: 'Item 3', value: '3' },
+        {label: 'Item 1', value: '1'},
+        {label: 'Item 2', value: '2'},
+        {label: 'Item 3', value: '3'},
     ];
 
     return (
@@ -41,7 +41,7 @@ export default function SearchScreen({navigation}){
                         style={styles.logo}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={toggleModal} style={styles.joinButton} >
+                <TouchableOpacity onPress={toggleModal} style={styles.joinButton}>
                     <Text style={styles.joinButtonText}>{t('homepage.joinus')}</Text>
                 </TouchableOpacity>
                 <View>
@@ -49,14 +49,14 @@ export default function SearchScreen({navigation}){
                     <View style={styles.dropDownContainer}>
                         <TouchableOpacity>
                             <Dropdown
-                                placeholder = {t('academicpage.acdemicsField')} 
-                                label = {t('academicpage.acdemicsField')}
-                                data ={data}
+                                placeholder={t('academicpage.acdemicsField')}
+                                label={t('academicpage.acdemicsField')}
+                                data={data}
                             />
                             <Dropdown
-                                placeholder ={t('academicpage.acdemics.Area')} 
-                                label = {t('academicpage.acdemics.Area')}
-                                data ={data}
+                                placeholder={t('academicpage.acdemics.Area')}
+                                label={t('academicpage.acdemics.Area')}
+                                data={data}
                             />
                         </TouchableOpacity>
                     </View>
@@ -70,7 +70,7 @@ export default function SearchScreen({navigation}){
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
+        // backgroundColor: 'white',
     },
     header: {
         flexDirection: 'row',

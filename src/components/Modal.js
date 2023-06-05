@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, {useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {
     View,
     Modal,
@@ -16,8 +16,8 @@ import TextInput from './TextInput';
 import ImagePicker from "react-native-image-picker";
 import {CheckBox} from 'react-native-elements';
 
-const MyModal = ({ modalVisible, toggleModal }) => {
-    const { t, i18n } = useTranslation();
+const MyModal = ({modalVisible, toggleModal}) => {
+    const {t, i18n} = useTranslation();
     // Function to handle image selection
     const [selectedImage, setSelectedImage] = useState(null);
     const selectImage = () => {
@@ -55,9 +55,12 @@ const MyModal = ({ modalVisible, toggleModal }) => {
                     <TouchableOpacity onPress={toggleModal} style={styles.closeButton}>
                         <Text style={styles.closeButtonText}>{t('academicpage.dialog.close')}</Text>
                     </TouchableOpacity>
-                    <TextInput placeholder= {t('academicpage.dialog.first.name')} label="First Name" />
-                    <TextInput placeholder={t('academicpage.dialog.last.name')} label="Last Name" />
-                    <TextInput placeholder={t('academicpage.dialog.Birhdate')} label="BirthDate" />
+                    <TextInput placeholder={t('academicpage.dialog.first.name')}
+                               label={t('academicpage.dialog.first.name')}/>
+                    <TextInput placeholder={t('academicpage.dialog.last.name')}
+                               label={t('academicpage.dialog.last.name')}/>
+                    <TextInput placeholder={t('academicpage.dialog.Birhdate')}
+                               label={t('academicpage.dialog.Birhdate')}/>
                     {/*<DatePicker*/}
                     {/*    style={styles.input}*/}
                     {/*    date={date}*/}
@@ -76,18 +79,21 @@ const MyModal = ({ modalVisible, toggleModal }) => {
                     {/*    }}*/}
                     {/*    showIcon={false}*/}
                     {/*/>*/}
-                    <TextInput placeholder={t('academicpage.dialog.email')} label="Email" />
+                    <TextInput placeholder={t('academicpage.dialog.email')} label={t('academicpage.dialog.email')}/>
                     <TouchableOpacity style={styles.dropDownContainer}>
-                        <Dropdown placeholder={t('academicpage.dialog.city')} label="Select City" data={cityData} />
-                        <Dropdown placeholder={t('academicpage.dialog.degree')} label="Select Degree" data={degreeData} />
+                        <Dropdown placeholder={t('academicpage.dialog.city')} label={t('academicpage.dialog.city')}
+                                  data={cityData}/>
+                        <Dropdown placeholder={t('academicpage.dialog.degree')} label={t('academicpage.dialog.degree')}
+                                  data={degreeData}/>
                     </TouchableOpacity>
-                    <TextInput placeholder={t('academicpage.dialog.subject')} label="Major" />
-                    <TextInput placeholder={t('academicpage.dialog.company')} label="Company Name" />
-                    <TextInput placeholder={t('academicpage.dialog.job')} label="Position" />
+                    <TextInput placeholder={t('academicpage.dialog.subject')} label={t('academicpage.dialog.subject')}/>
+                    <TextInput placeholder={t('academicpage.dialog.company')} label={t('academicpage.dialog.company')}/>
+                    <TextInput placeholder={t('academicpage.dialog.job')} label={t('academicpage.dialog.job')}/>
                     <TouchableOpacity style={styles.dropDownContainer}>
-                        <Dropdown placeholder={t('academicpage.dialog.sex')} label="Select Gender" data={genderData} />
+                        <Dropdown placeholder={t('academicpage.dialog.sex')} label={t('academicpage.dialog.sex')}
+                                  data={genderData}/>
                     </TouchableOpacity>
-                    <TextInput placeholder={t('academicpage.dialog.phone')} style={styles.input} />
+                    <TextInput placeholder={t('academicpage.dialog.phone')} style={styles.input}/>
                     <Button title={t('academicpage.dialog.upload')} onPress={selectImage}/>
                     {selectedImage && (
                         <Image
@@ -114,7 +120,7 @@ export default MyModal;
 const styles = StyleSheet.create({
     modalContainer: {
         flex: 1,
-        backgroundColor: 'white',
+        // backgroundColor: 'white',
         padding: 16,
         justifyContent: "center",
     },
@@ -163,18 +169,18 @@ const styles = StyleSheet.create({
 });
 
 const cityData = [
-    { label: 'City 1', value: '1' },
-    { label: 'City 2', value: '2' },
-    { label: 'City 3', value: '3' },
+    {label: 'City 1', value: '1'},
+    {label: 'City 2', value: '2'},
+    {label: 'City 3', value: '3'},
 ];
 
 const degreeData = [
-    { label: 'Degree 1', value: '1' },
-    { label: 'Degree 2', value: '2' },
-    { label: 'Degree 3', value: '3' },
+    {label: 'Degree 1', value: '1'},
+    {label: 'Degree 2', value: '2'},
+    {label: 'Degree 3', value: '3'},
 ];
 
 const genderData = [
-    { label: 'Male', value: '1' },
-    { label: 'Female', value: '2' },
+    {label: 'Male', value: '1'},
+    {label: 'Female', value: '2'},
 ];

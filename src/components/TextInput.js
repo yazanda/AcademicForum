@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, Text, View, TextInput} from 'react-native';
 
-const TextInputComponent = ({ placeholder , label }) => {
+const TextInputComponent = ({placeholder, label}) => {
     const [isFocus, setIsFocus] = useState(false);
 
     return (
         <View style={styles.container}>
             {isFocus && (
-                <Text style={[styles.label, { color: 'blue' }]}>
+                <Text style={[styles.label, {color: 'blue'}]}>
                     {label}
                 </Text>
             )}
             <TextInput
-                style={[styles.textInput, isFocus && { borderColor: 'blue' }]}
+                style={[styles.textInput, isFocus && {borderColor: 'blue'}]}
                 placeholder={!isFocus ? placeholder : ''}
                 onFocus={() => setIsFocus(true)}
                 onBlur={() => setIsFocus(false)}
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     },
     label: {
         position: 'absolute',
-        backgroundColor: 'white',
+        backgroundColor: 'rgba(0, 0, 0, 0)',
         left: 22,
         top: 8,
         zIndex: 999,
