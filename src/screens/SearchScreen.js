@@ -1,4 +1,7 @@
 import React, {useState} from 'react';
+import { FontAwesome } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
+import LanguageContext from '../components/LanguageContext';
 import {
     StyleSheet,
     Text,
@@ -13,6 +16,7 @@ import Dropdown from "../components/DropDown";
 import Modal from '../components/Modal'
 
 export default function SearchScreen({navigation}){
+    const { t, i18n } = useTranslation();
     const [modalVisible, setModalVisible] = useState(false);
     const toggleModal = () => {
         setModalVisible(!modalVisible);
@@ -38,19 +42,19 @@ export default function SearchScreen({navigation}){
                     />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={toggleModal} style={styles.joinButton} >
-                    <Text style={styles.joinButtonText}>Join Us</Text>
+                    <Text style={styles.joinButtonText}>{t('homepage.joinus')}</Text>
                 </TouchableOpacity>
                 <View>
-                    <Text style={styles.label}>Arab Academic List By Field & Area</Text>
+                    <Text style={styles.label}>{t('academicpage.acdemics')}</Text>
                     <View style={styles.dropDownContainer}>
                         <TouchableOpacity>
                             <Dropdown
-                                placeholder = 'By Field'
+                                placeholder = {t('academicpage.acdemicsField')} 
                                 label = 'By Field'
                                 data ={data}
                             />
                             <Dropdown
-                                placeholder = 'By Area'
+                                placeholder ={t('academicpage.acdemics.Area')} 
                                 label = 'By Area'
                                 data ={data}
                             />

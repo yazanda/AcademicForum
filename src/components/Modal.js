@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
     View,
     Modal,
@@ -16,6 +17,7 @@ import ImagePicker from "react-native-image-picker";
 import {CheckBox} from 'react-native-elements';
 
 const MyModal = ({ modalVisible, toggleModal }) => {
+    const { t, i18n } = useTranslation();
     // Function to handle image selection
     const [selectedImage, setSelectedImage] = useState(null);
     const selectImage = () => {
@@ -51,11 +53,11 @@ const MyModal = ({ modalVisible, toggleModal }) => {
             <SafeAreaView style={styles.modalContainer}>
                 <ScrollView>
                     <TouchableOpacity onPress={toggleModal} style={styles.closeButton}>
-                        <Text style={styles.closeButtonText}>Close</Text>
+                        <Text style={styles.closeButtonText}>{t('academicpage.dialog.close')}</Text>
                     </TouchableOpacity>
-                    <TextInput placeholder="First Name" label="First Name" />
-                    <TextInput placeholder="Last Name" label="Last Name" />
-                    <TextInput placeholder="BirthDate" label="BirthDate" />
+                    <TextInput placeholder= {t('academicpage.dialog.first.name')} label="First Name" />
+                    <TextInput placeholder={t('academicpage.dialog.last.name')} label="Last Name" />
+                    <TextInput placeholder={t('academicpage.dialog.Birhdate')} label="BirthDate" />
                     {/*<DatePicker*/}
                     {/*    style={styles.input}*/}
                     {/*    date={date}*/}
@@ -74,19 +76,19 @@ const MyModal = ({ modalVisible, toggleModal }) => {
                     {/*    }}*/}
                     {/*    showIcon={false}*/}
                     {/*/>*/}
-                    <TextInput placeholder="Email" label="Email" />
+                    <TextInput placeholder={t('academicpage.dialog.email')} label="Email" />
                     <TouchableOpacity style={styles.dropDownContainer}>
-                        <Dropdown placeholder="Select City" label="Select City" data={cityData} />
-                        <Dropdown placeholder="Select Degree" label="Select Degree" data={degreeData} />
+                        <Dropdown placeholder={t('academicpage.dialog.city')} label="Select City" data={cityData} />
+                        <Dropdown placeholder={t('academicpage.dialog.degree')} label="Select Degree" data={degreeData} />
                     </TouchableOpacity>
-                    <TextInput placeholder="Major" label="Major" />
-                    <TextInput placeholder="Company Name" label="Company Name" />
-                    <TextInput placeholder="Position" label="Position" />
+                    <TextInput placeholder={t('academicpage.dialog.subject')} label="Major" />
+                    <TextInput placeholder={t('academicpage.dialog.company')} label="Company Name" />
+                    <TextInput placeholder={t('academicpage.dialog.job')} label="Position" />
                     <TouchableOpacity style={styles.dropDownContainer}>
-                        <Dropdown placeholder="Select Gender" label="Select Gender" data={genderData} />
+                        <Dropdown placeholder={t('academicpage.dialog.sex')} label="Select Gender" data={genderData} />
                     </TouchableOpacity>
-                    <TextInput placeholder="Phone Number" style={styles.input} />
-                    <Button title="Upload Picture" onPress={selectImage}/>
+                    <TextInput placeholder={t('academicpage.dialog.phone')} style={styles.input} />
+                    <Button title={t('academicpage.dialog.upload')} onPress={selectImage}/>
                     {selectedImage && (
                         <Image
                             source={{uri: selectedImage}}
@@ -94,12 +96,12 @@ const MyModal = ({ modalVisible, toggleModal }) => {
                         />
                     )}
                     <CheckBox
-                        title='I confirm that the information I provided is reliable and accurate, and I also agree to bear the responsibility for publishing unreliable information, as well as I agree to publish the image of my personal file, which does not have any copying rights, publicly on the site and on the application the Arab Academic Forum database.'
+                        title={t('academicpage.dialog.checkbox')}
                         checked={checked}
                         onPress={toggleCheckbox}
                     />
                     <TouchableOpacity style={styles.sendButton} onPress={toggleModal}>
-                        <Text style={styles.sendButtonText}>Send</Text>
+                        <Text style={styles.sendButtonText}>{t('contactpage.submit')}</Text>
                     </TouchableOpacity>
                 </ScrollView>
             </SafeAreaView>

@@ -1,6 +1,9 @@
 import React, {useState, useRef, useEffect} from "react";
+import { I18nextProvider } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
+import LanguageContext from '../components/LanguageContext';
 import Header from "../components/Header";
-import {StyleSheet, SafeAreaView, Image, ScrollView, View, Text, Dimensions, FlatList} from "react-native";
+import {StyleSheet, SafeAreaView, Image, ScrollView, View, Text, Dimensions, FlatList,} from "react-native";
 
 const window = Dimensions.get('window');
 const images = [
@@ -9,16 +12,15 @@ const images = [
     require("../../assets/home.png"),
 ];
 
-const data = [
-    {
-        id: 1,
-        text: 'Increasing the \n percentage of\n Arab academics \n every year by 40%\n for the\n next three years.'
-    },
-    {id: 2, text: 'Gathering\n academics in the \nmiddle to create cooperation\n between them.'},
-    {id: 3, text: 'Making\n information \nabout the\n Academy available \nto the Arab \nuser in one place '},
-];
 
 export default function App({navigation}) {
+    const { t, i18n } = useTranslation();
+    const isRightToLeft = i18n.language === 'ar' || i18n.language === 'he';
+    const data = [
+        {id: 1,text: t('homepage.goals.0.desc')},
+        {id: 2, text: t('homepage.goals.1.desc')},
+        {id: 3, text: t('homepage.goals.2.desc')},
+    ];
     // Render each item in the list
     const renderItem = ({item}) => (
         <View style={styles.listItem}>
@@ -33,8 +35,8 @@ export default function App({navigation}) {
 
 
     return (
-
-        <SafeAreaView style={styles.container}>
+<I18nextProvider i18n={i18n}>
+        <SafeAreaView style={[styles.container, isRightToLeft && styles.rightToLeft]}>
             <Header style={styles.header} navigation={navigation}/>
             <ScrollView contentContainerStyle={styles.pageContainer} ref={scrollViewRef}
                         showsVerticalScrollIndicator={false}>
@@ -53,51 +55,58 @@ export default function App({navigation}) {
                         ))}
                     </ScrollView>
                     <View style={styles.slideTextContainer}>
-                        <Text style={styles.slideText}>المنتدى</Text>
-                        <Text style={styles.slideText}>البصمة الاكاديمية العربية</Text>
-                        <Text style={styles.slideText}>للتعاون, المشاركة والدعم</Text>
+                        <Text style={styles.slideText}>{t('homepage.title')}</Text>
+                        <Text style={styles.slideText}>{t('homepage.title_1')}</Text>
+                        <Text style={styles.slideText}>{t('homepage.title_2')}</Text>
                     </View>
                 </View>
                 <View style={styles.slideIntroductionContainer}>
-                    <Text style={styles.title}>About the Project</Text>
+                    <Text style={styles.title}>{t('homepage.about')}</Text>
+                    <View style={{height: 20}}/>
+                    
                     <Text style={styles.introduction}>
-                        The Arab Academic Forum is a forum that brings together Arab academics from various fields and
-                        is based on developing higher education in the Arab community through participation, exchanging
-                        experiences and finding opportunities. It also aspires to be a reference for the next generation
-                        desiring higher academic education.
+                       {t('homepage.description')}
                     </Text>
-                    <Text style={styles.title}>We too join the global goal of ending poverty</Text>
+                    <View style={{height:50}}/>
+                    <Text style={styles.title}>{t('homepage.about_2')}</Text>
+                    <View style={{height: 20}}/>
                     <Text style={styles.introduction}>
-                        Poverty was defined as the lack of basic needs, food, water, medical care, security and
-                        education. . Studies prove that the percentage of academics among the Arab population is lower
-                        than the percentage of the academic Jewish population. There are many barriers and gaps between
-                        the Arab population and the Jewish population, including language and gaps in socio-economic
-                        status. We believe that academia is one of the keys to eradicating poverty.
+                      {t('homepage.description_2')}
                     </Text>
                 </View>
-                <View style={{padding: 110, flexDirection: 'row', alignItems: 'center'}}>
+                
+                <View style={{marginTop: 20,paddingHorizontal: 20,textAlign: "left",}}>
+                <View style={{height:70}}/>
+                
+                <Image
+                        source={require('../../assets/ourMessage.png')}
+                        style={{width: 300, height: 300, marginLeft: 20}}
+                    />
+                    <View style={{height:20 }}/>
                     <View>
-                        <Text style={styles.title}>Our vision</Text>
+                       <Text style={{fontSize:30 ,color:"#f58723",fontWeight: "bold",textAlign:"left"} }>{t('homepage.vision.sub.title')}</Text>
                         <Text style={styles.introduction}>
-                            Poverty was defined as the lack of basic needs, food, water, medical care, security and
-                            education. . Studies prove that the percentage of academics among the Arab population is
-                            lower than the percentage of the academic Jewish population. There are many barriers and
-                            gaps between the Arab population and the Jewish population, including language and gaps in
-                            socio-economic status. We believe that academia is one of the keys to eradicating poverty.
+                        {t('homepage.vision.desc')}
+                        </Text>
+                        <View style={{height:40 }}/>
+                        <Text style={{fontSize:30 ,color:"#f58723",fontWeight: "bold",textAlign:"left"} }>{t('homepage.message.sub.title')}</Text>
+                        <Text style={styles.introduction}>
+                        {t('homepage.message.desc')}
                         </Text>
                     </View>
-                    <Image
-                        source={require('../../assets/ourMessage.png')}
-                        style={{width: 200, height: 300, marginLeft: 20}}
-                    />
-                </View>
-                <View style={{padding: 100, flexDirection: 'row', alignItems: 'center', hiegth: 300}}>
+                    
+                    </View>
+                <View style={{marginTop: 20,padding: 30,textAlign: "left",}}>
+                   <View style={{height:70 }}/>
+                    <Text style={{fontSize:30 ,color:"#f58723",fontWeight: "bold",textAlign:"left"} }>{t('homepage.goals.title')}</Text>
+                    <View style={{height:30 }}/>
                     <Image
                         source={require('../../assets/goals.png')}
-                        style={{width: 200, height: 200, marginLeft: 0, padding: 110, left: 5,}}
+                        style={{width: 350, height: 310, }}
                     />
-                    <View>
-                        <Text style={styles.title}>Our goals</Text>
+                    
+                        
+                     <View style={{ flexDirection: 'row',}}>
                         <FlatList
                             data={data}
                             renderItem={renderItem}
@@ -105,72 +114,52 @@ export default function App({navigation}) {
                         />
                     </View>
                 </View>
-                <View style={{padding: 110, flexDirection: 'row', alignItems: 'center'}}>
-                    <View>
-                        <Text style={styles.title}>We are the ones who create the future</Text>
+                    <View style={{marginTop: 20,paddingHorizontal: 20,textAlign: "left",}}>
+                        <Text style={styles.title}>{t('homepage.impact.sub.title')}</Text>
+                        <View style={{height:30 }}/>
                         <Text style={styles.introduction}>
-                            There are many challenges facing the Arab sector, and these challenges are reflected in the
-                            gaps in the social and economic situation, the educational and linguistic gaps. We believe
-                            that the Academy and the Forum were established on this basis to fill these gaps, while
-                            creating a positive system that affects the Arab population. “Studies prove that engaging in
-                            social work leads to positive thinking and reduces violence and crime. Focusing on
-                            positivity will provide financial and mental security and influence the way of
-                            life.” </Text>
+                        {t('homepage.impact.desc')} </Text>
                     </View>
+                    <View style={{height:30 }}/>
                     <Image
                         source={require('../../assets/impact.png')}
-                        style={{width: 200, height: 300, marginLeft: 20}}
+                        style={{width: 300, height: 300, marginLeft: 20}}
                     />
-                </View>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                
+                <View style={{marginTop: 20,paddingHorizontal: 20,textAlign: "left",}}>
                     <View>
-                        <Text style={styles.title}>social impact</Text>
+                        <Text style={styles.title}>{t('homepage.missfix.sub.title')}</Text>
+                        <View style={{height:30 }}/>
                         <Text style={styles.introduction}>
-                            In September 2022, the "Miss Fix" contest for social change of the women's lobby "Shadolat
-                            Nishim" was held under the auspices of Bank Hapoalim's Social Banking Center. The
-                            competition was created out of the need to give space to the beauty that occurs in social
-                            work, and to women working in society by promoting the values of social justice, equality,
-                            sustainability, health, technology and human rights, to give a platform for entrepreneurship
-                            in various fields and to build a society that promotes and stimulates important women's work
-                            socially. 183 women participated in the competition with different projects, and the number
-                            of voters for the projects exceeded 70,000 in the competition, which led to the selection of
-                            3 pioneering projects, and the project “The Forum” won the second place. In the photo, the
-                            founder and director of the project, Ms. Alaa Hassouna. </Text>
+                        {t('homepage.missfix.desc')} </Text>
                     </View>
                 </View>
-                <Text style={styles.title}>Project crew</Text>
+                <View style={{marginTop: 20,paddingHorizontal: 20,textAlign: "left",}}>
+                <Text style={styles.title}>{t('homepage.founder.title')}</Text>
+                <View style={{height: 20}}/>
                 <View style={styles.squ}>
                     <Image
                         source={require('../../assets/Alaa.png')}
                         style={{width: 200, height: 200, marginLeft: 20}}
                     />
-                    <Text style={styles.Names}>Founder & Manager</Text>
-                    <Text style={styles.Names}>الاء حسونة</Text>
-                    <Text style={styles.introduction}>Alaa Hassouna is a PhD student in Management at Bar-Ilan
-                        University. She holds a Bachelor's degree in Economics and Management, majoring in
-                        Entrepreneurship, and a Master's degree in Business Administration, specializing in Marketing.
-                        She has extensive experience in entrepreneurship and social initiatives, with more than 12 years
-                        of management experience in the field of sales, planning and budgeting, knowledge of business
-                        operations and functions (finance, human resources, procurement), analytical ability, excellent
-                        communication skills, outstanding organizational and leadership skills.</Text>
+                    <Text style={styles.Names}>{t('homepage.founders.1.name')}</Text>
+                    <View style={{height: 30}}/>
+                    <Text style={styles.text}>{t('homepage.founders.1.desc')}</Text>
+                </View>
                 </View>
                 <View style={{flex: 1}}>
                     <View style={{height: 30}}/>
                 </View>
                 <View style={styles.squ}>
+                   <View style={{height: 20 }}/>
                     <Image
                         source={require('../../assets/hassan.png')}
                         style={{width: 250, height: 300, marginLeft: 20}}
                     />
 
-                    <Text style={styles.Names}>Co-Founder & Technology Manager
-                    </Text>
-                    <Text style={styles.Names}>حسن حسونة</Text>
-                    <Text style={styles.introduction}>Hassan Hassouna, holds a first degree in information systems
-                        management from the Academic College of Tel Aviv - Jaffa. He has experience in developing and
-                        creating websites with the use of the latest technologies in the market, both on the side of a
-                        database using the electronic cloud and on the side of the customer. He has proven experience in
-                        management, planning, decision-making, and sales and marketing skills</Text>
+                    <Text style={styles.Names}>{t('homepage.founders.0.name')}</Text>
+                    <View style={{height: 20}}/>
+                    <Text style={styles.text}>{t('homepage.founders.0.desc')}</Text>
                 </View>
                 <View style={{flex: 1}}>
                     <View style={{height: 30}}/>
@@ -178,6 +167,7 @@ export default function App({navigation}) {
                 <View style={{height: 30}}/>
             </ScrollView>
         </SafeAreaView>
+        </I18nextProvider>
     );
 }
 
@@ -185,6 +175,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -196,6 +187,10 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         alignItems: "center",
         paddingBottom: 20,
+    },
+    rightToLeft: {
+        flexDirection: 'row-reverse',
+        textAlign:"right",
     },
     logo: {
         width: 200,
@@ -224,31 +219,36 @@ const styles = StyleSheet.create({
         top: 50,
         width: "100%",
         alignItems: "center",
+       
     },
     slideText: {
         paddingVertical: 10,
-        fontSize: 30,
+        fontSize: 25,
         fontWeight: "bold",
         color: "white",
+
+        borderColor:"blue",
+        textAlign:"center",
     },
     slideIntroductionContainer: {
         marginTop: 20,
         paddingHorizontal: 20,
+        textAlign: "left",
     },
     title: {
         fontSize: 20,
         fontWeight: "bold",
-        color: "orange",
-        top: 30,
+        color: "#f58723",
+        top: 40,
         marginBottom: 10,
-        textAlign: "center",
+        textAlign: "left",
     },
     introduction: {
         top: 20,
         fontSize: 15,
         fontWeight: "bold",
         color: "black",
-        textAlign: "center",
+        textAlign: "left",
         panding: 10,
     },
     listItem: {
@@ -256,24 +256,27 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 10,
-        panding: 100,
         height: 200,
+        width:300,
     },
     number: {
         fontWeight: 'bold',
+        left:5,
         fontSize: 16,
         marginRight: 10,
-        color: "orange",
+        color: "#f58723",
         textAlign: "center",
     },
     text: {
-        fontSize: 16,
+        fontSize: 15,
         left: 10,
         top: 10,
+        panding:100,
+        fontWeight: "bold",
     },
     square: {
         width: 20,
-        height: 40,
+        height: 25,
         backgroundColor: '#00008b',
         justifyContent: 'center',
         alignItems: 'center',
@@ -282,17 +285,23 @@ const styles = StyleSheet.create({
         left: 5,
     },
     squ: {
-        top: 50,
         width: 300,
-        height: 600,
+        height: 500,
+        shadowColor: '#000000',
+        shadowOpacity: 0.5,
+        shadowRadius: 10,
+        elevation: 0.5, // for Android shadows
+        padding:20,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 10,
-        borderWidth: 2, // Width of the border
-        borderColor: 'black',
-        Bottom: 30,
-    },
+        borderColor:"black",
+        top:50,
+},
+
     Names: {
         top: 20,
+        textAlign:"center",
+        fontWeight: "bold",
+        fontSize:20,
     },
 });

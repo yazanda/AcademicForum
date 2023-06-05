@@ -1,5 +1,7 @@
 {
   "page.home.head.title": "Al-Muntada - The Arab Academic Imprint",
+  "navbar.search":"search",
+  "homepage.title_2": "For collaboration, sharing and support",
   "navbar.podcast": "Podcast",
   "navbar.academic": "List of Academics",
   "navbar.contact": "Contact Us",
@@ -21,7 +23,7 @@
   "homepage.goals.title": "Our goals ",
   "homepage.goals": [
     {
-      "desc": "Management and operation: \nAl-Muntada is a social platform for academy students as well as academy graduates in the Arab society. The platform is constantly growing and evolving as is open for new members wanting to take part in knowledge sharing, cooperation, and much more.   \n"
+      "desc": "Management and operation: \nAl-Muntada is a social platform for academy students as well as academy graduates in the Arab society. The platform is constantly growing and evolving as is open for new members wanting to take part in knowledge sharing, cooperation, and much\n more.   \n"
     },
     {
       "desc": "Academic podcast “let’s hear you”:\nThe podcast will host academics who will be sharing their experience in the academy as well as in their career. The podcast aims to raise awareness for the possibilities that the Arab community could seek in the studies field, as well as in possible career paths.\n"
@@ -78,9 +80,12 @@
   "academicpage.title": "The Arab Academic list",
   "academicpage.text": " Our ability to communicate and collaborate with one another as an Arab society is the key to societal change for the better. Join us for a listing of Arab academics from countries and regions worldwide",
   "academicpage.acdemics": "List of Arab academics by location and specialization",
+  "academicpage.acdemicsField":"By Field",
+  "academicpage.acdemics.Area":"By Area",
   "academicpage.dialog.title": "Register as an academic",
   "academicpage.dialog.sub.title": "Please fill in the following details to register as an academic in English",
   "academicpage.dialog.first.name": "First Name",
+  "academicpage.dialog.Birhdate": "BirthDate",
   "academicpage.dialog.last.name": "Last Name",
   "academicpage.dialog.email": "Email",
   "academicpage.dialog.age": "Age",
@@ -94,10 +99,12 @@
   "academicpage.dialog.sex": "Gender",
   "academicpage.dialog.company": "Company",
   "academicpage.dialog.phone": "Phone Number",
+  "academicpage.dialog.upload": "UPLOAD PICTURE",
   "academicpage.dialog.checkbox": "I confirm that the information I have provided is reliable and accurate and I agree to bear the responsibility for publishing unreliable information. I also agree to publish my profile picture, which does not have any copy rights, publicly on the website and on the application database of the Arab Academic Forum.",
   "contactpage.title": "Contact Us",
   "contactpage.text": "For contact us please fill the form below",
   "contactpage.submit": "Submit",
+  "academicpage.dialog.close":"close",
   "contactpage.fullname": "Full Name",
   "contactpage.email": "Email",
   "contactpage.message": "Message",

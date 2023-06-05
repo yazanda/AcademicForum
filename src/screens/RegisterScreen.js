@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { useTranslation } from 'react-i18next';
 import {CheckBox} from 'react-native-elements';
 import {
     StyleSheet,
@@ -16,7 +17,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import Header from "../components/Header";
 
 export default function RegisterScreen({navigation}) {
-
+    const { t, i18n } = useTranslation();
     return(
         <SafeAreaView>
             <Text>Fuck</Text>
