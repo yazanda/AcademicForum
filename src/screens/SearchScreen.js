@@ -50,12 +50,12 @@ export default function SearchScreen({navigation}){
                         <TouchableOpacity>
                             <Dropdown
                                 placeholder = {t('academicpage.acdemicsField')} 
-                                label = 'By Field'
+                                label = {t('academicpage.acdemicsField')}
                                 data ={data}
                             />
                             <Dropdown
                                 placeholder ={t('academicpage.acdemics.Area')} 
-                                label = 'By Area'
+                                label = {t('academicpage.acdemics.Area')}
                                 data ={data}
                             />
                         </TouchableOpacity>
