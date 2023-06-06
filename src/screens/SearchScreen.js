@@ -14,6 +14,8 @@ import {
 import Header from '../components/Header';
 import Dropdown from "../components/DropDown";
 import Modal from '../components/Modal'
+import { getDegreeList } from '../lists/degree';
+import { getCityList } from '../lists/list';
 
 export default function SearchScreen({navigation}) {
     const {t, i18n} = useTranslation();
@@ -22,11 +24,9 @@ export default function SearchScreen({navigation}) {
         setModalVisible(!modalVisible);
     }
 
-    const data = [
-        {label: 'Item 1', value: '1'},
-        {label: 'Item 2', value: '2'},
-        {label: 'Item 3', value: '3'},
-    ];
+    const cities = getCityList;
+
+    const degrees = getDegreeList;
 
     return (
         <SafeAreaView style={styles.container}>
@@ -51,12 +51,18 @@ export default function SearchScreen({navigation}) {
                             <Dropdown
                                 placeholder={t('academicpage.acdemicsField')}
                                 label={t('academicpage.acdemicsField')}
-                                data={data}
+                                data={degrees.map((degree) => ({
+                                  label: degree.name,
+                                  value: degree.id.toString(),
+                                }))}
                             />
                             <Dropdown
                                 placeholder={t('academicpage.acdemics.Area')}
                                 label={t('academicpage.acdemics.Area')}
-                                data={data}
+                                data={cities.map((city) => ({
+                                    label: city.label,
+                                    value: city.label,
+                                  }))}
                             />
                         </TouchableOpacity>
                     </View>
