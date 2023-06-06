@@ -1,6 +1,7 @@
 import React, {useState, useRef, useEffect} from "react";
 import {I18nextProvider, useTranslation} from 'react-i18next';
 import LanguageContext from '../components/LanguageContext';
+import { I18nManager } from 'react-native';
 import Header from "../components/Header";
 import {StyleSheet, SafeAreaView, Image, ScrollView, View, Text, Dimensions, FlatList,} from "react-native";
 
@@ -14,29 +15,64 @@ const images = [
 
 export default function App({navigation}) {
     const {t, i18n} = useTranslation();
-    const isRightToLeft = i18n.language === 'ar' || i18n.language === 'he';
     const data = [
         {id: 1, text: t('homepage.goals.0.desc')},
         {id: 2, text: t('homepage.goals.1.desc')},
         {id: 3, text: t('homepage.goals.2.desc')},
     ];
+   
     // Render each item in the list
-    const renderItem = ({item}) => (
-        <View style={styles.listItem}>
-            <View style={styles.square}>
-                <Text style={styles.number}>{item.id}</Text>
+    
+    const renderItem = ({ item }) => {
+        if (i18n.language === 'AR') {
+          return (
+            <View style={styles.listItem}>
+              <Text style={styles.text}>{item.text}</Text>
+              <View style={{ width: 30 }} />
+              <View style={styles.square}>
+                <Text style={[styles.number]}>
+                  {item.id}
+                </Text>
+              </View>
             </View>
-            <Text style={styles.text}>{item.text}</Text>
-        </View>
-    );
+          );
+        } else if (i18n.language === 'EN') {
+          return (
+            <View style={styles.listItem}>
+              <View style={styles.square}>
+                <Text style={[styles.number]}>
+                  {item.id}
+                </Text>
+              </View>
+              <View style={{ width: 30 }} />
+              <Text style={styles.text}>{item.text}</Text>
+            </View>
+          );
+        } else {
+          // Default case if language is not Arabic, Hebrew, or English
+          return (
+            <View style={styles.listItem}>
+              <Text style={styles.text}>{item.text}</Text>
+              <View style={{ width: 30 }} />
+              <View style={styles.square}>
+                <Text style={[styles.number]}>
+                  {item.id}
+                </Text>
+              </View>
+            </View>
+          );
+        }
+      };
+    
+      
 
     const scrollViewRef = useRef(null);
 
 
     return (
         <I18nextProvider i18n={i18n}>
-            <SafeAreaView style={[styles.container, isRightToLeft && styles.rightToLeft]}>
-                <Header style={styles.header} navigation={navigation}/>
+            <SafeAreaView style={styles.container}>
+              <Header style={styles.header} navigation={navigation}/>
                 <ScrollView contentContainerStyle={styles.pageContainer} ref={scrollViewRef}
                             showsVerticalScrollIndicator={false}>
                     <Image source={require("../../assets/FinalLogo.png")} style={styles.logo}/>
@@ -74,7 +110,7 @@ export default function App({navigation}) {
                         </Text>
                     </View>
 
-                    <View style={{marginTop: 20, paddingHorizontal: 20, textAlign: "left",}}>
+                    <View style={{marginTop: 20, paddingHorizontal: 20, }}>
                         <View style={{height: 70}}/>
 
                         <Image
@@ -87,7 +123,6 @@ export default function App({navigation}) {
                                 fontSize: 30,
                                 color: "#f58723",
                                 fontWeight: "bold",
-                                textAlign: "left"
                             }}>{t('homepage.vision.sub.title')}</Text>
                             <Text style={styles.introduction}>
                                 {t('homepage.vision.desc')}
@@ -97,7 +132,7 @@ export default function App({navigation}) {
                                 fontSize: 30,
                                 color: "#f58723",
                                 fontWeight: "bold",
-                                textAlign: "left"
+                                
                             }}>{t('homepage.message.sub.title')}</Text>
                             <Text style={styles.introduction}>
                                 {t('homepage.message.desc')}
@@ -105,13 +140,13 @@ export default function App({navigation}) {
                         </View>
 
                     </View>
-                    <View style={{marginTop: 20, padding: 30, textAlign: "left",}}>
+                    <View style={{marginTop: 20, padding: 30, }}>
                         <View style={{height: 70}}/>
                         <Text style={{
                             fontSize: 30,
                             color: "#f58723",
                             fontWeight: "bold",
-                            textAlign: "left"
+                           
                         }}>{t('homepage.goals.title')}</Text>
                         <View style={{height: 30}}/>
                         <Image
@@ -128,7 +163,7 @@ export default function App({navigation}) {
                             />
                         </View>
                     </View>
-                    <View style={{marginTop: 20, paddingHorizontal: 20, textAlign: "left",}}>
+                    <View style={{marginTop: 20, paddingHorizontal: 20,}}>
                         <Text style={styles.title}>{t('homepage.impact.sub.title')}</Text>
                         <View style={{height: 30}}/>
                         <Text style={styles.introduction}>
@@ -140,7 +175,7 @@ export default function App({navigation}) {
                         style={{width: 300, height: 300, marginLeft: 20}}
                     />
 
-                    <View style={{marginTop: 20, paddingHorizontal: 20, textAlign: "left",}}>
+                    <View style={{marginTop: 20, paddingHorizontal: 20, }}>
                         <View>
                             <Text style={styles.title}>{t('homepage.missfix.sub.title')}</Text>
                             <View style={{height: 30}}/>
@@ -148,7 +183,7 @@ export default function App({navigation}) {
                                 {t('homepage.missfix.desc')} </Text>
                         </View>
                     </View>
-                    <View style={{marginTop: 20, paddingHorizontal: 20, textAlign: "left",}}>
+                    <View style={{marginTop: 20, paddingHorizontal: 20,}}>
                         <Text style={styles.title}>{t('homepage.founder.title')}</Text>
                         <View style={{height: 20}}/>
                         <View style={styles.squ}>
@@ -203,10 +238,7 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         // zIndex: 1,
     },
-    rightToLeft: {
-        flexDirection: 'row-reverse',
-        textAlign: "right",
-    },
+    
     logo: {
         width: 200,
         height: 75,
@@ -248,7 +280,7 @@ const styles = StyleSheet.create({
     slideIntroductionContainer: {
         marginTop: 20,
         paddingHorizontal: 20,
-        textAlign: "left",
+        //textAlign: "left",
     },
     title: {
         fontSize: 20,
@@ -256,14 +288,14 @@ const styles = StyleSheet.create({
         color: "#f58723",
         top: 40,
         marginBottom: 10,
-        textAlign: "left",
+       // textAlign: "left",
     },
     introduction: {
         top: 20,
         fontSize: 15,
         fontWeight: "bold",
         color: "black",
-        textAlign: "left",
+        //textAlign: "left",
         panding: 10,
     },
     listItem: {
@@ -273,6 +305,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         height: 200,
         width: 300,
+        
     },
     number: {
         fontWeight: 'bold',
@@ -281,6 +314,7 @@ const styles = StyleSheet.create({
         marginRight: 10,
         color: "#f58723",
         textAlign: "center",
+        
     },
     text: {
         fontSize: 15,
@@ -288,6 +322,7 @@ const styles = StyleSheet.create({
         top: 10,
         panding: 100,
         fontWeight: "bold",
+        padding:10,
     },
     square: {
         width: 20,
@@ -296,8 +331,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
-        right: 10,
-        left: 5,
+      
+      
     },
     squ: {
         width: 300,
