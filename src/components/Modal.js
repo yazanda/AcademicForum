@@ -15,6 +15,8 @@ import DatePicker from 'react-native-datepicker';
 import TextInput from './TextInput';
 import ImagePicker from "react-native-image-picker";
 import {CheckBox} from 'react-native-elements';
+import { getDegreeList } from '../lists/degree';
+import { getCityList } from '../lists/list';
 
 const MyModal = ({modalVisible, toggleModal}) => {
     const {t, i18n} = useTranslation();
@@ -82,9 +84,15 @@ const MyModal = ({modalVisible, toggleModal}) => {
                     <TextInput placeholder={t('academicpage.dialog.email')} label={t('academicpage.dialog.email')}/>
                     <TouchableOpacity style={styles.dropDownContainer}>
                         <Dropdown placeholder={t('academicpage.dialog.city')} label={t('academicpage.dialog.city')}
-                                  data={cityData}/>
+                                  data={cities.map((city) => ({
+                                    label: city.label,
+                                    value: city.label,
+                                  }))}/>
                         <Dropdown placeholder={t('academicpage.dialog.degree')} label={t('academicpage.dialog.degree')}
-                                  data={degreeData}/>
+                                  data={degrees.map((degree) => ({
+                                    label: degree.name,
+                                    value: degree.id.toString(),
+                                  }))}/>
                     </TouchableOpacity>
                     <TextInput placeholder={t('academicpage.dialog.subject')} label={t('academicpage.dialog.subject')}/>
                     <TextInput placeholder={t('academicpage.dialog.company')} label={t('academicpage.dialog.company')}/>
@@ -168,19 +176,11 @@ const styles = StyleSheet.create({
     },
 });
 
-const cityData = [
-    {label: 'City 1', value: '1'},
-    {label: 'City 2', value: '2'},
-    {label: 'City 3', value: '3'},
-];
-
-const degreeData = [
-    {label: 'Degree 1', value: '1'},
-    {label: 'Degree 2', value: '2'},
-    {label: 'Degree 3', value: '3'},
-];
+const cities = getCityList;
+const degrees = getDegreeList;
 
 const genderData = [
     {label: 'Male', value: '1'},
     {label: 'Female', value: '2'},
 ];
+

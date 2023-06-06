@@ -25,7 +25,6 @@ export default function SearchScreen({navigation}) {
     }
 
     const cities = getCityList;
-
     const degrees = getDegreeList;
 
     return (
