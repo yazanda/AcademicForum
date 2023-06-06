@@ -12,7 +12,7 @@ import Header from '../components/Header';
 import TextInput from '../components/TextInput';
 import Dropdown from "../components/DropDown";
 
-export default function ContactUsScreen({navigation}) {
+ const ContactUsScreen = ({navigation}) => {
 
     const data = [
         {label: 'Item 1', value: '1'},
@@ -53,6 +53,8 @@ export default function ContactUsScreen({navigation}) {
     )
 
 }
+
+export default ContactUsScreen;
 
 const styles = StyleSheet.create({
     container: {

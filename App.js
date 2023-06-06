@@ -2,12 +2,12 @@ import React from "react";
 import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 import {
-    startScreen,
+    PodcastScreen,
     ContactUsScreen,
-    RegisterScreen,
-    SearchScreen, StartScreen,
+    SearchScreen,
+    StartScreen,
 } from "./src/screens";
-import PodcastScreen from "./src/screens/PodcastScreen";
+// import PodcastScreen from "./src/screens/PodcastScreen";
 
 const Stack = createStackNavigator();
 
