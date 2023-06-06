@@ -1,4 +1,6 @@
 import React, {useState, useRef} from 'react';
+import {useTranslation} from 'react-i18next';
+import LanguageContext from '../components/LanguageContext';
 import {
     StyleSheet,
     Text,
@@ -9,16 +11,36 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import Header from '../components/Header';
-import TextInput from '../components/TextInput';
+import TextInputComponent from '../components/TextInput';
 import Dropdown from "../components/DropDown";
+import axios from 'axios';
 
  const ContactUsScreen = ({navigation}) => {
+    const {t, i18n} = useTranslation();
+    const [fullName, setFullName] = useState('');
+    const [email, setEmail] = useState('');
+    const [subject, setSubject] = useState('');
+    const [message, setMessage] = useState('');
+    const [requiredError, setrequiredError] = useState('');
+    const data = t('contactpage.subjects', { returnObjects: true });
 
-    const data = [
-        {label: 'Item 1', value: '1'},
-        {label: 'Item 2', value: '2'},
-        {label: 'Item 3', value: '3'},
-    ];
+    const handleSend = async () => {
+        try {
+          const response = await axios.post('https://almuntada.onrender.com/api/v1/contact', {
+            fullName: fullName,
+            email: email,
+            subject: subject,
+            message: message
+          });
+          console.log(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+        setFullName('');
+        setEmail('');
+        setSubject('');
+        setMessage('');
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -34,17 +56,37 @@ import Dropdown from "../components/DropDown";
             </TouchableOpacity>
             <ScrollView contentContainerStyle={styles.contentContainer}>
                 <View>
-                    <TextInput label={"Full Name"} placeholder={"Full Name"}/>
-                    <TextInput label={"Email"} placeholder={"Email"}/>
+                    <TextInputComponent
+                      label={t('contactpage.fullname')}
+                      placeholder={t('contactpage.fullname')}
+                      value={fullName}
+                      setValue={setFullName}
+                      errorText={requiredError}
+                    />
+                    <TextInputComponent
+                      label={t('contactpage.email')} 
+                      placeholder={t('contactpage.email')}
+                      value={email}
+                      setValue={setEmail}
+                      errorText={requiredError}
+                      />
                     <TouchableOpacity style={styles.dropDownContainer}>
                         <Dropdown
-                            placeholder='Subject'
-                            label='Subject'
+                            placeholder={t('contactpage.subject')}
+                            label={t('contactpage.subject')}
                             data={data}
+                            value={subject}
+                            setValue={setSubject}
                         />
                     </TouchableOpacity>
-                    <TextInput label={"Message"} placeholder={"Message"}/>
-                    <TouchableOpacity style={styles.sendButton}>
+                    <TextInputComponent
+                      label={t('contactpage.message')}
+                      placeholder={t('contactpage.message')}
+                      value={message}
+                      setValue={setMessage}
+                      errorText={requiredError}
+                      />
+                    <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
                         <Text style={styles.sendButtonText}>Send</Text>
                     </TouchableOpacity>
                 </View>
@@ -55,6 +97,9 @@ import Dropdown from "../components/DropDown";
 }
 
 export default ContactUsScreen;
+
+
+
 
 const styles = StyleSheet.create({
     container: {

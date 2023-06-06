@@ -113,31 +113,31 @@
   "contactpage.subject": "Subject",
   "contactpage.subjects": [
     {
-      "name": ""
+      "label": ""
     },
     {
-      "name": "Publication in the monthly magazine"
+      "label": "Publication in the monthly magazine"
     },
     {
-      "name": "Podcast Hosting Request \"We Heard Your Voice\""
+      "label": "Podcast Hosting Request \"We Heard Your Voice\""
     },
     {
-      "name": "Cooperation of operators or institutions"
+      "label": "Cooperation of operators or institutions"
     },
     {
-      "name": "Find a workshop or training"
+      "label": "Find a workshop or training"
     },
     {
-      "name": "Advice for choosing a career"
+      "label": "Advice for choosing a career"
     },
     {
-      "name": "Find a job"
+      "label": "Find a job"
     },
     {
-      "name": "Find a scholarship"
+      "label": "Find a scholarship"
     },
     {
-      "name": "Other"
+      "label": "Other"
     }
   ],
   "podcastpage.desc": "Podcast \"We heard your voice\". An individual and talk show program aimed at researching academic personalities from the Arab community who wish to share their experience with their community and discuss academic and professional issues.",
