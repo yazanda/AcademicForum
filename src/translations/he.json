@@ -110,6 +110,7 @@
   "contactpage.message": "הודעה",
   "contactpage.required": "שדה זה חובה",
   "contactpage.dialog.title": "בקשתך להצטרפות נשלחה בהצלחה",
+  "contactpage.send.title": "הודעתך נשלחה בהצלחה",
   "contactpage.subject": "נושא",
   "contactpage.subjects": [
     {

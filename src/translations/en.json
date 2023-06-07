@@ -110,6 +110,7 @@
   "contactpage.message": "Message",
   "contactpage.required": "Required",
   "contactpage.dialog.title": "The message has been sent successfully",
+  "contactpage.send.title": "Your messege sent successfully",
   "contactpage.subject": "Subject",
   "contactpage.subjects": [
     {

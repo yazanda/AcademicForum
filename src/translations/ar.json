@@ -110,6 +110,7 @@
   "contactpage.message": "الرسالة",
   "contactpage.required": "هذا الحقل اجباري",
   "contactpage.dialog.title": "تم ارسال طلبك للانضمام بنجاح",
+  "contactpage.send.title": "تم ارسال رسالتك بنجاح",
   "contactpage.subject": "الموضوع",
   "contactpage.subjects": [
     {

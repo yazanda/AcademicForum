@@ -9,11 +9,13 @@ import {
     Image,
     ScrollView,
     TouchableOpacity,
+    Alert,
 } from 'react-native';
 import Header from '../components/Header';
 import TextInputComponent from '../components/TextInput';
 import Dropdown from "../components/DropDown";
 import axios from 'axios';
+import Modal from 'react-native-modal';
 
  const ContactUsScreen = ({navigation}) => {
     const {t, i18n} = useTranslation();
@@ -23,6 +25,7 @@ import axios from 'axios';
     const [message, setMessage] = useState('');
     const [requiredError, setrequiredError] = useState('');
     const data = t('contactpage.subjects', { returnObjects: true });
+    const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
 
     const handleSend = async () => {
         try {
@@ -33,13 +36,24 @@ import axios from 'axios';
             message: message
           });
           console.log(response.data);
+        if (response.status === 201) {
+            setIsSuccessModalVisible(true);
+            // Clear form fields after successful submission
+            setFullName('');
+            setEmail('');
+            setSubject('');
+            setMessage('');
+          } else {
+            Alert.alert('Error', 'Failed to send the form. Please try again.');
+          }
         } catch (error) {
           console.error(error);
+          Alert.alert('Error', 'An error occurred while sending the form. Please try again.');
         }
-        setFullName('');
-        setEmail('');
-        setSubject('');
-        setMessage('');
+    };
+    
+    const handleCloseSuccessModal = () => {
+        setIsSuccessModalVisible(false);
     };
 
     return (
@@ -90,6 +104,14 @@ import axios from 'axios';
                         <Text style={styles.sendButtonText}>Send</Text>
                     </TouchableOpacity>
                 </View>
+                <Modal isVisible={isSuccessModalVisible}>
+                    <View style={styles.modalContainer}>
+                      <Text style={styles.modalText}>{t('contactpage.send.title')}</Text>
+                      <TouchableOpacity style={styles.modalButton} onPress={handleCloseSuccessModal}>
+                        <Text style={styles.modalButtonText}>Close</Text>
+                      </TouchableOpacity>
+                    </View>
+                </Modal>
             </ScrollView>
         </SafeAreaView>
     )
@@ -98,27 +120,19 @@ import axios from 'axios';
 
 export default ContactUsScreen;
 
-
-
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
         justifyContent: 'center',
     },
-    // header: {
-    //     flexDirection: 'row',
-    //     // justifyContent: 'space-between',
-    //     // alignItems: 'center',
-    // },
     contentContainer: {
         flex: 1,
     },
     logo: {
         width: 200,
         height: 75,
-        alignSelf: 'center', // Center the logo horizontally
+        alignSelf: 'center', 
         resizeMode: "contain",
     },
     sendButton: {
@@ -127,8 +141,8 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 16,
         width: '50%',
-        alignSelf: 'center', // Add this line to center the button
-        marginTop: 20, // Add margin-top to create some space between the checkbox and the button
+        alignSelf: 'center', 
+        marginTop: 20, 
         alignItems: 'center',
     },
     sendButtonText: {
@@ -136,4 +150,27 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "white",
     },
+    modalContainer: {
+        backgroundColor: 'white',
+        padding: 16,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 8,
+      },
+      modalText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 16,
+      },
+      modalButton: {
+        backgroundColor: 'green',
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+        borderRadius: 8,
+      },
+      modalButtonText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
 });
