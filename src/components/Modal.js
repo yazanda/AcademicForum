@@ -11,7 +11,7 @@ import {
     StyleSheet,
 } from 'react-native';
 import Dropdown from './DropDown';
-import DatePicker from 'react-native-datepicker';
+import DatePicker from './DatePicker';
 import TextInput from './TextInput';
 import ImagePicker from "react-native-image-picker";
 import {CheckBox} from 'react-native-elements';
@@ -44,12 +44,9 @@ const MyModal = ({modalVisible, toggleModal}) => {
         setChecked(!checked);
     };
     //***********************************************************************************
-    const [date, setDate] = useState(null);
+    const [selectedDate, setSelectedDate] = useState(null);
 
-    const handleDateChange = (newDate) => {
-        setDate(newDate);
-    };
-
+    let validationError;
     return (
         <Modal visible={modalVisible} animationType="slide" onRequestClose={toggleModal}>
             <SafeAreaView style={styles.modalContainer}>
@@ -61,8 +58,15 @@ const MyModal = ({modalVisible, toggleModal}) => {
                                label={t('academicpage.dialog.first.name')}/>
                     <TextInput placeholder={t('academicpage.dialog.last.name')}
                                label={t('academicpage.dialog.last.name')}/>
-                    <TextInput placeholder={t('academicpage.dialog.Birhdate')}
-                               label={t('academicpage.dialog.Birhdate')}/>
+                    {/*<TextInput placeholder={t('academicpage.dialog.Birhdate')}*/}
+                    {/*           label={t('academicpage.dialog.Birhdate')}/>*/}
+                    <DatePicker
+                        placeholder={t('academicpage.dialog.Birhdate')}
+                        label={t('academicpage.dialog.Birhdate')}
+                        value={selectedDate}
+                        onChange={(date) => setSelectedDate(date)}
+                        error={validationError}
+                    />
                     {/*<DatePicker*/}
                     {/*    style={styles.input}*/}
                     {/*    date={date}*/}
@@ -101,7 +105,7 @@ const MyModal = ({modalVisible, toggleModal}) => {
                         <Dropdown placeholder={t('academicpage.dialog.sex')} label={t('academicpage.dialog.sex')}
                                   data={genderData}/>
                     </TouchableOpacity>
-                    <TextInput placeholder={t('academicpage.dialog.phone')} style={styles.input}/>
+                    <TextInput placeholder={t('academicpage.dialog.phone')} label={t('academicpage.dialog.phone')} />
                     <Button title={t('academicpage.dialog.upload')} onPress={selectImage}/>
                     {selectedImage && (
                         <Image
