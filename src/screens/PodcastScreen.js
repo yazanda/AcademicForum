@@ -24,7 +24,7 @@ export default function PodcastScreen({navigation}) {
     };
 
     const renderItem = ({ item }) => (
-        <View style={styles.videoContainer}>
+        <View style={styles.videoContainer} key={item.id}>
           <Video
             source={{ uri: item.podcastUrl }}
             style={styles.video}
@@ -53,11 +53,7 @@ export default function PodcastScreen({navigation}) {
                 <View style={styles.pageContent}>
                     <Text style={[styles.firstText, isRTL && styles.rtlText]}>{t('podcastpage.desc')}</Text>
                     <Text style={[styles.secondText, isRTL && styles.rtlText]}>{t('podcastpage.subdesc')}</Text>
-                    <FlatList
-                      data={videos}
-                      renderItem={renderItem}
-                      keyExtractor={(item) => item.id.toString()}
-                    />
+                    {videos.map((item) => renderItem({ item }))}
                 </View>
             </ScrollView>
         </SafeAreaView>

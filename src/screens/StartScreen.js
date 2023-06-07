@@ -71,153 +71,154 @@ export default function App({navigation}) {
 
     return (
         <I18nextProvider i18n={i18n}>
-            <SafeAreaView style={styles.container}>
-              <Header style={styles.header} navigation={navigation}/>
-                <ScrollView contentContainerStyle={styles.pageContainer} ref={scrollViewRef}
-                            showsVerticalScrollIndicator={false}>
-                    <Image source={require("../../assets/FinalLogo.png")} style={styles.logo}/>
-                    <View style={styles.sliderContainer}>
-                        <ScrollView
-                            ref={scrollViewRef}
-                            horizontal
-                            pagingEnabled
-                            showsHorizontalScrollIndicator={false}
-                        >
-                            {images.map((image, index) => (
-                                <View key={index} style={styles.slide}>
-                                    <Image source={image} style={styles.image}/>
-                                </View>
-                            ))}
-                        </ScrollView>
-                        <View style={styles.slideTextContainer}>
-                            <Text style={styles.slideText}>{t('homepage.title')}</Text>
-                            <Text style={styles.slideText}>{t('homepage.title_1')}</Text>
-                            <Text style={styles.slideText}>{t('homepage.title_2')}</Text>
-                        </View>
+          <SafeAreaView style={styles.container}>
+            <Header style={styles.header} navigation={navigation} />
+            <ScrollView
+              contentContainerStyle={styles.pageContainer}
+              ref={scrollViewRef}
+              showsVerticalScrollIndicator={false}
+            >
+              <Image source={require("../../assets/FinalLogo.png")} style={styles.logo} />
+              <View style={styles.sliderContainer}>
+                <ScrollView
+                  ref={scrollViewRef}
+                  horizontal
+                  pagingEnabled
+                  showsHorizontalScrollIndicator={false}
+                >
+                  {images.map((image, index) => (
+                    <View key={index} style={styles.slide}>
+                      <Image source={image} style={styles.image} />
                     </View>
-                    <View style={styles.slideIntroductionContainer}>
-                        <Text style={styles.title}>{t('homepage.about')}</Text>
-                        <View style={{height: 20}}/>
-
-                        <Text style={styles.introduction}>
-                            {t('homepage.description')}
-                        </Text>
-                        <View style={{height: 50}}/>
-                        <Text style={styles.title}>{t('homepage.about_2')}</Text>
-                        <View style={{height: 20}}/>
-                        <Text style={styles.introduction}>
-                            {t('homepage.description_2')}
-                        </Text>
-                    </View>
-
-                    <View style={{marginTop: 20, paddingHorizontal: 20, }}>
-                        <View style={{height: 70}}/>
-
-                        <Image
-                            source={require('../../assets/ourMessage.png')}
-                            style={{width: 300, height: 300, marginLeft: 20}}
-                        />
-                        <View style={{height: 20}}/>
-                        <View>
-                            <Text style={{
-                                fontSize: 30,
-                                color: "#f58723",
-                                fontWeight: "bold",
-                            }}>{t('homepage.vision.sub.title')}</Text>
-                            <Text style={styles.introduction}>
-                                {t('homepage.vision.desc')}
-                            </Text>
-                            <View style={{height: 40}}/>
-                            <Text style={{
-                                fontSize: 30,
-                                color: "#f58723",
-                                fontWeight: "bold",
-                                
-                            }}>{t('homepage.message.sub.title')}</Text>
-                            <Text style={styles.introduction}>
-                                {t('homepage.message.desc')}
-                            </Text>
-                        </View>
-
-                    </View>
-                    <View style={{marginTop: 20, padding: 30, }}>
-                        <View style={{height: 70}}/>
-                        <Text style={{
-                            fontSize: 30,
-                            color: "#f58723",
-                            fontWeight: "bold",
-                           
-                        }}>{t('homepage.goals.title')}</Text>
-                        <View style={{height: 30}}/>
-                        <Image
-                            source={require('../../assets/goals.png')}
-                            style={{width: 350, height: 310,}}
-                        />
-
-
-                        <View style={{flexDirection: 'row',}}>
-                            <FlatList
-                                data={data}
-                                renderItem={renderItem}
-                                keyExtractor={(item) => item.id.toString()}
-                            />
-                        </View>
-                    </View>
-                    <View style={{marginTop: 20, paddingHorizontal: 20,}}>
-                        <Text style={styles.title}>{t('homepage.impact.sub.title')}</Text>
-                        <View style={{height: 30}}/>
-                        <Text style={styles.introduction}>
-                            {t('homepage.impact.desc')} </Text>
-                    </View>
-                    <View style={{height: 30}}/>
-                    <Image
-                        source={require('../../assets/impact.png')}
-                        style={{width: 300, height: 300, marginLeft: 20}}
-                    />
-
-                    <View style={{marginTop: 20, paddingHorizontal: 20, }}>
-                        <View>
-                            <Text style={styles.title}>{t('homepage.missfix.sub.title')}</Text>
-                            <View style={{height: 30}}/>
-                            <Text style={styles.introduction}>
-                                {t('homepage.missfix.desc')} </Text>
-                        </View>
-                    </View>
-                    <View style={{marginTop: 20, paddingHorizontal: 20,}}>
-                        <Text style={styles.title}>{t('homepage.founder.title')}</Text>
-                        <View style={{height: 20}}/>
-                        <View style={styles.squ}>
-                            <Image
-                                source={require('../../assets/Alaa.png')}
-                                style={{width: 200, height: 200, marginLeft: 20}}
-                            />
-                            <Text style={styles.Names}>{t('homepage.founders.1.name')}</Text>
-                            <View style={{height: 30}}/>
-                            <Text style={styles.text}>{t('homepage.founders.1.desc')}</Text>
-                        </View>
-                    </View>
-                    <View style={{flex: 1}}>
-                        <View style={{height: 30}}/>
-                    </View>
-                    <View style={styles.squ}>
-                        <View style={{height: 20}}/>
-                        <Image
-                            source={require('../../assets/hassan.png')}
-                            style={{width: 250, height: 300, marginLeft: 20}}
-                        />
-
-                        <Text style={styles.Names}>{t('homepage.founders.0.name')}</Text>
-                        <View style={{height: 20}}/>
-                        <Text style={styles.text}>{t('homepage.founders.0.desc')}</Text>
-                    </View>
-                    <View style={{flex: 1}}>
-                        <View style={{height: 30}}/>
-                    </View>
-                    <View style={{height: 30}}/>
+                  ))}
                 </ScrollView>
-            </SafeAreaView>
+                <View style={styles.slideTextContainer}>
+                  <Text style={styles.slideText}>{t('homepage.title')}</Text>
+                  <Text style={styles.slideText}>{t('homepage.title_1')}</Text>
+                  <Text style={styles.slideText}>{t('homepage.title_2')}</Text>
+                </View>
+              </View>
+              <View style={styles.slideIntroductionContainer}>
+                <Text style={styles.title}>{t('homepage.about')}</Text>
+                <View style={{ height: 20 }} />
+      
+                <Text style={styles.introduction}>
+                  {t('homepage.description')}
+                </Text>
+                <View style={{ height: 50 }} />
+                <Text style={styles.title}>{t('homepage.about_2')}</Text>
+                <View style={{ height: 20 }} />
+                <Text style={styles.introduction}>
+                  {t('homepage.description_2')}
+                </Text>
+              </View>
+      
+              <View style={{ marginTop: 20, paddingHorizontal: 20 }}>
+                <View style={{ height: 70 }} />
+      
+                <Image
+                  source={require('../../assets/ourMessage.png')}
+                  style={{ width: 300, height: 300, marginLeft: 20 }}
+                />
+                <View style={{ height: 20 }} />
+                <View>
+                  <Text style={{
+                    fontSize: 30,
+                    color: "#f58723",
+                    fontWeight: "bold",
+                  }}>{t('homepage.vision.sub.title')}</Text>
+                  <Text style={styles.introduction}>
+                    {t('homepage.vision.desc')}
+                  </Text>
+                  <View style={{ height: 40 }} />
+                  <Text style={{
+                    fontSize: 30,
+                    color: "#f58723",
+                    fontWeight: "bold",
+                  }}>{t('homepage.message.sub.title')}</Text>
+                  <Text style={styles.introduction}>
+                    {t('homepage.message.desc')}
+                  </Text>
+                </View>
+      
+              </View>
+              <View style={{ marginTop: 20, padding: 30 }}>
+                <View style={{ height: 70 }} />
+                <Text style={{
+                  fontSize: 30,
+                  color: "#f58723",
+                  fontWeight: "bold",
+                }}>{t('homepage.goals.title')}</Text>
+                <View style={{ height: 30 }} />
+                <Image
+                  source={require('../../assets/goals.png')}
+                  style={{ width: 350, height: 310 }}
+                />
+      
+                <View style={{ flexDirection: 'row' }}>
+                  <FlatList
+                    data={data}
+                    renderItem={renderItem}
+                    keyExtractor={(item) => item.id.toString()}
+                  />
+                </View>
+              </View>
+              <View style={{ marginTop: 20, paddingHorizontal: 20 }}>
+                <Text style={styles.title}>{t('homepage.impact.sub.title')}</Text>
+                <View style={{ height: 30 }} />
+                <Text style={styles.introduction}>
+                  {t('homepage.impact.desc')} </Text>
+              </View>
+              <View style={{ height: 30 }} />
+              <Image
+                source={require('../../assets/impact.png')}
+                style={{ width: 300, height: 300, marginLeft: 20 }}
+              />
+      
+              <View style={{ marginTop: 20, paddingHorizontal: 20 }}>
+                <View>
+                  <Text style={styles.title}>{t('homepage.missfix.sub.title')}</Text>
+                  <View style={{ height: 30 }} />
+                  <Text style={styles.introduction}>
+                    {t('homepage.missfix.desc')} </Text>
+                </View>
+              </View>
+              <View style={{ marginTop: 20, paddingHorizontal: 20 }}>
+                <Text style={styles.title}>{t('homepage.founder.title')}</Text>
+                <View style={{ height: 20 }} />
+                <View style={styles.squ}>
+                  <Image
+                    source={require('../../assets/Alaa.png')}
+                    style={{ width: 200, height: 200, marginLeft: 20 }}
+                  />
+                  <Text style={styles.Names}>{t('homepage.founders.1.name')}</Text>
+                  <View style={{ height: 30 }} />
+                  <Text style={styles.text}>{t('homepage.founders.1.desc')}</Text>
+                </View>
+              </View>
+              <View style={{ flex: 1 }}>
+                <View style={{ height: 30 }} />
+              </View>
+              <View style={styles.squ}>
+                <View style={{ height: 20 }} />
+                <Image
+                  source={require('../../assets/hassan.png')}
+                  style={{ width: 250, height: 300, marginLeft: 20 }}
+                />
+      
+                <Text style={styles.Names}>{t('homepage.founders.0.name')}</Text>
+                <View style={{ height: 20 }} />
+                <Text style={styles.text}>{t('homepage.founders.0.desc')}</Text>
+              </View>
+              <View style={{ flex: 1 }}>
+                <View style={{ height: 30 }} />
+              </View>
+              <View style={{ height: 30 }} />
+            </ScrollView>
+          </SafeAreaView>
         </I18nextProvider>
-    );
+      );
+      
 }
 
 const styles = StyleSheet.create({
