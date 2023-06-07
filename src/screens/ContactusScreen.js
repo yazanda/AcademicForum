@@ -1,6 +1,6 @@
 import React, {useState, useRef} from 'react';
 import {useTranslation} from 'react-i18next';
-import LanguageContext from '../components/LanguageContext';
+// import LanguageContext from '../components/LanguageContext';
 import {
     StyleSheet,
     Text,
@@ -62,7 +62,7 @@ import Modal from 'react-native-modal';
                 style={styles.header}
                 navigation={navigation}
             />
-            <TouchableOpacity onPress={() => navigation.navigate("StartScreen")}>
+            <TouchableOpacity onPress={() => navigation.navigate("StartScreen")} style={styles.logoContainer}>
                 <Image
                     source={require("../../assets/FinalLogo.png")}
                     style={styles.logo}
@@ -105,7 +105,7 @@ import Modal from 'react-native-modal';
                       errorText={requiredError}
                       />
                     <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
-                        <Text style={styles.sendButtonText}>Send</Text>
+                        <Text style={styles.sendButtonText}>{t('contactpage.submit')}</Text>
                     </TouchableOpacity>
                 </View>
                 <Modal isVisible={isSuccessModalVisible}>
@@ -143,6 +143,12 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontWeight: 'bold',
         fontSize: 16,
+    },
+    logoContainer: {
+        width: 200,
+        height: 75,
+        alignSelf: 'center', 
+        resizeMode: "contain",
     },
     logo: {
         width: 200,
