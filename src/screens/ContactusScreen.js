@@ -51,7 +51,7 @@ import Modal from 'react-native-modal';
           Alert.alert('Error', 'An error occurred while sending the form. Please try again.');
         }
     };
-    
+
     const handleCloseSuccessModal = () => {
         setIsSuccessModalVisible(false);
     };
@@ -69,7 +69,11 @@ import Modal from 'react-native-modal';
                 />
             </TouchableOpacity>
             <ScrollView contentContainerStyle={styles.contentContainer}>
-                <View>
+                <View style={styles.title}>
+                    <Text style={styles.titleText}>{t('contactpage.title')}</Text>
+                    <Text style={styles.titleText}>{t('contactpage.text')}</Text>
+                </View>
+                <View style={styles.inputsContainer}>
                     <TextInputComponent
                       label={t('contactpage.fullname')}
                       placeholder={t('contactpage.fullname')}
@@ -128,6 +132,17 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         flex: 1,
+    },
+    inputsContainer: {
+        paddingTop: 20,
+    },
+    title: {
+        marginTop: 10,
+    },
+    titleText: {
+        alignSelf: 'center',
+        fontWeight: 'bold',
+        fontSize: 16,
     },
     logo: {
         width: 200,

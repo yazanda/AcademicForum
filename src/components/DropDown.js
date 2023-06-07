@@ -58,6 +58,7 @@ export default DropdownComponent;
 const styles = StyleSheet.create({
     container: {
         padding: 16,
+        paddingTop: 0,
     },
     dropdown: {
         width: '100%',

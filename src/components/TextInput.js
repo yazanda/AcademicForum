@@ -28,7 +28,8 @@ export default TextInputComponent;
 const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
-        padding: 16,
+        paddingLeft: 16,
+        paddingRight: 16,
     },
     textInput: {
         width: '100%',
