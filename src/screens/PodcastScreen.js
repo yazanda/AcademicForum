@@ -44,7 +44,7 @@ export default function PodcastScreen({navigation}) {
                 navigation={navigation}
             />
             <ScrollView style={styles.pageContentContainer}>
-                <TouchableOpacity onPress={()=> navigation.navigate("StartScreen")}>
+                <TouchableOpacity onPress={()=> navigation.navigate("StartScreen")} style={styles.logoContainer}>
                     <Image
                         source={require("../../assets/FinalLogo.png")}
                         style={styles.logo}
@@ -71,6 +71,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 16,
         paddingTop: 30,
+    },
+    logoContainer: {
+        width: 200,
+        height: 75,
+        alignSelf: 'center', 
+        resizeMode: "contain",
     },
     logo: {
         width: 200,

@@ -12,6 +12,8 @@ import {
 } from 'react-native';
 import Dropdown from './DropDown';
 import DatePicker from './DatePicker';
+// import DateTimePicker from '@react-native-community/datetimepicker';
+
 import TextInput from './TextInput';
 import ImagePicker from "react-native-image-picker";
 import {CheckBox} from 'react-native-elements';
@@ -20,6 +22,20 @@ import { getCityList } from '../lists/list';
 
 const MyModal = ({modalVisible, toggleModal}) => {
     const {t, i18n} = useTranslation();
+
+    const [firstName, setFirstName] = useState({ value: "", error: "" });
+    const [lastName, setLastName] = useState({ value: "", error: "" });
+    const [email, setEmail] = useState({ value: "", error: "" });
+    const [age, setAge] = useState({ value: "", error: "" });
+    const [degree, setDegree] = useState({ value: "", error: "" });
+    const [subject, setSubject] = useState({ value: "", error: "" });
+    const [career, setCareer] = useState({ value: "", error: "" });
+    const [city, setCity] = useState({ value: "", error: "" });
+    const [gender, setGender] = useState({ value: "", error: "" });
+    const [phoneNumber, setPhoneNumber] = useState({ value: "", error: "" });
+    const [company, setCompany] = useState({ value: "", error: "" });
+    const [checked, setChecked] = useState(false);
+
     // Function to handle image selection
     const [selectedImage, setSelectedImage] = useState(null);
     const selectImage = () => {
@@ -39,10 +55,10 @@ const MyModal = ({modalVisible, toggleModal}) => {
     };
     //***********************************************************************************
     // Function to handle checkBox
-    const [checked, setChecked] = useState(false);
-    const toggleCheckbox = () => {
-        setChecked(!checked);
-    };
+    
+    // const toggleCheckbox = () => {
+    //     setChecked(!checked);
+    // };
     //***********************************************************************************
     const [selectedDate, setSelectedDate] = useState(null);
 
@@ -54,19 +70,27 @@ const MyModal = ({modalVisible, toggleModal}) => {
                     <TouchableOpacity onPress={toggleModal} style={styles.closeButton}>
                         <Text style={styles.closeButtonText}>{t('academicpage.dialog.close')}</Text>
                     </TouchableOpacity>
-                    <TextInput placeholder={t('academicpage.dialog.first.name')}
-                               label={t('academicpage.dialog.first.name')}/>
-                    <TextInput placeholder={t('academicpage.dialog.last.name')}
-                               label={t('academicpage.dialog.last.name')}/>
+                    <TextInput  label={t('academicpage.dialog.first.name')}
+                                returnKeyType="next"
+                                value={firstName.value}
+                                onChangeText={(text) => setFirstName({ value: text, error: "" })}
+                                error={!!firstName.error}
+                                errorText={firstName.error}/>
+                    <TextInput  label={t('academicpage.dialog.last.name')}
+                                returnKeyType="next"
+                                value={lastName.value}
+                                onChangeText={(text) => setLastName({ value: text, error: "" })}
+                                error={!!lastName.error}
+                                errorText={lastName.error}/>
                     {/*<TextInput placeholder={t('academicpage.dialog.Birhdate')}*/}
                     {/*           label={t('academicpage.dialog.Birhdate')}/>*/}
-                    <DatePicker
+                    {/* <DateTimePickerModal
                         placeholder={t('academicpage.dialog.Birhdate')}
                         label={t('academicpage.dialog.Birhdate')}
                         value={selectedDate}
                         onChange={(date) => setSelectedDate(date)}
                         error={validationError}
-                    />
+                    /> */}
                     {/*<DatePicker*/}
                     {/*    style={styles.input}*/}
                     {/*    date={date}*/}
@@ -85,27 +109,58 @@ const MyModal = ({modalVisible, toggleModal}) => {
                     {/*    }}*/}
                     {/*    showIcon={false}*/}
                     {/*/>*/}
-                    <TextInput placeholder={t('academicpage.dialog.email')} label={t('academicpage.dialog.email')}/>
-                    <TouchableOpacity style={styles.dropDownContainer}>
+                    <TextInput  label={t('academicpage.dialog.email')}
+                                returnKeyType="next"
+                                value={email.value}
+                                onChangeText={(text) => setEmail({ value: text, error: "" })}
+                                error={!!email.error}
+                                errorText={email.error}/>
+                    {/* <TouchableOpacity style={styles.dropDownContainer}> */}
                         <Dropdown placeholder={t('academicpage.dialog.city')} label={t('academicpage.dialog.city')}
                                   data={cities.map((city) => ({
                                     label: city.label,
                                     value: city.label,
-                                  }))}/>
+                                  }))}
+                                  value={city}
+                                  setValue={setCity}/>
                         <Dropdown placeholder={t('academicpage.dialog.degree')} label={t('academicpage.dialog.degree')}
                                   data={degrees.map((degree) => ({
                                     label: degree.name,
                                     value: degree.id.toString(),
-                                  }))}/>
-                    </TouchableOpacity>
-                    <TextInput placeholder={t('academicpage.dialog.subject')} label={t('academicpage.dialog.subject')}/>
-                    <TextInput placeholder={t('academicpage.dialog.company')} label={t('academicpage.dialog.company')}/>
-                    <TextInput placeholder={t('academicpage.dialog.job')} label={t('academicpage.dialog.job')}/>
+                                  }))}
+                                  value={degree}
+                                  setValue={setDegree}/>
+                    {/* </TouchableOpacity> */}
+                    <TextInput  label={t('academicpage.dialog.subject')}
+                                returnKeyType="next"
+                                value={subject.value}
+                                onChangeText={(text) => setSubject({ value: text, error: "" })}
+                                error={!!subject.error}
+                                errorText={subject.error}/>
+                    <TextInput  label={t('academicpage.dialog.company')}
+                                returnKeyType="next"
+                                value={company.value}
+                                onChangeText={(text) => setCompany({ value: text, error: "" })}
+                                error={!!company.error}
+                                errorText={company.error}/>
+                    <TextInput  label={t('academicpage.dialog.job')}
+                                returnKeyType="next"
+                                value={career.value}
+                                onChangeText={(text) => setCareer({ value: text, error: "" })}
+                                error={!!career.error}
+                                errorText={career.error}/>
                     <TouchableOpacity style={styles.dropDownContainer}>
                         <Dropdown placeholder={t('academicpage.dialog.sex')} label={t('academicpage.dialog.sex')}
-                                  data={genderData}/>
+                                  data={genderData}
+                                  value={gender}
+                                  setValue={setGender}/>
                     </TouchableOpacity>
-                    <TextInput placeholder={t('academicpage.dialog.phone')} label={t('academicpage.dialog.phone')} />
+                    <TextInput  label={t('academicpage.dialog.phone')}
+                                returnKeyType="next"
+                                value={phoneNumber.value}
+                                onChangeText={(text) => setPhoneNumber({ value: text, error: "" })}
+                                error={!!phoneNumber.error}
+                                errorText={phoneNumber.error} />
                     <Button title={t('academicpage.dialog.upload')} onPress={selectImage}/>
                     {selectedImage && (
                         <Image
@@ -116,7 +171,7 @@ const MyModal = ({modalVisible, toggleModal}) => {
                     <CheckBox
                         title={t('academicpage.dialog.checkbox')}
                         checked={checked}
-                        onPress={toggleCheckbox}
+                        onPress={() => {setChecked(!checked)}}
                     />
                     <TouchableOpacity style={styles.sendButton} onPress={toggleModal}>
                         <Text style={styles.sendButtonText}>{t('contactpage.submit')}</Text>

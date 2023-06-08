@@ -74,14 +74,16 @@ export default function App({navigation}) {
           <SafeAreaView style={styles.container}>
             <Header style={styles.header} navigation={navigation} />
             <ScrollView
+            nestedScrollEnabled
               contentContainerStyle={styles.pageContainer}
-              ref={scrollViewRef}
+            //   ref={scrollViewRef}
               showsVerticalScrollIndicator={false}
             >
               <Image source={require("../../assets/FinalLogo.png")} style={styles.logo} />
               <View style={styles.sliderContainer}>
                 <ScrollView
                   ref={scrollViewRef}
+                  nestedScrollEnabled
                   horizontal
                   pagingEnabled
                   showsHorizontalScrollIndicator={false}
@@ -156,11 +158,13 @@ export default function App({navigation}) {
                 />
       
                 <View style={{ flexDirection: 'row' }}>
-                  <FlatList
+                  {/* <FlatList
+                  horizontal={true}
                     data={data}
+                    nestedScrollEnabled={true}
                     renderItem={renderItem}
                     keyExtractor={(item) => item.id.toString()}
-                  />
+                  /> */}
                 </View>
               </View>
               <View style={{ marginTop: 20, paddingHorizontal: 20 }}>
