@@ -26,12 +26,13 @@ const MyModal = ({modalVisible, toggleModal}) => {
     const [firstName, setFirstName] = useState({ value: "", error: "" });
     const [lastName, setLastName] = useState({ value: "", error: "" });
     const [email, setEmail] = useState({ value: "", error: "" });
+    const [selectedDate, setSelectedDate] = useState(null);
     const [age, setAge] = useState({ value: "", error: "" });
-    const [degree, setDegree] = useState({ value: "", error: "" });
+    const [degree, setDegree] = useState('');
     const [subject, setSubject] = useState({ value: "", error: "" });
     const [career, setCareer] = useState({ value: "", error: "" });
-    const [city, setCity] = useState({ value: "", error: "" });
-    const [gender, setGender] = useState({ value: "", error: "" });
+    const [city, setCity] = useState('');
+    const [gender, setGender] = useState('');
     const [phoneNumber, setPhoneNumber] = useState({ value: "", error: "" });
     const [company, setCompany] = useState({ value: "", error: "" });
     const [checked, setChecked] = useState(false);
@@ -53,15 +54,7 @@ const MyModal = ({modalVisible, toggleModal}) => {
             }
         );
     };
-    //***********************************************************************************
-    // Function to handle checkBox
     
-    // const toggleCheckbox = () => {
-    //     setChecked(!checked);
-    // };
-    //***********************************************************************************
-    const [selectedDate, setSelectedDate] = useState(null);
-
     let validationError;
     return (
         <Modal visible={modalVisible} animationType="slide" onRequestClose={toggleModal}>
@@ -82,40 +75,20 @@ const MyModal = ({modalVisible, toggleModal}) => {
                                 onChangeText={(text) => setLastName({ value: text, error: "" })}
                                 error={!!lastName.error}
                                 errorText={lastName.error}/>
-                    {/*<TextInput placeholder={t('academicpage.dialog.Birhdate')}*/}
-                    {/*           label={t('academicpage.dialog.Birhdate')}/>*/}
-                    {/* <DateTimePickerModal
+                    <DatePicker
                         placeholder={t('academicpage.dialog.Birhdate')}
                         label={t('academicpage.dialog.Birhdate')}
                         value={selectedDate}
                         onChange={(date) => setSelectedDate(date)}
                         error={validationError}
-                    /> */}
-                    {/*<DatePicker*/}
-                    {/*    style={styles.input}*/}
-                    {/*    date={date}*/}
-                    {/*    mode="date"*/}
-                    {/*    placeholder="Select BirthDate"*/}
-                    {/*    format="YYYY-MM-DD"*/}
-                    {/*    minDate="1900-01-01"*/}
-                    {/*    maxDate={new Date()}*/}
-                    {/*    confirmBtnText="Confirm"*/}
-                    {/*    cancelBtnText="Cancel"*/}
-                    {/*    onDateChange={handleDateChange}*/}
-                    {/*    customStyles={{*/}
-                    {/*        dateInput: styles.dateInput,*/}
-                    {/*        dateText: styles.dateText,*/}
-                    {/*        placeholderText: styles.dateText,*/}
-                    {/*    }}*/}
-                    {/*    showIcon={false}*/}
-                    {/*/>*/}
+                    />
                     <TextInput  label={t('academicpage.dialog.email')}
                                 returnKeyType="next"
                                 value={email.value}
                                 onChangeText={(text) => setEmail({ value: text, error: "" })}
                                 error={!!email.error}
                                 errorText={email.error}/>
-                    {/* <TouchableOpacity style={styles.dropDownContainer}> */}
+                    <TouchableOpacity style={styles.dropDownContainer}>
                         <Dropdown placeholder={t('academicpage.dialog.city')} label={t('academicpage.dialog.city')}
                                   data={cities.map((city) => ({
                                     label: city.label,
@@ -125,12 +98,12 @@ const MyModal = ({modalVisible, toggleModal}) => {
                                   setValue={setCity}/>
                         <Dropdown placeholder={t('academicpage.dialog.degree')} label={t('academicpage.dialog.degree')}
                                   data={degrees.map((degree) => ({
-                                    label: degree.name,
+                                    label: degree.label,
                                     value: degree.id.toString(),
                                   }))}
                                   value={degree}
                                   setValue={setDegree}/>
-                    {/* </TouchableOpacity> */}
+                    </TouchableOpacity>
                     <TextInput  label={t('academicpage.dialog.subject')}
                                 returnKeyType="next"
                                 value={subject.value}

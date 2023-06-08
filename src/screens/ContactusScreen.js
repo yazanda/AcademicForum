@@ -12,28 +12,27 @@ import {
     Alert,
 } from 'react-native';
 import Header from '../components/Header';
-import TextInputComponent from '../components/TextInput';
+import TextInput from '../components/TextInput';
 import Dropdown from "../components/DropDown";
 import axios from 'axios';
 import Modal from 'react-native-modal';
 
  const ContactUsScreen = ({navigation}) => {
     const {t, i18n} = useTranslation();
-    const [fullName, setFullName] = useState('');
-    const [email, setEmail] = useState('');
+    const [fullName, setFullName] = useState({ value: "", error: "" });
+    const [email, setEmail] = useState({ value: "", error: "" });
     const [subject, setSubject] = useState('');
-    const [message, setMessage] = useState('');
-    const [requiredError, setrequiredError] = useState('');
+    const [message, setMessage] = useState({ value: "", error: "" });
     const data = t('contactpage.subjects', { returnObjects: true });
     const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
 
     const handleSend = async () => {
         try {
           const response = await axios.post('https://almuntada.onrender.com/api/v1/contact', {
-            fullName: fullName,
-            email: email,
+            fullName: fullName.value,
+            email: email.value,
             subject: subject,
-            message: message
+            message: message.value,
           });
           console.log(response.data);
         if (response.status === 201) {
@@ -74,19 +73,19 @@ import Modal from 'react-native-modal';
                     <Text style={styles.titleText}>{t('contactpage.text')}</Text>
                 </View>
                 <View style={styles.inputsContainer}>
-                    <TextInputComponent
+                    <TextInput
                       label={t('contactpage.fullname')}
-                      placeholder={t('contactpage.fullname')}
-                      value={fullName}
-                      setValue={setFullName}
-                      errorText={requiredError}
+                      value={fullName.value}
+                      onChangeText={(text) => setFullName({ value: text, error: "" })}
+                      error={!!fullName.error}
+                      errorText={fullName.error}
                     />
-                    <TextInputComponent
+                    <TextInput
                       label={t('contactpage.email')} 
-                      placeholder={t('contactpage.email')}
-                      value={email}
-                      setValue={setEmail}
-                      errorText={requiredError}
+                      value={email.value}
+                      onChangeText={(text) => setEmail({ value: text, error: "" })}
+                      error={!!email.error}
+                      errorText={email.error}
                       />
                     <TouchableOpacity style={styles.dropDownContainer}>
                         <Dropdown
@@ -97,12 +96,12 @@ import Modal from 'react-native-modal';
                             setValue={setSubject}
                         />
                     </TouchableOpacity>
-                    <TextInputComponent
+                    <TextInput
                       label={t('contactpage.message')}
-                      placeholder={t('contactpage.message')}
-                      value={message}
-                      setValue={setMessage}
-                      errorText={requiredError}
+                      value={message.value}
+                      onChangeText={(text) => setMessage({ value: text, error: "" })}
+                      error={!!message.error}
+                      errorText={message.error}
                       />
                     <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
                         <Text style={styles.sendButtonText}>{t('contactpage.submit')}</Text>

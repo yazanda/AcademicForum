@@ -89,18 +89,15 @@ const DatePicker = ({ label, value, onChange, placeholder, error }) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
-        paddingLeft: 16,
-        paddingRight: 16,
+        padding: 10,
     },
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        borderWidth: 0.5,
-        borderRadius: 8,
+        borderWidth: 1,
+        borderRadius: 5,
         position: 'relative',
         overflow: 'hidden',
-        marginBottom: 16,
     },
     textInput: {
         flex: 1,

@@ -20,6 +20,8 @@ import { getCityList } from '../lists/list';
 export default function SearchScreen({navigation}) {
     const {t, i18n} = useTranslation();
     const [modalVisible, setModalVisible] = useState(false);
+    const [city, setCity] = useState('');
+    const [degree, setDegree] = useState('');
     const toggleModal = () => {
         setModalVisible(!modalVisible);
     }
@@ -51,9 +53,11 @@ export default function SearchScreen({navigation}) {
                                 placeholder={t('academicpage.acdemicsField')}
                                 label={t('academicpage.acdemicsField')}
                                 data={degrees.map((degree) => ({
-                                  label: degree.name,
+                                  label: degree.label,
                                   value: degree.id.toString(),
                                 }))}
+                                value={degree}
+                                setValue={setDegree}
                             />
                             <Dropdown
                                 placeholder={t('academicpage.acdemics.Area')}
@@ -62,6 +66,8 @@ export default function SearchScreen({navigation}) {
                                     label: city.label,
                                     value: city.label,
                                   }))}
+                                value={city}
+                                setValue={setCity}
                             />
                         </TouchableOpacity>
                     </View>
