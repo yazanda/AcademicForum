@@ -1,86 +1,89 @@
-import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, Platform, DatePickerIOS, DatePickerAndroid, TouchableOpacity, Text } from 'react-native';
-import DatePickerA from 'react-native-datepicker';
+import React, { useState, useRef } from 'react';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Button, Platform } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
-
-const DatePicker = ({ label, placeholder, value, onChange, error }) => {
+const DatePicker = ({ label, value, onChange, placeholder, error }) => {
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
+    const inputRef = useRef(null);
 
-    const handleDateChange = (date) => {
-        onChange(date);
-        setShowDatePicker(false);
-    };
-    const handleShowDatePicker = () => {
-        setShowDatePicker(!showDatePicker);
-    }
-
-    const openAndroidDatePicker = async () => {
-        try {
-            const { action, year, month, day } = await DatePickerAndroid.open({
-                date: value || new Date(),
-            });
-            if (action !== DatePickerAndroid.dismissedAction) {
-                const selectedDate = new Date(year, month, day);
-                handleDateChange(selectedDate);
-            }
-        } catch ({ code, message }) {
-            console.warn('Cannot open date picker', message);
+    const handleDateChange = (event, date) => {
+        setShowDatePicker(Platform.OS === 'ios');
+        if (date) {
+            onChange(date);
         }
     };
 
+    const handleShowDatePicker = () => {
+        setShowDatePicker(true);
+        setIsFocused(true);
+    };
+
+    const handleHideDatePicker = () => {
+        setShowDatePicker(false);
+        setIsFocused(false);
+    };
+
+    const handleConfirm = () => {
+        handleHideDatePicker();
+        inputRef.current.blur();
+        // Handle confirmation logic here
+        console.log('Selected date:', value);
+    };
+
     const renderDatePicker = () => {
-        if (isFocused && Platform.OS === 'ios') {
+        if (showDatePicker) {
             return (
-                <DatePickerIOS
-                    date={value || new Date()}
-                    onDateChange={handleDateChange}
+                <DateTimePicker
+                    value={value || new Date()}
                     mode="date"
-                />
-            );
-        } else if (isFocused && Platform.OS === 'android') {
-            return (
-                <DatePickerAndroid
-                    date={value || new Date()}
-                    onDateChange={handleDateChange}
-                    mode="date"
+                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                    onChange={handleDateChange}
+                    textColor={Platform.OS === 'ios' ? 'black' : 'default'}
                 />
             );
         }
         return null;
     };
 
+    const handleContainerPress = () => {
+        if (!isFocused) {
+            setIsFocused(true);
+        }
+    };
+
     return (
-        <View style={styles.container}>
-            {isFocused && (
+        <TouchableOpacity
+            style={styles.container}
+            activeOpacity={1}
+            onPress={handleShowDatePicker}
+            onBlur={handleHideDatePicker}
+        >
+            {showDatePicker && (
                 <Text style={[styles.label, { color: 'blue' }]}>{label}</Text>
             )}
-            <TouchableOpacity
-                style={[styles.inputContainer, isFocused && { borderColor: 'blue' }]}
-                onPress={() => {
-                    handleShowDatePicker();
-                    setIsFocused(true);
-                }}
-                onBlur={() => setIsFocused(false)}
-            >
+            <View style={[styles.inputContainer, showDatePicker && { borderColor: 'blue' }]}>
                 <TextInput
-                    style={[styles.textInput, error && styles.errorTextInput]}
+                    ref={inputRef}
+                    style={[styles.textInput, error && styles.errorTextInput, { color: value ? 'black' : 'gray' }]}
                     value={value ? value.toDateString() : ''}
                     placeholder={!isFocused ? placeholder : ''}
                     placeholderTextColor={'black'}
-                    onFocus={() => setIsFocused(true)}
-                    onBlur={() => setIsFocused(false)}
-                    onChangeText={(text) => {
-                        if (text === '') {
-                            onChange(null); // Clear the date by setting it to null
-                        }
-                    }}
-                    editable={true}
+                    editable={false}
+                    onTouchStart={handleShowDatePicker}
+                    onBlur={handleHideDatePicker}
                 />
-            </TouchableOpacity>
+                {Platform.OS === 'ios' && showDatePicker && (
+                    <Button
+                        title="Confirm"
+                        onPress={handleConfirm}
+                        style={styles.confirmButton}
+                    />
+                )}
+            </View>
             {renderDatePicker()}
             {error && <Text style={styles.errorText}>{error}</Text>}
-        </View>
+        </TouchableOpacity>
     );
 };
 
@@ -122,6 +125,13 @@ const styles = StyleSheet.create({
     },
     errorText: {
         color: 'red',
+    },
+    confirmButton: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        height: '100%',
+        paddingHorizontal: 16,
     },
 });
 
