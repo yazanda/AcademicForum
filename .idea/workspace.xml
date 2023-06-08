@@ -7,6 +7,8 @@
     <list default="true" id="0fde6ac4-8533-427d-81df-75737bc70cc2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/DatePicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DatePicker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/DropDown.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DropDown.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TextInput.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TextInput.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +62,8 @@
       <workItem from="1685830301776" duration="13284000" />
       <workItem from="1686054966468" duration="1275000" />
       <workItem from="1686158149073" duration="4251000" />
+      <workItem from="1686249774272" duration="77000" />
+      <workItem from="1686260680875" duration="2076000" />
     </task>
     <servers />
   </component>

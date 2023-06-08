@@ -18,7 +18,11 @@ const DropdownComponent = ({ placeholder, label, data, value, setValue }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+        style={styles.container}
+        underlineColor="transparent"
+        mode="outlined"
+    >
       <Dropdown
         style={[styles.dropdown, isFocus && styles.focusedDropdown]}
         placeholderStyle={styles.placeholderStyle}
@@ -77,15 +81,15 @@ const styles = StyleSheet.create({
   label: {
     position: 'absolute',
     backgroundColor: 'white',
-    left: 22,
-    top: 8,
+    left: 18,
+    top: 0,
     zIndex: 1,
     paddingHorizontal: 8,
     fontSize: 14,
-    color: 'gray',
+    color: 'blue',
   },
   focusedLabel: {
-    top: -10,
+    top: 0,
     color: 'blue',
   },
   placeholderStyle: {

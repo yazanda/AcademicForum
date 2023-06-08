@@ -59,7 +59,7 @@ const DatePicker = ({ label, value, onChange, placeholder, error }) => {
             onPress={handleShowDatePicker}
             onBlur={handleHideDatePicker}
         >
-            {showDatePicker && (
+            {isFocused && ( // fix this for ios
                 <Text style={[styles.label, { color: 'blue' }]}>{label}</Text>
             )}
             <View style={[styles.inputContainer, showDatePicker && { borderColor: 'blue' }]}>
@@ -109,12 +109,13 @@ const styles = StyleSheet.create({
     },
     label: {
         position: 'absolute',
-        backgroundColor: 'rgba(0, 0, 0, 0)',
+        backgroundColor: 'white',
         left: 22,
-        top: -10,
+        top: 0,
         zIndex: 999,
         paddingHorizontal: 8,
         fontSize: 14,
+
     },
     labelFocused: {
         color: 'blue',
