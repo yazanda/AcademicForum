@@ -102,19 +102,26 @@ export default function App({navigation}) {
     return (
         <I18nextProvider i18n={i18n}>
             <SafeAreaView style={styles.container}>
-              <Header style={styles.header} navigation={navigation}/>
-                <ScrollView contentContainerStyle={styles.pageContainer} ref={scrollViewRef}
-                            showsVerticalScrollIndicator={false}>
-                    <Image source={require("../../assets/FinalLogo.png")} style={styles.logo}/>
-                    <View style={styles.sliderContainer}>
-                        <FlatList
-                        
-                            horizontal
-                            pagingEnabled
-                            showsHorizontalScrollIndicator={false}
-                        >
+            <Header style={styles.header} navigation={navigation} />
+            <ScrollView
+            nestedScrollEnabled
+              contentContainerStyle={styles.pageContainer}
+            //   ref={scrollViewRef}
+              showsVerticalScrollIndicator={false}
+            >
+              <Image source={require("../../assets/FinalLogo.png")} style={styles.logo} />
+              <View style={styles.sliderContainer}>
+                <ScrollView
+                  ref={scrollViewRef}
+                  nestedScrollEnabled
+                  horizontal
+                  pagingEnabled
+                  showsHorizontalScrollIndicator={false}
+                >
+                  
+                  </ScrollView>
                           <View style={{height: 20}}/>  
-                        </FlatList>
+                        
                         <View style={styles.slideTextContainer}>
                             <Text style={styles.slideText}>{t('homepage.title')}</Text>
                             <Text style={styles.slideText}>{t('homepage.title_1')}</Text>
@@ -320,10 +327,12 @@ export default function App({navigation}) {
                     <View style={{height: 30}}/>
                     </View>
                    </View>
-                </ScrollView>
-            </SafeAreaView>
+                
+            </ScrollView>
+          </SafeAreaView>
         </I18nextProvider>
-    );
+      );
+      
 }
 
 const styles = StyleSheet.create({

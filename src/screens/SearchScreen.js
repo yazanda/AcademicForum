@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {FontAwesome} from '@expo/vector-icons';
 import {useTranslation} from 'react-i18next';
-import LanguageContext from '../components/LanguageContext';
 import {
     StyleSheet,
     Text,
@@ -11,6 +10,7 @@ import {
     ScrollView,
     TouchableOpacity,
     Dimensions,
+    Linking,
 } from 'react-native';
 import Header from '../components/Header';
 import Dropdown from "../components/DropDown";
@@ -47,6 +47,8 @@ export default function SearchScreen({navigation}) {
         const facebookURL = 'https://www.facebook.com/Almuntada.ac';
         Linking.openURL(facebookURL);
       };
+    const [city, setCity] = useState('');
+    const [degree, setDegree] = useState('');
     const toggleModal = () => {
         setModalVisible(!modalVisible);
     }
@@ -60,7 +62,7 @@ export default function SearchScreen({navigation}) {
                 style={styles.header}
                 navigation={navigation}
             />
-            <ScrollView contentContainerStyle={styles.contentContainer}>
+            <ScrollView Style={styles.contentContainer}>
                 <TouchableOpacity onPress={() => navigation.navigate("StartScreen")}>
                     <Image
                         source={require("../../assets/FinalLogo.png")}
@@ -86,9 +88,11 @@ export default function SearchScreen({navigation}) {
                                 placeholder={t('academicpage.acdemicsField')}
                                 label={t('academicpage.acdemicsField')}
                                 data={degrees.map((degree) => ({
-                                  label: degree.name,
+                                  label: degree.label,
                                   value: degree.id.toString(),
                                 }))}
+                                value={degree}
+                                setValue={setDegree}
                             />
                             <Dropdown
                                 placeholder={t('academicpage.acdemics.Area')}
@@ -97,12 +101,13 @@ export default function SearchScreen({navigation}) {
                                     label: city.label,
                                     value: city.label,
                                   }))}
+                                value={city}
+                                setValue={setCity}
                             />
                         </TouchableOpacity>
                     </View>
                 </View>
                 <Modal modalVisible={modalVisible} toggleModal={toggleModal}/>
-                <View style={{marginTop: 20, paddingHorizontal: 20,}}>  
                     <View style={{height: 70}}/>
                     <View style={styles.rectangular}>
                     <View style={styles.halfReg}>
@@ -147,8 +152,7 @@ export default function SearchScreen({navigation}) {
                         </View>
                         </View>
                         </View>
-                    </View>
-                    <View style={{height: 120}}/>
+                    <View style={{height: 140}}/>
                    <View style={styles.end} >
                    <View style={styles.halfReg}>
                     <View style={{height: 10}}/>
@@ -172,38 +176,55 @@ export default function SearchScreen({navigation}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor:"white",
+        flexGrow: 1,
     },
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        paddingHorizontal: 16,
+        paddingTop: 30,
     },
     contentContainer: {
         flexGrow: 1,
         alignItems: "center",
         paddingBottom: 20,
+        
     },
     logo: {
         width: 200,
         height: 75,
         resizeMode: "contain",
+        alignSelf: 'center',
     },
     joinButton: {
         backgroundColor: "#041041",
         borderRadius: 8,
         paddingVertical: 12,
         paddingHorizontal: 16,
+        alignSelf: 'center',
+        
     },
     joinButtonText: {
         fontSize: 16,
         fontWeight: "bold",
         color: "white",
+        padding:10,
+    },
+    slideTextContainer: {
+        height: Dimensions.get("window").height / 3,
+        //width: "100%",
+        marginTop: 10,
+        alignItems:'center',
+
     },
     label: {
         paddingTop: 16,
         fontSize: 22,
         color: 'darkorange',
+        fontWeight: "bold",
+        padding:20,
     },
     dropDownContainer: {
         paddingTop: 16,
@@ -249,7 +270,7 @@ const styles = StyleSheet.create({
     top: 10,
     padding: 100,
     fontWeight: "bold",
-    padding:10,
+    
 },
 halfReg:{
     flexDirection: 'column',
