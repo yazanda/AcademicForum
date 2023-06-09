@@ -1,20 +1,50 @@
-import React, {useState, useRef, useEffect} from "react";
+import React, {useState, useRef, useEffect } from "react";
 import {I18nextProvider, useTranslation} from 'react-i18next';
 import LanguageContext from '../components/LanguageContext';
-import { I18nManager } from 'react-native';
+import { I18nManager } from "react-native";
 import Header from "../components/Header";
-import {StyleSheet, SafeAreaView, Image, ScrollView, View, Text, Dimensions, FlatList,} from "react-native";
+import Modal from '../components/Modal';
+import { FontAwesome } from '@expo/vector-icons';
+import {StyleSheet, SafeAreaView, Image, ScrollView, View, Text, Dimensions, FlatList, TouchableOpacity,Linking} from "react-native";
+
 
 const window = Dimensions.get('window');
-const images = [
-    require("../../assets/home.png"),
-    require("../../assets/home.png"),
-    require("../../assets/home.png"),
-];
 
 
 export default function App({navigation}) {
     const {t, i18n} = useTranslation();
+    const [modalVisible, setModalVisible] = useState(false);
+    const handleOpenPDF = async () => {
+        try {
+         
+          const localUri = require('../../assets/terms.pdf');
+    
+       
+          navigation.navigate('PDFScreen', { uri: localUri });
+        } catch (error) {
+          console.log('Error opening PDF:', error);
+        }
+      };
+    
+   
+      
+    
+    const openInstagram = () => {
+        const instagramURL = 'https://www.instagram.com/almuntada_/?fbclid=IwAR1SIvAHoEaeXCxT1pDt1mzbfSL_8A7tOeBpB-GSRur81TELRu28gdgtG5I';
+        Linking.openURL(instagramURL);
+      };
+      const openLinkedin = () => {
+        const linkedinURL = 'https://www.linkedin.com/company/almuntada';
+        Linking.openURL(linkedinURL);
+      };
+      const openFacebook = () => {
+        const facebookURL = 'https://www.facebook.com/Almuntada.ac';
+        Linking.openURL(facebookURL);
+      };
+      
+    const toggleModal = () => {
+        setModalVisible(!modalVisible);
+    }
     const data = [
         {id: 1, text: t('homepage.goals.0.desc')},
         {id: 2, text: t('homepage.goals.1.desc')},
@@ -68,7 +98,7 @@ export default function App({navigation}) {
 
     const scrollViewRef = useRef(null);
 
-
+    
     return (
         <I18nextProvider i18n={i18n}>
             <SafeAreaView style={styles.container}>
@@ -77,27 +107,31 @@ export default function App({navigation}) {
                             showsVerticalScrollIndicator={false}>
                     <Image source={require("../../assets/FinalLogo.png")} style={styles.logo}/>
                     <View style={styles.sliderContainer}>
-                        <ScrollView
-                            ref={scrollViewRef}
+                        <FlatList
+                        
                             horizontal
                             pagingEnabled
                             showsHorizontalScrollIndicator={false}
                         >
-                            {images.map((image, index) => (
-                                <View key={index} style={styles.slide}>
-                                    <Image source={image} style={styles.image}/>
-                                </View>
-                            ))}
-                        </ScrollView>
+                          <View style={{height: 20}}/>  
+                        </FlatList>
                         <View style={styles.slideTextContainer}>
                             <Text style={styles.slideText}>{t('homepage.title')}</Text>
                             <Text style={styles.slideText}>{t('homepage.title_1')}</Text>
-                            <Text style={styles.slideText}>{t('homepage.title_2')}</Text>
+                            <Text style={styles.slideText}>{t('homepage.description')}</Text>
                         </View>
+                        <View style={{height: 30}}/> 
+                        <TouchableOpacity onPress={toggleModal} style={styles.joinButton}>
+                        <Text style={styles.joinButtonText}>{t('homepage.joinus')}</Text>
+                        </TouchableOpacity>
+                        <Modal modalVisible={modalVisible} toggleModal={toggleModal}/>
                     </View>
-                    <View style={styles.slideIntroductionContainer}>
+                    <View style={{height: 200}}/>
+                    <Image source={require("../../assets/almuntda.png")} style={{width: 350, height: 250}}/>
+                   <View style={styles.slideIntroductionContainer}>
+                        <View style={{height: 10}}/> 
                         <Text style={styles.title}>{t('homepage.about')}</Text>
-                        <View style={{height: 20}}/>
+                        <View style={{height: 10}}/>
 
                         <Text style={styles.introduction}>
                             {t('homepage.description')}
@@ -148,12 +182,7 @@ export default function App({navigation}) {
                             fontWeight: "bold",
                            
                         }}>{t('homepage.goals.title')}</Text>
-                        <View style={{height: 30}}/>
-                        <Image
-                            source={require('../../assets/goals.png')}
-                            style={{width: 350, height: 310,}}
-                        />
-
+                    
 
                         <View style={{flexDirection: 'row',}}>
                             <FlatList
@@ -162,8 +191,15 @@ export default function App({navigation}) {
                                 keyExtractor={(item) => item.id.toString()}
                             />
                         </View>
+                        <View style={{height: 30}}/>
+                        <Image
+                            source={require('../../assets/goals.png')}
+                            style={{width: 350, height: 310,}}
+                        />
+
                     </View>
                     <View style={{marginTop: 20, paddingHorizontal: 20,}}>
+                        <View style={{height: 30}}/>
                         <Text style={styles.title}>{t('homepage.impact.sub.title')}</Text>
                         <View style={{height: 30}}/>
                         <Text style={styles.introduction}>
@@ -183,37 +219,107 @@ export default function App({navigation}) {
                                 {t('homepage.missfix.desc')} </Text>
                         </View>
                     </View>
-                    <View style={{marginTop: 20, paddingHorizontal: 20,}}>
-                        <Text style={styles.title}>{t('homepage.founder.title')}</Text>
-                        <View style={{height: 20}}/>
+                    <View style={{height: 30}}/>
+                    <Image
+                                source={require('../../assets/Alaa2.png')}
+                                style={{width: 370, height: 350}}
+                            />
+                    <View style={{marginTop: 40, paddingHorizontal: 20 }}>
+
+                        <Text style={[styles.title,{fontSize:35}]}>{t('homepage.founder.title')}</Text>
+                    </View>
+                    <View style={{ paddingHorizontal: 20,}}>
+                        
                         <View style={styles.squ}>
                             <Image
                                 source={require('../../assets/Alaa.png')}
-                                style={{width: 200, height: 200, marginLeft: 20}}
+                                style={{width: 300, height: 328,position: 'absolute',top: 0,}}
                             />
+                            <View style={{height: 350}}/>
                             <Text style={styles.Names}>{t('homepage.founders.1.name')}</Text>
                             <View style={{height: 30}}/>
                             <Text style={styles.text}>{t('homepage.founders.1.desc')}</Text>
+                            <View style={{height: 20}}/>
                         </View>
                     </View>
                     <View style={{flex: 1}}>
                         <View style={{height: 30}}/>
                     </View>
+                    <View style={{marginTop: 20, paddingHorizontal: 20,}}>
                     <View style={styles.squ}>
                         <View style={{height: 20}}/>
                         <Image
                             source={require('../../assets/hassan.png')}
-                            style={{width: 250, height: 300, marginLeft: 20}}
+                            style={{width: 300, height: 360 ,position: 'absolute',top: 0,}}
                         />
-
+                          <View style={{height: 350}}/>
                         <Text style={styles.Names}>{t('homepage.founders.0.name')}</Text>
                         <View style={{height: 20}}/>
                         <Text style={styles.text}>{t('homepage.founders.0.desc')}</Text>
+                        <View style={{height: 20}}/>
                     </View>
-                    <View style={{flex: 1}}>
+                    </View>
+
+                    <View style={{marginTop: 20, paddingHorizontal: 20,}}>  
+                    <View style={{height: 70}}/>
+                    <View style={styles.rectangular}>
+                    <View style={styles.halfReg}>
+                    <View style={{height: 20}}/>
+                    <Text style={styles.TextInfo}>{t('footer.contactus')}</Text>
+                    <View style={{height: 20}}/>
+                    <View style={styles.info}> 
+                    <FontAwesome name="phone" style={{fontSize:20,color: '#05063F' }} />
+                     <View style={{width: 10}}/> 
+                    <Text style={styles.nfo}>052-9086918</Text>
+                        </View>
+                        <View style={{height: 10}}/>
+                        <View style={styles.info}> 
+                        <FontAwesome name="envelope" style={{fontSize:20,color: '#05063F' }} />
+                     <View style={{width: 10}}/> 
+                    <Text style={styles.nfo}>almuntada.ac@gmail.com</Text>
+                        </View>
+                    </View>
+                    <View style={{width: 50}}/> 
+                    <View style={styles.halfReg}>
+                    <View style={{width: 10}}/> 
+                    <View style={{height: 20}}/>
+                    <Image source={require("../../assets/FinalLogo.png")} style={{width: 100, height: 50 }}/>
+                    <View style={{height: 10}}/>
+                    <View style={styles.info}>  
+                  <TouchableOpacity onPress={openInstagram}>
+                    <View>
+                  <FontAwesome name="instagram" style={{fontSize:20,color: '#05063F' }} />
+                 </View>
+                 </TouchableOpacity>
+
+                         
+                        <View style={{width: 15 , }}/>
+                        <TouchableOpacity onPress={openLinkedin}>
+                        <FontAwesome name="linkedin" style={{fontSize:20,color: '#05063F' }} />
+                        </TouchableOpacity>
+                        <View style={{width: 15}}/>
+                        <TouchableOpacity onPress={openFacebook}>
+                        <FontAwesome name="facebook" style={{fontSize:20 ,color: '#05063F'}} />
+                        </TouchableOpacity>
+                        </View>
                         <View style={{height: 30}}/>
+                        </View>
                     </View>
+                    </View>
+                    <View style={{height: 100}}/>
+                   <View style={styles.end} >
+                   <View style={styles.halfReg}>
+                    <View style={{height: 10}}/>
+                   <Text style={styles.TextEnd}>Copyrights.Al-Hassouna-2023 All rights Reserved</Text>
+                   </View>
+                    <View style={styles.halfReg}>
+                    <View style={{height: 10}}/>
+                    <TouchableOpacity onPress={handleOpenPDF}>
+                    <Text style={styles.TextEnd}>Privacy Policy&Terms of use</Text>
+                    </TouchableOpacity>
                     <View style={{height: 30}}/>
+                    </View>
+                   </View>
                 </ScrollView>
             </SafeAreaView>
         </I18nextProvider>
@@ -223,6 +329,10 @@ export default function App({navigation}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor:"white",
+        flexGrow: 1,
+    
+
     },
 
     header: {
@@ -232,6 +342,21 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         paddingTop: 30,
     },
+    joinButton: {
+        backgroundColor: "#041041",
+        borderRadius: 8,
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+        top:100,
+        //height:60,
+    },
+    joinButtonText: {
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "white",
+        padding:10,
+    },
+
     pageContainer: {
         flexGrow: 1,
         alignItems: "center",
@@ -247,8 +372,10 @@ const styles = StyleSheet.create({
     },
     sliderContainer: {
         height: Dimensions.get("window").height / 3,
-        width: "100%",
+        //width: "100%",
         marginTop: 10,
+        alignItems:'center',
+
     },
     slide: {
         flex: 1,
@@ -272,38 +399,39 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         fontSize: 25,
         fontWeight: "bold",
-        color: "white",
-
+        color: '#041041',
+        padding:10,
         borderColor: "blue",
         textAlign: "center",
     },
     slideIntroductionContainer: {
         marginTop: 20,
         paddingHorizontal: 20,
+        top:60,
         //textAlign: "left",
     },
     title: {
-        fontSize: 20,
+        fontSize: 25,
         fontWeight: "bold",
         color: "#f58723",
-        top: 40,
+        //top: 40,
         marginBottom: 10,
        // textAlign: "left",
     },
     introduction: {
-        top: 20,
-        fontSize: 15,
+        //top: 20,
+        fontSize: 20,
         fontWeight: "bold",
         color: "black",
         //textAlign: "left",
-        panding: 10,
+        padding: 10,
     },
     listItem: {
         top: 15,
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 10,
-        height: 200,
+        height: 320,
         width: 300,
         
     },
@@ -316,36 +444,58 @@ const styles = StyleSheet.create({
         textAlign: "center",
         
     },
+    rectangular:{
+         width:Dimensions.get("window").width,
+         backgroundColor:'#F7FAF8',
+         flexDirection: 'row',
+         alignSelf: 'flex-start',
+    },
     text: {
-        fontSize: 15,
+        fontSize: 20,
         left: 10,
         top: 10,
-        panding: 100,
+        padding: 100,
         fontWeight: "bold",
         padding:10,
     },
+
     square: {
         width: 20,
-        height: 25,
+        height: 30,
         backgroundColor: '#00008b',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
       
-      
     },
     squ: {
         width: 300,
-        height: 500,
         shadowColor: '#000000',
-        shadowOpacity: 0.5,
+        shadowOpacity: 0.7,
         shadowRadius: 10,
-        elevation: 0.5, // for Android shadows
-        padding: 20,
+        elevation: 2, // for Android shadows
+        padding: 10,
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: "black",
         top: 50,
+        minWidth: 50,
+        minHeight: 50,
+        alignSelf: 'flex-start',
+    },
+    squar:{
+        width: 300,
+        alignSelf: 'flex-start',
+        shadowColor: '#000000',
+        shadowOpacity: 0.7,
+        shadowRadius: 10,
+        elevation: 0.5, // for Android shadows
+        padding: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderColor: "black",
+        top: 50,
+        bottom:50,
     },
 
     Names: {
@@ -354,4 +504,43 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 20,
     },
+    
+    halfReg:{
+        flexDirection: 'column',
+        width:(Dimensions.get("window").width/2)+10,
+        padding:20,
+    },
+
+    TextInfo:{
+        fontSize:18,
+        color:"#05063F",
+        textAlign:'center',
+        fontWeight: "bold",
+    },
+
+    info:{
+        flexDirection: 'row',
+    },
+
+    nfo:{
+        fontSize:14,
+        fontWeight: "bold",
+    },
+    end:{
+        width:Dimensions.get("window").width,
+        backgroundColor:'#092D82',
+        flexDirection: 'row',
+        alignSelf: 'flex-start',
+        bottom:0,
+        
+       
+        position: 'absolute',
+       
+
+    },
+
+    TextEnd:{
+    color:'white',
+    },
+    
 });
