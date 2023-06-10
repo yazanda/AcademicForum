@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
     View,
@@ -12,14 +12,11 @@ import {
 } from 'react-native';
 import Dropdown from './DropDown';
 import DatePicker from './DatePicker';
-// import DateTimePicker from '@react-native-community/datetimepicker';
-
+import * as ImagePicker from 'expo-image-picker';
 import TextInput from './TextInput';
-import ImagePicker from "react-native-image-picker";
 import {CheckBox} from 'react-native-elements';
 import { getDegreeList } from '../lists/degree';
 import { getCityList } from '../lists/list';
-// import ImageUploadButton from './ImageUpload';
 
 const MyModal = ({modalVisible, toggleModal}) => {
     const {t, i18n} = useTranslation();
@@ -40,25 +37,22 @@ const MyModal = ({modalVisible, toggleModal}) => {
 
     // Function to handle image selection
     const [selectedImage, setSelectedImage] = useState(null);
-    // const selectImage = () => {
-    //     ImagePicker.showImagePicker(
-    //         {
-    //             title: "Select Picture",
-    //             mediaType: "photo",
-    //             maxWidth: 500,
-    //             maxHeight: 500,
-    //         },
-    //         (response) => {
-    //             if (!response.didCancel && !response.error) {
-    //                 setSelectedImage(response.uri);
-    //             }
-    //         }
-    //     );
-    // };
-    const handleImageSelect = (file) => {
-        // Do something with the selected image file
-        setSelectedImage(file);
-    };
+    
+      const openImagePicker = async () => {
+
+        (async () => {
+            const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+            if (status !== 'granted') {
+              console.log('Permission to access image gallery denied');
+            }
+        })();
+
+        const result = await ImagePicker.launchImageLibraryAsync();
+        if (!result.canceled) {
+          setSelectedImage(result.uri);
+        }
+      };
+      
     
     let validationError;
     return (
@@ -153,6 +147,8 @@ const MyModal = ({modalVisible, toggleModal}) => {
                         {/* <ImageUploadButton/> */}
                         {/* {selectedImage && <img src={URL.createObjectURL(selectedImage)} alt="Selected" />} */}
                     {/* </div> */}
+                    <Button title="Upload Photo" onPress={openImagePicker} />
+
                     <CheckBox
                         title={t('academicpage.dialog.checkbox')}
                         checked={checked}
