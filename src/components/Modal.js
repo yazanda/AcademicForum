@@ -19,6 +19,7 @@ import ImagePicker from "react-native-image-picker";
 import {CheckBox} from 'react-native-elements';
 import { getDegreeList } from '../lists/degree';
 import { getCityList } from '../lists/list';
+// import ImageUploadButton from './ImageUpload';
 
 const MyModal = ({modalVisible, toggleModal}) => {
     const {t, i18n} = useTranslation();
@@ -39,20 +40,24 @@ const MyModal = ({modalVisible, toggleModal}) => {
 
     // Function to handle image selection
     const [selectedImage, setSelectedImage] = useState(null);
-    const selectImage = () => {
-        ImagePicker.showImagePicker(
-            {
-                title: "Select Picture",
-                mediaType: "photo",
-                maxWidth: 500,
-                maxHeight: 500,
-            },
-            (response) => {
-                if (!response.didCancel && !response.error) {
-                    setSelectedImage(response.uri);
-                }
-            }
-        );
+    // const selectImage = () => {
+    //     ImagePicker.showImagePicker(
+    //         {
+    //             title: "Select Picture",
+    //             mediaType: "photo",
+    //             maxWidth: 500,
+    //             maxHeight: 500,
+    //         },
+    //         (response) => {
+    //             if (!response.didCancel && !response.error) {
+    //                 setSelectedImage(response.uri);
+    //             }
+    //         }
+    //     );
+    // };
+    const handleImageSelect = (file) => {
+        // Do something with the selected image file
+        setSelectedImage(file);
     };
     
     let validationError;
@@ -90,16 +95,16 @@ const MyModal = ({modalVisible, toggleModal}) => {
                                 errorText={email.error}/>
                     <TouchableOpacity style={styles.dropDownContainer}>
                         <Dropdown placeholder={t('academicpage.dialog.city')} label={t('academicpage.dialog.city')}
-                                  data={cities.map((city) => ({
-                                    label: city.label,
-                                    value: city.label,
+                                  data={cities.map((cityIn) => ({
+                                    label: cityIn.label,
+                                    value: cityIn.label,
                                   }))}
                                   value={city}
                                   setValue={setCity}/>
                         <Dropdown placeholder={t('academicpage.dialog.degree')} label={t('academicpage.dialog.degree')}
-                                  data={degrees.map((degree) => ({
-                                    label: degree.label,
-                                    value: degree.id.toString(),
+                                  data={degrees.map((degreeIn) => ({
+                                    label: degreeIn.label,
+                                    value: degreeIn.id.toString(),
                                   }))}
                                   value={degree}
                                   setValue={setDegree}/>
@@ -134,13 +139,17 @@ const MyModal = ({modalVisible, toggleModal}) => {
                                 onChangeText={(text) => setPhoneNumber({ value: text, error: "" })}
                                 error={!!phoneNumber.error}
                                 errorText={phoneNumber.error} />
-                    <Button title={t('academicpage.dialog.upload')} onPress={selectImage}/>
+                    {/* <Button title={t('academicpage.dialog.upload')} onPress={selectImage}/>
                     {selectedImage && (
                         <Image
                             source={{uri: selectedImage}}
                             style={{width: 200, height: 200}}
                         />
-                    )}
+                    )} */}
+                    {/* <div> */}
+                        {/* <ImageUploadButton/> */}
+                        {/* {selectedImage && <img src={URL.createObjectURL(selectedImage)} alt="Selected" />} */}
+                    {/* </div> */}
                     <CheckBox
                         title={t('academicpage.dialog.checkbox')}
                         checked={checked}

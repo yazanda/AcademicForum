@@ -24,6 +24,7 @@ const window = Dimensions.get('window');
 export default function SearchScreen({navigation}) {
     const {t, i18n} = useTranslation();
     const [modalVisible, setModalVisible] = useState(false);
+    const [academics, setAcademics] = useState([]);
     const handleOpenPDF = async () => {
         try {
          
@@ -55,6 +56,19 @@ export default function SearchScreen({navigation}) {
 
     const cities = getCityList;
     const degrees = getDegreeList;
+
+    useEffect(() => {
+        fetchAcademics();
+    }, []);
+
+    const fetchAcademics = async () => {
+        try {
+          const response = await axios.get('https://almuntada.onrender.com/api/v1/podcasts/isApproved/true');
+          setVideos(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+    };
 
     return (
         <SafeAreaView style={styles.container}>

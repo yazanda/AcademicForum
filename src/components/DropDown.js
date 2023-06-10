@@ -7,10 +7,10 @@ const DropdownComponent = ({ placeholder, label, data, value, setValue }) => {
   const [isFocus, setIsFocus] = useState(false);
 
   const renderLabel = () => {
-    if (value || isFocus) {
+    if (!value) {
       return (
         <Text style={[styles.label, isFocus && styles.focusedLabel]}>
-          {label || 'Dropdown label'}
+          {label}
         </Text>
       );
     }
@@ -41,7 +41,7 @@ const DropdownComponent = ({ placeholder, label, data, value, setValue }) => {
         onBlur={() => setIsFocus(false)}
         onChange={(item) => {
           setValue(item.label);
-          setIsFocus(false);
+          // setIsFocus(false);
         }}
         renderLeftIcon={() => (
           <AntDesign

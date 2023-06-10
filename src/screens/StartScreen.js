@@ -192,11 +192,11 @@ export default function App({navigation}) {
                     
 
                         <View style={{flexDirection: 'row',}}>
-                            <FlatList
+                            {/* <FlatList
                                 data={data}
                                 renderItem={renderItem}
                                 keyExtractor={(item) => item.id.toString()}
-                            />
+                            /> */}
                         </View>
                         <View style={{height: 30}}/>
                         <Image
