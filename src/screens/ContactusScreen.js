@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 import {useTranslation} from 'react-i18next';
 import { FontAwesome } from '@expo/vector-icons';
 import End from '../components/End';
-
+import { nameValidator, emailValidator, subjectValidator, messageValidator } from '../Validations/contactValidate';
 import {
     StyleSheet,
     Text,
@@ -25,12 +25,23 @@ const window = Dimensions.get('window');
     const {t, i18n} = useTranslation();
     const [fullName, setFullName] = useState({ value: "", error: "" });
     const [email, setEmail] = useState({ value: "", error: "" });
-    const [subject, setSubject] = useState('');
+    const [subject, setSubject] = useState({ value: "", error: "" });
     const [message, setMessage] = useState({ value: "", error: "" });
     const data = t('contactpage.subjects', { returnObjects: true });
     const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
     
     const handleSend = async () => {
+      const nameError = nameValidator(fullName.value);
+      const emailError = emailValidator(email.value);
+      const messageError = messageValidator(message.value);
+      const subjectError = subjectValidator(subject.value);
+      if(nameError || emailError || messageError || subjectError){
+        setFullName({ ...fullName, error: nameError });
+        setEmail({ ...email, error: emailError });
+        setMessage({ ...message, error: messageError });
+        setSubject({ ...subject, error: subjectError });
+        return;
+      }
         try {
           const response = await axios.post('https://almuntada.onrender.com/api/v1/contact', {
             fullName: fullName.value,
@@ -99,8 +110,9 @@ const window = Dimensions.get('window');
                             placeholder={t('contactpage.subject')}
                             label={t('contactpage.subject')}
                             data={data}
-                            value={subject}
+                            value={subject.value}
                             setValue={setSubject}
+                            errorText={subject.error}
                         />
                     </TouchableOpacity>
                     <TextInput

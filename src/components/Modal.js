@@ -29,11 +29,11 @@ const MyModal = ({modalVisible, toggleModal}) => {
     const [email, setEmail] = useState({ value: "", error: "" });
     const [selectedDate, setSelectedDate] = useState(null);
     const [age, setAge] = useState({ value: "", error: "" });
-    const [degree, setDegree] = useState('');
+    const [degree, setDegree] = useState({ value: "", error: "" });
     const [subject, setSubject] = useState({ value: "", error: "" });
     const [career, setCareer] = useState({ value: "", error: "" });
-    const [city, setCity] = useState('');
-    const [gender, setGender] = useState('');
+    const [city, setCity] = useState({ value: "", error: "" });
+    const [gender, setGender] = useState({ value: "", error: "" });
     const [phoneNumber, setPhoneNumber] = useState({ value: "", error: "" });
     const [company, setCompany] = useState({ value: "", error: "" });
     const [checked, setChecked] = useState(false);
@@ -99,15 +99,17 @@ const MyModal = ({modalVisible, toggleModal}) => {
                                     label: cityIn.label,
                                     value: cityIn.label,
                                   }))}
-                                  value={city}
-                                  setValue={setCity}/>
+                                  value={city.value}
+                                  setValue={setCity}
+                                  errorText={city.error}/>
                         <Dropdown placeholder={t('academicpage.dialog.degree')} label={t('academicpage.dialog.degree')}
                                   data={degrees.map((degreeIn) => ({
                                     label: degreeIn.label,
                                     value: degreeIn.id.toString(),
                                   }))}
-                                  value={degree}
-                                  setValue={setDegree}/>
+                                  value={degree.value}
+                                  setValue={setDegree}
+                                  errorText={degree.error}/>
                     </TouchableOpacity>
                     <TextInput  label={t('academicpage.dialog.subject')}
                                 returnKeyType="next"
@@ -130,8 +132,9 @@ const MyModal = ({modalVisible, toggleModal}) => {
                     <TouchableOpacity style={styles.dropDownContainer}>
                         <Dropdown placeholder={t('academicpage.dialog.sex')} label={t('academicpage.dialog.sex')}
                                   data={genderData}
-                                  value={gender}
-                                  setValue={setGender}/>
+                                  value={gender.value}
+                                  setValue={setGender}
+                                  errorText={gender.error}/>
                     </TouchableOpacity>
                     <TextInput  label={t('academicpage.dialog.phone')}
                                 returnKeyType="next"

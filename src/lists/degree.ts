@@ -1,22 +1,26 @@
 export const getDegreeList = [
   {
     id: 1,
-    label: "Associates Degree"
+    label: ""
   },
   {
     id: 2,
-    label: "Bachelors Degree"
+    label: "Associates Degree"
   },
   {
     id: 3,
-    label: "Masters Degree"
+    label: "Bachelors Degree"
   },
   {
     id: 4,
-    label: "Doctoral Degree"
+    label: "Masters Degree"
   },
   {
     id: 5,
+    label: "Doctoral Degree"
+  },
+  {
+    id: 6,
     label: "Student"
   }
 ];

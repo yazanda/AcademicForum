@@ -40,61 +40,61 @@ const End = ({navigation}) => {
         <SafeAreaView>
         <View style={{height: 70}}/>
         <View style={styles.rectangular}>
-                    <View style={styles.halfReg}>
-                    <View style={{height: 20}}/>
-                    <Text style={styles.TextInfo}>{t('footer.contactus')}</Text>
-                    <View style={{height: 20}}/>
-                    <View style={styles.info}> 
+            <View style={styles.halfReg}>
+                <View style={{height: 20}}/>
+                <Text style={styles.TextInfo}>{t('footer.contactus')}</Text>
+                <View style={{height: 20}}/>
+                <View style={styles.info}> 
                     <FontAwesome name="phone" style={{fontSize:20,color: '#05063F' }} />
-                     <View style={{width: 10}}/> 
-                    <Text style={styles.nfo}>052-9086918</Text>
-                    </View>
-                    <View style={{height: 10}}/>
-                    <View style={styles.info}> 
-                        <FontAwesome name="envelope" style={{fontSize:20,color: '#05063F' }} />
-                        <View style={{width: 10}}/> 
-                        <Text style={styles.nfo}>almuntada.ac@gmail.com</Text>
-                    </View>
-                    </View>
-                    <View style={{width: 50}}/> 
-                    <View style={styles.halfReg}>
                     <View style={{width: 10}}/> 
-                    <View style={{height: 20}}/>
-                    <Image source={require("../../assets/FinalLogo.png")} style={{width: 100, height: 50 }}/>
-                    <View style={{height: 10}}/>
-                    <View style={styles.info}>  
-                            <TouchableOpacity onPress={openInstagram}>
-                            <View>
-                                 <FontAwesome name="instagram" style={{fontSize:20,color: '#05063F' }} />
-                            </View>
-                            </TouchableOpacity>
-                            <View style={{width: 15}}/>
-                            <TouchableOpacity onPress={openLinkedin}>
-                            <FontAwesome name="linkedin" style={{fontSize:20,color: '#05063F' }} />
-                            </TouchableOpacity>
-                            <View style={{width: 15}}/>
-                           <TouchableOpacity onPress={openFacebook}>
-                           <FontAwesome name="facebook" style={{fontSize:20 ,color: '#05063F'}} />
-                           </TouchableOpacity>
-                    </View>
-                    <View style={{height: 30}}/>
-                    </View>
-                    </View>
-                    <View style={{height: 140}}/>
-                <View style={styles.end} >
-                   <View style={styles.halfReg}>
-                        <View style={{height: 10}}/>
-                        <Text style={styles.TextEnd}>Copyrights.Al-Hassouna-2023 All rights Reserved</Text>
-                    </View>
-                    <View style={styles.halfReg}>
-                        <View style={{height: 10}}/>
-                        {/* <TouchableOpacity onPress={handleOpenPDF}> */}
-                        <Text style={styles.TextEnd}>Privacy Policy&Terms of use</Text>
-                        {/* </TouchableOpacity> */}
-                        <View style={{height: 30}}/>
-                    </View>
+                    <Text style={styles.nfo}>052-9086918</Text>
                 </View>
-                </SafeAreaView>
+                <View style={{height: 10}}/>
+                <View style={styles.info}> 
+                    <FontAwesome name="envelope" style={{fontSize:20,color: '#05063F' }} />
+                    <View style={{width: 10}}/> 
+                    <Text style={styles.nfo}>almuntada.ac@gmail.com</Text>
+                </View>
+            </View>
+            <View style={{width: 50}}/> 
+            <View style={styles.halfReg}>
+                <View style={{width: 10}}/> 
+                <View style={{height: 20}}/>
+                <Image source={require("../../assets/FinalLogo.png")} style={{width: 100, height: 50 }}/>
+                <View style={{height: 10}}/>
+                <View style={styles.info}>  
+                    <TouchableOpacity onPress={openInstagram}>
+                        <View>
+                            <FontAwesome name="instagram" style={{fontSize:20,color: '#05063F' }} />
+                        </View>
+                    </TouchableOpacity>
+                    <View style={{width: 15}}/>
+                    <TouchableOpacity onPress={openLinkedin}>
+                        <FontAwesome name="linkedin" style={{fontSize:20,color: '#05063F' }} />
+                    </TouchableOpacity>
+                    <View style={{width: 15}}/>
+                    <TouchableOpacity onPress={openFacebook}>
+                        <FontAwesome name="facebook" style={{fontSize:20 ,color: '#05063F'}} />
+                    </TouchableOpacity>
+                </View>
+                <View style={{height: 30}}/>
+            </View>
+        </View>
+        <View style={{height: 90}}/>
+            <View style={styles.end} >
+                <View style={styles.halfReg}>
+                    <View style={{height: 10}}/>
+                    <Text style={styles.TextEnd}>Copyrights.Al-Hassouna-2023 All rights Reserved</Text>
+                </View>
+                <View style={styles.halfReg}>
+                    <View style={{height: 10}}/>
+                    {/* <TouchableOpacity onPress={handleOpenPDF}> */}
+                        <Text style={styles.TextEnd}>Privacy Policy&Terms of use</Text>
+                    {/* </TouchableOpacity> */}
+                    <View style={{height: 30}}/>
+                </View>
+            </View>
+        </SafeAreaView>
       );
 
 };export default End;
@@ -119,22 +119,24 @@ halfReg:{
     flexDirection: 'column',
     width:(Dimensions.get("window").width/2)+10,
     padding:20,
+    
 },
 info:{
     flexDirection: 'row',
 },
 nfo:{
-    fontSize:14,
+    fontSize:12,
     fontWeight: "bold",
+    paddingTop:3,
+    paddingLeft: 5
 },
 TextInfo:{
     fontSize:18,
     color:"#05063F",
-    textAlign:'center',
     fontWeight: "bold",
 },
 end:{
-    width:Dimensions.get("window").width,
+    width:'100%',
     backgroundColor:'#092D82',
     flexDirection: 'row',
     alignSelf: 'flex-start',
@@ -143,7 +145,8 @@ end:{
 },
 
 TextEnd:{
-color:'white',
+    fontSize: 12,
+    color:'white',
 },
 });
 

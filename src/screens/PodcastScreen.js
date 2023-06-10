@@ -21,7 +21,7 @@ export default function PodcastScreen({navigation}) {
 
     const fetchVideos = async () => {
         try {
-          const response = await axios.get('https://almuntada.onrender.com/api/v1/podcasts/isActive/true');
+          const response = await axios.get('https://almuntada.onrender.com/api/v1/podcasts');
           setVideos(response.data);
         } catch (error) {
           console.error(error);

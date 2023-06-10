@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FontAwesome} from '@expo/vector-icons';
 import {useTranslation} from 'react-i18next';
+import axios from 'axios';
 import {
     StyleSheet,
     Text,
@@ -25,31 +26,10 @@ const window = Dimensions.get('window');
 export default function SearchScreen({navigation}) {
     const {t, i18n} = useTranslation();
     const [modalVisible, setModalVisible] = useState(false);
-    const handleOpenPDF = async () => {
-        try {
-         
-          const localUri = require('../../assets/terms.pdf');
-    
-       
-          navigation.navigate('PDFScreen', { uri: localUri });
-        } catch (error) {
-          console.log('Error opening PDF:', error);
-        }
-      };
-    const openInstagram = () => {
-        const instagramURL = 'https://www.instagram.com/almuntada_/?fbclid=IwAR1SIvAHoEaeXCxT1pDt1mzbfSL_8A7tOeBpB-GSRur81TELRu28gdgtG5I';
-        Linking.openURL(instagramURL);
-      };
-      const openLinkedin = () => {
-        const linkedinURL = 'https://www.linkedin.com/company/almuntada';
-        Linking.openURL(linkedinURL);
-      };
-      const openFacebook = () => {
-        const facebookURL = 'https://www.facebook.com/Almuntada.ac';
-        Linking.openURL(facebookURL);
-      };
+    const [academics, setAcademics] = useState([]);
     const [city, setCity] = useState('');
     const [degree, setDegree] = useState('');
+
     const toggleModal = () => {
         setModalVisible(!modalVisible);
     }
@@ -63,12 +43,36 @@ export default function SearchScreen({navigation}) {
 
     const fetchAcademics = async () => {
         try {
-          const response = await axios.get('https://almuntada.onrender.com/api/v1/podcasts/isApproved/true');
-          setVideos(response.data);
+          const response = await axios.get('https://almuntada.onrender.com/api/v1/academic/isApproved/true');
+          setAcademics(response.data);
         } catch (error) {
           console.error(error);
         }
     };
+
+    const renderItem = ({ item }) => (
+        <View style={styles.card} key={item.id}>
+          <Image style={styles.image} source={{ uri: item.imageUrl }} />
+            <View style={styles.detailsContainer}>
+                <Text style={styles.fullName}>{`${item.firstName} ${item.lastName}`}</Text>
+                <Text style={styles.email}>{item.email}</Text>
+                <Text style={styles.city}>{item.city}</Text>
+                <Text style={styles.degree}>{item.degree}</Text>
+            </View>
+        {/* <Text style={styles.videoTitle}>{item.title}</Text> */}
+        </View>
+    );
+
+    const filteredData = academics.filter((item) => {
+        if (city && degree) {
+          return item.city === city && item.degree === degree;
+        } else if (city !== '') {
+          return item.city === city;
+        } else if (degree !== '') {
+          return item.degree === degree;
+        }
+        return true; 
+    });
 
     return (
         <SafeAreaView style={styles.container}>
@@ -84,17 +88,17 @@ export default function SearchScreen({navigation}) {
                     />
                 </TouchableOpacity>
                 <View style={styles.slideTextContainer}>
-                     <View style={{height: 50}}/> 
+                     {/* <View style={{height: 50}}/>  */}
                             <Text style={styles.slideTitle}>{t('academicpage.title')}</Text>
                             <Text style={styles.slideText}>{t('academicpage.text')}</Text>
                         </View>
-                        <View style={{height: 30}}/> 
+                        {/* <View style={{height: 30}}/>  */}
                         
                 <TouchableOpacity onPress={toggleModal} style={styles.joinButton}>
                     <Text style={styles.joinButtonText}>{t('homepage.joinus')}</Text>
                 </TouchableOpacity>
-                <View>
-                <View style={{height: 100}}/> 
+                {/* <View> */}
+                {/* <View style={{height: 100}}/>  */}
                     <Text style={styles.label}>{t('academicpage.acdemics')}</Text>
                     <View style={styles.dropDownContainer}>
                         <TouchableOpacity>
@@ -119,9 +123,15 @@ export default function SearchScreen({navigation}) {
                                 setValue={setCity}
                             />
                         </TouchableOpacity>
+                        
                     </View>
+                {/* </View> */}
+                
+                <View style={styles.pageContent}>
+                    {filteredData.map((item) => renderItem({ item }))}
                 </View>
-                <End style={styles.End} navigation={navigation} /> 
+
+                <End style={styles.end} navigation={navigation} /> 
                     
                    
             </ScrollView>
@@ -169,10 +179,9 @@ const styles = StyleSheet.create({
         padding:10,
     },
     slideTextContainer: {
-        height: Dimensions.get("window").height / 3,
-        //width: "100%",
         marginTop: 10,
         alignItems:'center',
+        padding: 10,
 
     },
     label: {
@@ -213,53 +222,62 @@ const styles = StyleSheet.create({
         borderColor: "blue",
         textAlign: "center",
     },
-    rectangular:{
-        width:Dimensions.get("window").width,
-        backgroundColor:'#F7FAF8',
-        flexDirection: 'row',
-        alignSelf: 'flex-start',
-        
-   },
-   text: {
-    fontSize: 20,
-    left: 10,
-    top: 10,
-    padding: 100,
-    fontWeight: "bold",
-    
-},
-halfReg:{
-    flexDirection: 'column',
-    width:(Dimensions.get("window").width/2)+10,
-    padding:20,
-},
-info:{
-    flexDirection: 'row',
-},
-nfo:{
-    fontSize:14,
-    fontWeight: "bold",
-},
-TextInfo:{
-    fontSize:18,
-    color:"#05063F",
-    textAlign:'center',
-    fontWeight: "bold",
-},
 end:{
     width:Dimensions.get("window").width,
     backgroundColor:'#092D82',
     flexDirection: 'row',
     alignSelf: 'flex-start',
     bottom:0,
-    
-   
     position: 'absolute',
-   
-
 },
 
-TextEnd:{
-color:'white',
+card: {
+    flexDirection: 'column',  // Change to column layout
+    marginBottom: 10,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    elevation: 2,
+    width: '70%',
+    height: 320,
+    alignSelf: 'center'
+  },
+  image: {
+    width: '90%',
+    height: '60%',
+    alignSelf: 'center',
+    // borderRadius: 40,
+    marginBottom: 10,  // Move the margin to the bottom
+  },
+  detailsContainer: {
+    flex: 1,
+    alignItems: 'center',  // Align the details in the center
+  },
+  fullName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  email: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  city: {
+    fontSize: 14,
+    marginBottom: 5,
+  },
+  degree: {
+    fontSize: 14,
+    color: 'gray',
+  },
+  
+  pageContent: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 16,
 },
 })

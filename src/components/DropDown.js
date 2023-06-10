@@ -3,11 +3,11 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
-const DropdownComponent = ({ placeholder, label, data, value, setValue }) => {
+const DropdownComponent = ({ placeholder, label, data, value, setValue, errorText }) => {
   const [isFocus, setIsFocus] = useState(false);
 
   const renderLabel = () => {
-    if (!value) {
+    if (value || isFocus) {
       return (
         <Text style={[styles.label, isFocus && styles.focusedLabel]}>
           {label}
@@ -24,7 +24,7 @@ const DropdownComponent = ({ placeholder, label, data, value, setValue }) => {
         mode="outlined"
     >
       <Dropdown
-        style={[styles.dropdown, isFocus && styles.focusedDropdown]}
+        style={[errorText? styles.errorDropDown : styles.dropdown, isFocus && styles.focusedDropdown]}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}
@@ -34,14 +34,14 @@ const DropdownComponent = ({ placeholder, label, data, value, setValue }) => {
         maxHeight={300}
         labelField="label"
         valueField="value"
-        placeholder={!isFocus ? placeholder || 'Select item' : '...'}
+        placeholder={value? value : !isFocus ? placeholder || 'Select item' : '...'}
         searchPlaceholder="Search..."
         value={value}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         onChange={(item) => {
-          setValue(item.label);
-          // setIsFocus(false);
+          setValue({value: item.label, error: ""});
+          setIsFocus(false);
         }}
         renderLeftIcon={() => (
           <AntDesign
@@ -53,6 +53,8 @@ const DropdownComponent = ({ placeholder, label, data, value, setValue }) => {
         )}
       />
       {renderLabel()}
+
+      {errorText ? <Text style={styles.error}>{errorText}</Text> : null}
     </View>
   );
 };
@@ -72,8 +74,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 8,
   },
+  errorDropDown: {
+    height: 50,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: 'red',
+    borderRadius: 5,
+    paddingHorizontal: 8,
+  },
   focusedDropdown: {
-    borderColor: 'blue',
+    borderColor: '#00008B',
+    borderWidth: 1.5,
   },
   icon: {
     marginRight: 5,
@@ -86,11 +97,11 @@ const styles = StyleSheet.create({
     zIndex: 1,
     paddingHorizontal: 8,
     fontSize: 14,
-    color: 'blue',
+    color: '#00008B',
   },
   focusedLabel: {
     top: 0,
-    color: 'blue',
+    color: '#00008B',
   },
   placeholderStyle: {
     fontSize: 16,
@@ -105,5 +116,10 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
+  },
+  error: {
+    fontSize: 13,
+    color: 'red',
+    paddingTop: 8,
   },
 });
