@@ -17,6 +17,7 @@ import Dropdown from "../components/DropDown";
 import Modal from '../components/Modal'
 import { getDegreeList } from '../lists/degree';
 import { getCityList } from '../lists/list';
+import End from '../components/End';
 
 const window = Dimensions.get('window');
 
@@ -24,7 +25,6 @@ const window = Dimensions.get('window');
 export default function SearchScreen({navigation}) {
     const {t, i18n} = useTranslation();
     const [modalVisible, setModalVisible] = useState(false);
-    const [academics, setAcademics] = useState([]);
     const handleOpenPDF = async () => {
         try {
          
@@ -121,65 +121,7 @@ export default function SearchScreen({navigation}) {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <Modal modalVisible={modalVisible} toggleModal={toggleModal}/>
-                    <View style={{height: 70}}/>
-                    <View style={styles.rectangular}>
-                    <View style={styles.halfReg}>
-                    <View style={{height: 20}}/>
-                    <Text style={styles.TextInfo}>{t('footer.contactus')}</Text>
-                    <View style={{height: 20}}/>
-                    <View style={styles.info}> 
-                    <FontAwesome name="phone" style={{fontSize:20,color: '#05063F' }} />
-                     <View style={{width: 10}}/> 
-                    <Text style={styles.nfo}>052-9086918</Text>
-                        </View>
-                        <View style={{height: 10}}/>
-                        <View style={styles.info}> 
-                        <FontAwesome name="envelope" style={{fontSize:20,color: '#05063F' }} />
-                     <View style={{width: 10}}/> 
-                    <Text style={styles.nfo}>almuntada.ac@gmail.com</Text>
-                        </View>
-                    </View>
-                    <View style={{width: 50}}/> 
-                    <View style={styles.halfReg}>
-                    <View style={{width: 10}}/> 
-                    <View style={{height: 20}}/>
-                    <Image source={require("../../assets/FinalLogo.png")} style={{width: 100, height: 50 }}/>
-                    <View style={{height: 10}}/>
-                    <View style={styles.info}>  
-                  <TouchableOpacity onPress={openInstagram}>
-                    <View>
-                  <FontAwesome name="instagram" style={{fontSize:20,color: '#05063F' }} />
-                 </View>
-                 </TouchableOpacity>
-
-                         
-                        <View style={{width: 15 , }}/>
-                        <TouchableOpacity onPress={openLinkedin}>
-                        <FontAwesome name="linkedin" style={{fontSize:20,color: '#05063F' }} />
-                        </TouchableOpacity>
-                        <View style={{width: 15}}/>
-                        <TouchableOpacity onPress={openFacebook}>
-                        <FontAwesome name="facebook" style={{fontSize:20 ,color: '#05063F'}} />
-                        </TouchableOpacity>
-                        
-                        </View>
-                        </View>
-                        </View>
-                    <View style={{height: 140}}/>
-                   <View style={styles.end} >
-                   <View style={styles.halfReg}>
-                    <View style={{height: 10}}/>
-                   <Text style={styles.TextEnd}>Copyrights.Al-Hassouna-2023 All rights Reserved</Text>
-                   </View>
-                    <View style={styles.halfReg}>
-                    <View style={{height: 10}}/>
-                    <TouchableOpacity onPress={handleOpenPDF}>
-                    <Text style={styles.TextEnd}>Privacy Policy&Terms of use</Text>
-                    </TouchableOpacity>
-                    <View style={{height: 30}}/>
-                    </View>
-                   </View>
+                <End style={styles.End} navigation={navigation} /> 
                     
                    
             </ScrollView>

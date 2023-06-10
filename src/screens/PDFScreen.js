@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { WebView } from 'react-native-webview';
 
 export default function PDFScreen({ route }) {
-  const { uri } = route.params;
+  const { uri } = route;
   const uriString = String(uri);
 
   return (
