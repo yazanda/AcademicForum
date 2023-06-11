@@ -1,11 +1,8 @@
-import React, {useState, useRef, useEffect } from "react";
-import {I18nextProvider, useTranslation} from 'react-i18next';
-import LanguageContext from '../components/LanguageContext';
-import {I18nManager, TouchableWithoutFeedback} from "react-native";
+import React, {useState, useRef } from "react";
+import {useTranslation} from 'react-i18next';
 import End from "../components/End";
 import Modal from '../components/Modal';
-import { FontAwesome } from '@expo/vector-icons';
-import {StyleSheet, SafeAreaView, Image, ScrollView, View, Text, Dimensions, FlatList, TouchableOpacity,Linking} from "react-native";
+import {StyleSheet, SafeAreaView, Image, ScrollView, View, Text, Dimensions, TouchableOpacity} from "react-native";
 import Header from "../components/Header";
 
 const window = Dimensions.get('window');

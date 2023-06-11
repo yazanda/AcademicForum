@@ -12,14 +12,13 @@ import {
     ScrollView,
     TouchableOpacity,
     Alert,
-    Linking,
-    Dimensions, Platform,
+    Platform,
 } from 'react-native';
 import TextInput from '../components/TextInput';
 import Dropdown from "../components/DropDown";
 import axios from 'axios';
 import Modal from 'react-native-modal';
-const window = Dimensions.get('window');
+
  const ContactUsScreen = ({navigation}) => {
     const {t, i18n} = useTranslation();
     const [fullName, setFullName] = useState({ value: "", error: "" });
@@ -146,16 +145,18 @@ const window = Dimensions.get('window');
                     </ScrollView>
                 )}
             </View>
-            <TouchableOpacity onPress={() => navigation.navigate("StartScreen")} style={styles.logoContainer}>
-                <Image
-                    source={require("../../assets/FinalLogo.png")}
-                    style={styles.logo}
-                />
-            </TouchableOpacity>
+            
             <ScrollView nestedScrollEnabled
               contentContainerStyle={styles.pageContainer}
             //   ref={scrollViewRef}
               showsVerticalScrollIndicator={false}>
+
+            <TouchableOpacity onPress={() => navigation.navigate("StartScreen")} style={styles.logoContainer}>
+                <Image
+                    source={require("../../assets/FinalLogo.png")}
+                    style={styles.logo}
+            />
+            </TouchableOpacity>
                 <View style={styles.title}>
                     <Text style={styles.titleText}>{t('contactpage.title')}</Text>
                     <Text style={styles.titleText}>{t('contactpage.text')}</Text>
@@ -322,5 +323,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
       },
-     
+    //   pageContainer: {
+    //     flexGrow: 1,
+    //     alignItems: "center",
+    //     paddingBottom: 20,
+    // },
 });

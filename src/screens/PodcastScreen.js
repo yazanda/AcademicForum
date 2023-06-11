@@ -6,11 +6,9 @@ import {
     ScrollView,
     Text,
     Image,
-    FlatList,
     TouchableOpacity,
     I18nManager,
     Dimensions,
-    Linking,
     Platform
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -18,8 +16,6 @@ import { Video } from 'expo-av';
 import axios from 'axios';
 import { FontAwesome } from '@expo/vector-icons';
 import End from '../components/End';
-
-const window = Dimensions.get('window');
 
 export default function PodcastScreen({navigation}) {
     const [videos, setVideos] = useState([]);

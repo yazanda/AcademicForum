@@ -11,7 +11,7 @@ import {
     ScrollView,
     TouchableOpacity,
     Dimensions,
-    Linking, Platform,
+    Platform,
 } from 'react-native';
 import Dropdown from "../components/DropDown";
 import Modal from '../components/Modal'
@@ -150,7 +150,7 @@ export default function SearchScreen({navigation}) {
                 )}
             </View>
             <ScrollView Style={styles.contentContainer}>
-                <TouchableOpacity onPress={() => navigation.navigate("StartScreen")}>
+                <TouchableOpacity onPress={() => navigation.navigate("StartScreen")} style={styles.logoContainer}>
                     <Image
                         source={require("../../assets/FinalLogo.png")}
                         style={styles.logo}
@@ -259,6 +259,12 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingBottom: 20,
         
+    },
+    logoContainer: {
+        width: 200,
+        height: 75,
+        alignSelf: 'center', 
+        resizeMode: "contain",
     },
     logo: {
         width: 200,
