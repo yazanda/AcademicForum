@@ -1,9 +1,11 @@
-import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, ActivityIndicator, TouchableOpacity, StyleSheet} from 'react-native';
 import React, {useState} from 'react';
 import * as ImagePicker from 'expo-image-picker';
+import {useTranslation} from 'react-i18next';
 export const UploadImage = ({setImage}) => {
-
+    const {t, i18n} = useTranslation();
     const [loading, setLoading] = useState(false)
+    const [success, setSuccess] = useState(false);
     // console.log(image);
     const pickFromGallery = async () => {
         const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -15,7 +17,7 @@ export const UploadImage = ({setImage}) => {
                 quality: 0.5
             })
             if (!data.canceled) {
-                let newFile = {uri: data.uri, type: `test/${data.uri.split('.')[1]}`, name: `test.${data.uri.split('.')[1]}`}
+                let newFile = {uri: data.assets[0].uri, type: `test/${data.assets[0].uri.split('.')[1]}`, name: `test.${data.assets[0].uri.split('.')[1]}`}
                 handleUpload(newFile)
             }
         }
@@ -33,18 +35,53 @@ export const UploadImage = ({setImage}) => {
         }).then(res => res.json())
             .then(data => {
                     setImage(data.url)
-                    setLoading(false)
+                    console.log(data.url);
+                    setLoading(false);
+                    setSuccess(true);
                 }
             ).catch(err => console.log(err))
 
     }
 
     return (
-        <View>
-            <TouchableOpacity onPress={pickFromGallery}>
-                <Text>Upload</Text>
+        <View style={styles.container}>
+            <TouchableOpacity style={styles.button} onPress={pickFromGallery}>
+                <Text style={styles.buttonText}>{t('academicpage.dialog.upload')}</Text>
             </TouchableOpacity>
-            {loading ? <Text>Loading...</Text> : <Text> Successful </Text>}
+            {loading ? (
+                <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="small" color="#0000ff" />
+                </View>
+            ) : success ? (
+                <Text style={styles.successText}>Uploaded Successfully</Text>
+            ) : null}
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        alignItems: 'center',
+    },
+    button: {
+      backgroundColor: '#ddd',
+      padding: 10,
+      borderRadius: 8,
+      marginBottom: 10,
+      width: '80%',
+    },
+    buttonText: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
+    loadingContainer: {
+      alignItems: 'center',
+    },
+    successText: {
+      fontSize: 14,
+      fontWeight: 'bold',
+      color: 'green',
+      textAlign: 'center',
+    },
+  });

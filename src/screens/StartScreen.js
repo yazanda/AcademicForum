@@ -465,6 +465,7 @@ const styles = StyleSheet.create({
     },
     squ: {
         width: 300,
+        backgroundColor: '#fff',
         shadowColor: '#000000',
         shadowOpacity: 0.7,
         shadowRadius: 10,
