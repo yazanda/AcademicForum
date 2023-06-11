@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
     View,
@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import Dropdown from './DropDown';
 import DatePicker from './DatePicker';
-import * as ImagePicker from 'expo-image-picker';
 import TextInput from './TextInput';
 import {CheckBox, Input} from 'react-native-elements';
 import { getDegreeList } from '../lists/degree';
