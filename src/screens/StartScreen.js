@@ -225,12 +225,12 @@ export default function App({navigation}) {
                             color: "#f58723",
                             fontWeight: "bold",
                         }}>{t('homepage.goals.title')}</Text>
-                        <View style={{flexDirection: 'row',}}>
-                            {/* <FlatList
-                                data={data}
-                                renderItem={renderItem}
-                                keyExtractor={(item) => item.id.toString()}
-                            /> */}
+                        <View>
+                            {data.map((item) => (
+                                <View key={item.id}>
+                                    {renderItem({ item })}
+                                </View>
+                            ))}
                         </View>
                         <View style={{height: 30}}/>
                         <Image
