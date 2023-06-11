@@ -47,6 +47,7 @@ const MyModal = ({modalVisible, toggleModal}) => {
             }
         })();
 
+        // if(status === 'granted')
         const result = await ImagePicker.launchImageLibraryAsync();
         if (!result.canceled) {
           setSelectedImage(result.uri);
@@ -87,7 +88,7 @@ const MyModal = ({modalVisible, toggleModal}) => {
                                 onChangeText={(text) => setEmail({ value: text, error: "" })}
                                 error={!!email.error}
                                 errorText={email.error}/>
-                    <TouchableOpacity style={styles.dropDownContainer}>
+                    {/* <TouchableOpacity style={styles.dropDownContainer}> */}
                         <Dropdown placeholder={t('academicpage.dialog.city')} label={t('academicpage.dialog.city')}
                                   data={cities.map((cityIn) => ({
                                     label: cityIn.label,
@@ -104,7 +105,7 @@ const MyModal = ({modalVisible, toggleModal}) => {
                                   value={degree.value}
                                   setValue={setDegree}
                                   errorText={degree.error}/>
-                    </TouchableOpacity>
+                    {/* </TouchableOpacity> */}
                     <TextInput  label={t('academicpage.dialog.subject')}
                                 returnKeyType="next"
                                 value={subject.value}
@@ -136,18 +137,8 @@ const MyModal = ({modalVisible, toggleModal}) => {
                                 onChangeText={(text) => setPhoneNumber({ value: text, error: "" })}
                                 error={!!phoneNumber.error}
                                 errorText={phoneNumber.error} />
-                    {/* <Button title={t('academicpage.dialog.upload')} onPress={selectImage}/>
-                    {selectedImage && (
-                        <Image
-                            source={{uri: selectedImage}}
-                            style={{width: 200, height: 200}}
-                        />
-                    )} */}
-                    {/* <div> */}
-                        {/* <ImageUploadButton/> */}
-                        {/* {selectedImage && <img src={URL.createObjectURL(selectedImage)} alt="Selected" />} */}
-                    {/* </div> */}
-                    <Button title="Upload Photo" onPress={openImagePicker} />
+
+                    <Button title={t('academicpage.dialog.imageurl')} onPress={openImagePicker} />
 
                     <CheckBox
                         title={t('academicpage.dialog.checkbox')}

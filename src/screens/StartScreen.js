@@ -1,11 +1,11 @@
 import React, {useState, useRef, useEffect } from "react";
-import {I18nextProvider, useTranslation} from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import LanguageContext from '../components/LanguageContext';
-import { I18nManager } from "react-native";
+// import { I18nManager } from "react-native";
 import Header from "../components/Header";
 import End from "../components/End";
 import Modal from '../components/Modal';
-import { FontAwesome } from '@expo/vector-icons';
+// import { FontAwesome } from '@expo/vector-icons';
 import {StyleSheet, SafeAreaView, Image, ScrollView, View, Text, Dimensions, FlatList, TouchableOpacity,Linking} from "react-native";
 
 
@@ -74,7 +74,7 @@ export default function App({navigation}) {
 
     
     return (
-        <I18nextProvider i18n={i18n}>
+        // <I18nextProvider i18n={i18n}>
             <SafeAreaView style={styles.container}>
             <Header style={styles.header} navigation={navigation} />
             <ScrollView
@@ -94,14 +94,14 @@ export default function App({navigation}) {
                 >
                   
                   </ScrollView>
-                          <View style={{height: 20}}/>  
+                          {/* <View style={{height: 20}}/>   */}
                         
                         <View style={styles.slideTextContainer}>
                             <Text style={styles.slideText}>{t('homepage.title')}</Text>
                             <Text style={styles.slideText}>{t('homepage.title_1')}</Text>
                             <Text style={styles.slideText}>{t('homepage.description')}</Text>
                         </View>
-                        <View style={{height: 30}}/> 
+                        {/* <View style={{height: 30}}/>  */}
                         <TouchableOpacity onPress={toggleModal} style={styles.joinButton}>
                         <Text style={styles.joinButtonText}>{t('homepage.joinus')}</Text>
                         </TouchableOpacity>
@@ -163,14 +163,13 @@ export default function App({navigation}) {
                             fontWeight: "bold",
                            
                         }}>{t('homepage.goals.title')}</Text>
-                    
 
-                        <View style={{flexDirection: 'row',}}>
-                            {/* <FlatList
-                                data={data}
-                                renderItem={renderItem}
-                                keyExtractor={(item) => item.id.toString()}
-                            /> */}
+                        <View>
+                            {data.map((item) => (
+                                <View key={item.id}>
+                                    {renderItem({ item })}
+                                </View>
+                             ))}
                         </View>
                         <View style={{height: 30}}/>
                         <Image
@@ -240,10 +239,10 @@ export default function App({navigation}) {
                         <View style={{height: 20}}/>
                     </View>
                     </View>
-                    <End style={styles.End} navigation={navigation} />                 
+                    <End style={styles.end} navigation={navigation} />                 
             </ScrollView>
           </SafeAreaView>
-        </I18nextProvider>
+        // </I18nextProvider>
       );
     
 }
@@ -265,8 +264,9 @@ const styles = StyleSheet.create({
     joinButton: {
         backgroundColor: "#041041",
         borderRadius: 8,
-        paddingVertical: 12,
+        paddingVertical: 10,
         paddingHorizontal: 16,
+        paddingTop: 5,
         top:100,
         //height:60,
     },
@@ -390,6 +390,7 @@ const styles = StyleSheet.create({
     },
     squ: {
         width: 300,
+        backgroundColor: 'white',
         shadowColor: '#000000',
         shadowOpacity: 0.7,
         shadowRadius: 10,

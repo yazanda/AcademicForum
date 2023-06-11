@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {FontAwesome} from '@expo/vector-icons';
+// import {FontAwesome} from '@expo/vector-icons';
 import {useTranslation} from 'react-i18next';
 import axios from 'axios';
 import {
@@ -27,8 +27,8 @@ export default function SearchScreen({navigation}) {
     const {t, i18n} = useTranslation();
     const [modalVisible, setModalVisible] = useState(false);
     const [academics, setAcademics] = useState([]);
-    const [city, setCity] = useState('');
-    const [degree, setDegree] = useState('');
+    const [city, setCity] = useState({ value: "", error: "" });
+    const [degree, setDegree] = useState({ value: "", error: "" });
 
     const toggleModal = () => {
         setModalVisible(!modalVisible);
@@ -64,16 +64,15 @@ export default function SearchScreen({navigation}) {
     );
 
     const filteredData = academics.filter((item) => {
-        if (city && degree) {
-          return item.city === city && item.degree === degree;
-        } else if (city !== '') {
-          return item.city === city;
-        } else if (degree !== '') {
-          return item.degree === degree;
+        if (city.value && degree.value) {
+          return item.city === city.value && item.degree === degree.value;
+        } else if (city.value !== '') {
+          return item.city === city.value;
+        } else if (degree.value !== '') {
+          return item.degree === degree.value;
         }
         return true; 
     });
-
     return (
         <SafeAreaView style={styles.container}>
             <Header
@@ -110,8 +109,9 @@ export default function SearchScreen({navigation}) {
                                   label: degree.label,
                                   value: degree.id.toString(),
                                 }))}
-                                value={degree}
+                                value={degree.value}
                                 setValue={setDegree}
+                                errorText={degree.error}
                             />
                             <Dropdown
                                 placeholder={t('academicpage.acdemics.Area')}
@@ -120,8 +120,9 @@ export default function SearchScreen({navigation}) {
                                     label: city.label,
                                     value: city.label,
                                   }))}
-                                value={city}
+                                value={city.value}
                                 setValue={setCity}
+                                errorText={city.error}
                             />
                         </TouchableOpacity>
                         
@@ -247,7 +248,7 @@ card: {
     alignSelf: 'center'
   },
   image: {
-    width: '90%',
+    width: '80%',
     height: '60%',
     alignSelf: 'center',
     // borderRadius: 40,

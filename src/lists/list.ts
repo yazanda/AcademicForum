@@ -1,8 +1,5 @@
 export const getCityList = [
   {
-    "label": ""
-  },
-  {
     "label": "Acre"
   },
   {

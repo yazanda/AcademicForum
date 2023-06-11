@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
   errorDropDown: {
     height: 50,
     backgroundColor: 'white',
-    borderWidth: 1,
-    borderColor: 'red',
+    borderWidth: 2,
+    borderColor: '#8b0000',
     borderRadius: 5,
     paddingHorizontal: 8,
   },
