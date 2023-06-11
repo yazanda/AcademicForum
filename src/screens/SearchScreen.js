@@ -11,7 +11,7 @@ import {
     ScrollView,
     TouchableOpacity,
     Dimensions,
-    Linking,
+    Linking, Platform,
 } from 'react-native';
 import Dropdown from "../components/DropDown";
 import Modal from '../components/Modal'
@@ -215,6 +215,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor:"white",
         flexGrow: 1,
+        ...Platform.select({
+            android: {
+                paddingTop: 40,
+            },
+        }),
     },
     languageContainer: {
         flexDirection: 'row',
