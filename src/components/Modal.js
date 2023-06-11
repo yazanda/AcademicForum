@@ -17,6 +17,7 @@ import TextInput from './TextInput';
 import {CheckBox} from 'react-native-elements';
 import { getDegreeList } from '../lists/degree';
 import { getCityList } from '../lists/list';
+import axios from 'axios';
 
 const MyModal = ({modalVisible, toggleModal}) => {
     const {t, i18n} = useTranslation();
@@ -40,17 +41,48 @@ const MyModal = ({modalVisible, toggleModal}) => {
     
       const openImagePicker = async () => {
 
-        (async () => {
-            const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-            if (status !== 'granted') {
-              console.log('Permission to access image gallery denied');
-            }
-        })();
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-        // if(status === 'granted')
+        if (status !== 'granted') {
+            console.log('Permission to access image gallery denied');
+            return;
+        }     
+
         const result = await ImagePicker.launchImageLibraryAsync();
-        if (!result.canceled) {
-          setSelectedImage(result.uri);
+        if (result && !result.canceled) {
+            const selectedImage = result.assets[0].uri;
+            setSelectedImage(selectedImage);
+        }
+      };
+
+      const uploadToCloudinary = async () => {
+        try {
+          const formData = new FormData();
+          formData.append('file', {
+            uri: selectedImage,
+            name: 'image.jpg',
+            type: 'image/jpeg',
+          });
+          formData.append('upload_preset', 'ml_default');
+    
+          const response = await axios.post(
+            'https://api.cloudinary.com/v1_1/djc1iyjjm/image/upload',
+            formData
+          );
+    
+          console.log(response.data);
+          // Handle the Cloudinary response here
+        } catch (error) {
+            if (error.response) {
+                console.log('Error response:', error.response.data);
+                console.log('Error status code:', error.response.status);
+                console.log('Error headers:', error.response.headers);
+              } else if (error.request) {
+                console.log('No response received:', error.request);
+              } else {
+                console.log('Error:', error.message);
+              }
+          // Handle the error here
         }
       };
       
@@ -88,7 +120,7 @@ const MyModal = ({modalVisible, toggleModal}) => {
                                 onChangeText={(text) => setEmail({ value: text, error: "" })}
                                 error={!!email.error}
                                 errorText={email.error}/>
-                    {/* <TouchableOpacity style={styles.dropDownContainer}> */}
+                    <TouchableOpacity style={styles.dropDownContainer}>
                         <Dropdown placeholder={t('academicpage.dialog.city')} label={t('academicpage.dialog.city')}
                                   data={cities.map((cityIn) => ({
                                     label: cityIn.label,
@@ -105,7 +137,7 @@ const MyModal = ({modalVisible, toggleModal}) => {
                                   value={degree.value}
                                   setValue={setDegree}
                                   errorText={degree.error}/>
-                    {/* </TouchableOpacity> */}
+                    </TouchableOpacity>
                     <TextInput  label={t('academicpage.dialog.subject')}
                                 returnKeyType="next"
                                 value={subject.value}
@@ -139,7 +171,9 @@ const MyModal = ({modalVisible, toggleModal}) => {
                                 errorText={phoneNumber.error} />
 
                     <Button title={t('academicpage.dialog.imageurl')} onPress={openImagePicker} />
-
+                    {selectedImage && (
+                        <Button title="Upload Image" onPress={uploadToCloudinary} />
+                    )}
                     <CheckBox
                         title={t('academicpage.dialog.checkbox')}
                         checked={checked}
