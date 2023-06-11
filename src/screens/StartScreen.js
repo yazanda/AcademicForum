@@ -6,7 +6,7 @@ import End from "../components/End";
 import Modal from '../components/Modal';
 import { FontAwesome } from '@expo/vector-icons';
 import {StyleSheet, SafeAreaView, Image, ScrollView, View, Text, Dimensions, FlatList, TouchableOpacity,Linking} from "react-native";
-
+import Header from "../components/Header";
 
 const window = Dimensions.get('window');
 
