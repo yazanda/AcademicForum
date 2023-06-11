@@ -1,9 +1,12 @@
-import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, Image, TouchableOpacity, StyleSheet, Button} from 'react-native';
 import React, {useState} from 'react';
 import * as ImagePicker from 'expo-image-picker';
+import {useTranslation} from 'react-i18next';
+
 export const UploadImage = ({setImage}) => {
 
     const [loading, setLoading] = useState(false)
+    const {t, i18n} = useTranslation();
     // console.log(image);
     const pickFromGallery = async () => {
         const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -42,9 +45,9 @@ export const UploadImage = ({setImage}) => {
     return (
         <View>
             <TouchableOpacity onPress={pickFromGallery}>
-                <Text>Upload</Text>
+                <Button title={t('academicpage.dialog.imageurl')}/>
             </TouchableOpacity>
-            {loading ? <Text>Loading...</Text> : <Text> Successful </Text>}
+            {/*{loading ? <Text>Loading...</Text> : <Text> Successful </Text>}*/}
         </View>
     )
 }

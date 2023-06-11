@@ -19,7 +19,7 @@ import { getDegreeList } from '../lists/degree';
 import { getCityList } from '../lists/list';
 import axios from 'axios';
 import {Box, Typography} from "@mui/material";
-import {UploadImage} from "./uploadImage";
+import {UploadImage} from "./UploadImage";
 
 const MyModal = ({modalVisible, toggleModal}) => {
     const {t, i18n} = useTranslation();
