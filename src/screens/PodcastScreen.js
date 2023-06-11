@@ -1,5 +1,18 @@
 import React, {useEffect, useRef, useState} from 'react';
-import { SafeAreaView, StyleSheet, View, ScrollView, Text, Image, FlatList, TouchableOpacity, I18nManager ,Dimensions,Linking} from 'react-native';
+import {
+    SafeAreaView,
+    StyleSheet,
+    View,
+    ScrollView,
+    Text,
+    Image,
+    FlatList,
+    TouchableOpacity,
+    I18nManager,
+    Dimensions,
+    Linking,
+    Platform
+} from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Video } from 'expo-av';
 import axios from 'axios';
@@ -150,6 +163,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor:'white',
+        ...Platform.select({
+            android: {
+                paddingTop: 40,
+            },
+        }),
     },
     languageContainer: {
         flexDirection: 'row',

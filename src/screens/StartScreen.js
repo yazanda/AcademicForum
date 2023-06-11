@@ -1,8 +1,7 @@
 import React, {useState, useRef, useEffect } from "react";
 import {I18nextProvider, useTranslation} from 'react-i18next';
 import LanguageContext from '../components/LanguageContext';
-import { I18nManager } from "react-native";
-import Header from "../components/Header";
+import {I18nManager, TouchableWithoutFeedback} from "react-native";
 import End from "../components/End";
 import Modal from '../components/Modal';
 import { FontAwesome } from '@expo/vector-icons';
@@ -264,6 +263,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "white",
         flexGrow: 1,
+        ...Platform.select({
+            android: {
+                paddingTop: 40,
+            },
+        }),
     },
     languageContainer: {
         flexDirection: 'row',

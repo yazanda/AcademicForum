@@ -13,7 +13,7 @@ import {
     TouchableOpacity,
     Alert,
     Linking,
-    Dimensions,
+    Dimensions, Platform,
 } from 'react-native';
 import TextInput from '../components/TextInput';
 import Dropdown from "../components/DropDown";
@@ -220,6 +220,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         justifyContent: 'center',
+        ...Platform.select({
+            android: {
+                paddingTop: 40,
+            },
+        }),
     },
     languageContainer: {
         flexDirection: 'row',
