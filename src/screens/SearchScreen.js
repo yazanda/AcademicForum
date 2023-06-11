@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {FontAwesome} from '@expo/vector-icons';
 import {useTranslation} from 'react-i18next';
 import axios from 'axios';
@@ -26,8 +26,8 @@ export default function SearchScreen({navigation}) {
     const {t, i18n} = useTranslation();
     const [modalVisible, setModalVisible] = useState(false);
     const [academics, setAcademics] = useState([]);
-    const [city, setCity] = useState('');
-    const [degree, setDegree] = useState('');
+    const [city, setCity] = useState({ value: "", error: "" });
+    const [degree, setDegree] = useState({ value: "", error: "" });
 
     const toggleModal = () => {
         setModalVisible(!modalVisible);
@@ -72,6 +72,18 @@ export default function SearchScreen({navigation}) {
         }
         return true; 
     });
+
+    const [isSideBarOpen, setSideBarOpen] = useState(false);
+    const sidebarRef = useRef(null);
+
+    const handleMenuPress = () => {
+        setSideBarOpen(!isSideBarOpen);
+    }
+
+    const handleLanguageChange = (language) => {
+        i18n.changeLanguage(language);
+        setSideBarOpen(false);
+    };
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.sideBarContainer}>
