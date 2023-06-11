@@ -58,11 +58,7 @@ const MyModal = ({modalVisible, toggleModal}) => {
       const uploadToCloudinary = async () => {
         try {
           const formData = new FormData();
-          formData.append('file', {
-            uri: selectedImage,
-            name: 'image.jpg',
-            type: 'image/jpeg',
-          });
+          formData.append('file', selectedImage);
           formData.append('upload_preset', 'ml_default');
     
           const response = await axios.post(
