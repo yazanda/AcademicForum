@@ -97,6 +97,7 @@ export default function SearchScreen({navigation}) {
                 <TouchableOpacity onPress={toggleModal} style={styles.joinButton}>
                     <Text style={styles.joinButtonText}>{t('homepage.joinus')}</Text>
                 </TouchableOpacity>
+                <Modal modalVisible={modalVisible} toggleModal={toggleModal}/>
                 {/* <View> */}
                 {/* <View style={{height: 100}}/>  */}
                     <Text style={styles.label}>{t('academicpage.acdemics')}</Text>

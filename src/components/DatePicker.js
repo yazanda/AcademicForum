@@ -35,7 +35,7 @@ const DatePicker = ({ label, value, onChange, placeholder, error }) => {
         if (showDatePicker) {
             return (
                 <DateTimePicker
-                    value={value || new Date()}
+                    value={value ?  value : new Date()}
                     mode="date"
                     display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                     onChange={handleDateChange}
@@ -46,11 +46,6 @@ const DatePicker = ({ label, value, onChange, placeholder, error }) => {
         return null;
     };
 
-    const handleContainerPress = () => {
-        if (!isFocused) {
-            setIsFocused(true);
-        }
-    };
 
     return (
         <TouchableOpacity

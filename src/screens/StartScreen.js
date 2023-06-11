@@ -253,8 +253,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor:"white",
         flexGrow: 1,
-    
-
     },
 
     header: {
@@ -376,7 +374,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         left: 10,
         top: 10,
-        padding: 100,
+        // padding: 100,
         fontWeight: "bold",
         padding:10,
     },
@@ -454,13 +452,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignSelf: 'flex-start',
         bottom:0,
-        
-       
         position: 'absolute',
-       
-
     },
-
     TextEnd:{
     color:'white',
     },
