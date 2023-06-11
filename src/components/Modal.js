@@ -14,10 +14,12 @@ import Dropdown from './DropDown';
 import DatePicker from './DatePicker';
 import * as ImagePicker from 'expo-image-picker';
 import TextInput from './TextInput';
-import {CheckBox} from 'react-native-elements';
+import {CheckBox, Input} from 'react-native-elements';
 import { getDegreeList } from '../lists/degree';
 import { getCityList } from '../lists/list';
 import axios from 'axios';
+import {Box, Typography} from "@mui/material";
+import {UploadImage} from "./uploadImage";
 
 const MyModal = ({modalVisible, toggleModal}) => {
     const {t, i18n} = useTranslation();
@@ -37,52 +39,8 @@ const MyModal = ({modalVisible, toggleModal}) => {
     const [checked, setChecked] = useState(false);
 
     // Function to handle image selection
-    const [selectedImage, setSelectedImage] = useState(null);
-    
-      const openImagePicker = async () => {
+    const [image, setImage] = useState(null)
 
-        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-        if (status !== 'granted') {
-            console.log('Permission to access image gallery denied');
-            return;
-        }     
-
-        const result = await ImagePicker.launchImageLibraryAsync();
-        if (result && !result.canceled) {
-            const selectedImage = result.assets[0].uri;
-            setSelectedImage(selectedImage);
-        }
-      };
-
-      const uploadToCloudinary = async () => {
-        try {
-          const formData = new FormData();
-          formData.append('file', selectedImage);
-          formData.append('upload_preset', 'ml_default');
-    
-          const response = await axios.post(
-            'https://api.cloudinary.com/v1_1/djc1iyjjm/image/upload',
-            formData
-          );
-    
-          console.log(response.data);
-          // Handle the Cloudinary response here
-        } catch (error) {
-            if (error.response) {
-                console.log('Error response:', error.response.data);
-                console.log('Error status code:', error.response.status);
-                console.log('Error headers:', error.response.headers);
-              } else if (error.request) {
-                console.log('No response received:', error.request);
-              } else {
-                console.log('Error:', error.message);
-              }
-          // Handle the error here
-        }
-      };
-      
-    
     let validationError;
     return (
         <Modal visible={modalVisible} animationType="slide" onRequestClose={toggleModal}>
@@ -165,11 +123,9 @@ const MyModal = ({modalVisible, toggleModal}) => {
                                 onChangeText={(text) => setPhoneNumber({ value: text, error: "" })}
                                 error={!!phoneNumber.error}
                                 errorText={phoneNumber.error} />
-
-                    <Button title={t('academicpage.dialog.imageurl')} onPress={openImagePicker} />
-                    {selectedImage && (
-                        <Button title="Upload Image" onPress={uploadToCloudinary} />
-                    )}
+                    <UploadImage
+                        setImage={setImage}
+                    />
                     <CheckBox
                         title={t('academicpage.dialog.checkbox')}
                         checked={checked}
@@ -244,4 +200,31 @@ const genderData = [
     {label: 'Male', value: '1'},
     {label: 'Female', value: '2'},
 ];
+function CircularProgressWithLabel(
+    props,
+) {
+    return (
+        <Box sx={{position: 'relative', display: 'inline-flex'}}>
+            <CircularProgress variant="determinate" {...props} />
+            <Box
+                sx={{
+                    top: 0,
+                    left: 0,
+                    bottom: 0,
+                    right: 0,
+                    position: 'absolute',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}
+            >
+                <Typography
+                    variant="caption"
+                    component="div"
+                    color="text.secondary"
+                >{`${Math.round(props.value)}%`}</Typography>
+            </Box>
+        </Box>
+    );
+}
 
