@@ -1,30 +1,36 @@
-import React, {useState, useRef } from "react";
-import {useTranslation} from 'react-i18next';
+import React, {useState, useRef, useEffect} from "react";
+import {I18nextProvider, useTranslation} from 'react-i18next';
+import LanguageContext from '../components/LanguageContext';
+import {I18nManager, Platform, TouchableWithoutFeedback} from "react-native";
 import End from "../components/End";
 import Modal from '../components/Modal';
-import {StyleSheet, SafeAreaView, Image, ScrollView, View, Text, Dimensions, TouchableOpacity} from "react-native";
-import Header from "../components/Header";
-
+import {FontAwesome} from '@expo/vector-icons';
+import {
+    StyleSheet,
+    SafeAreaView,
+    Image,
+    ScrollView,
+    View,
+    Text,
+    Dimensions,
+    FlatList,
+    TouchableOpacity,
+    Linking
+} from "react-native";
 const window = Dimensions.get('window');
-
-
 export default function App({navigation}) {
     const {t, i18n} = useTranslation();
     const [modalVisible, setModalVisible] = useState(false);
     // SideBar & Languages
     const [isSideBarOpen, setSideBarOpen] = useState(false);
     const sidebarRef = useRef(null);
-
     const handleMenuPress = () => {
         setSideBarOpen(!isSideBarOpen);
     }
-
     const handleLanguageChange = (language) => {
         i18n.changeLanguage(language);
         setSideBarOpen(false);
     };
-
-
     const toggleModal = () => {
         setModalVisible(!modalVisible);
     }
@@ -33,9 +39,7 @@ export default function App({navigation}) {
         {id: 2, text: t('homepage.goals.1.desc')},
         {id: 3, text: t('homepage.goals.2.desc')},
     ];
-
     // Render each item in the list
-
     const renderItem = ({item}) => {
         if (i18n.language === 'AR') {
             return (
@@ -76,39 +80,96 @@ export default function App({navigation}) {
             );
         }
     };
-
     const scrollViewRef = useRef(null);
-
-
     return (
-        // <I18nextProvider i18n={i18n}>
+        <I18nextProvider i18n={i18n}>
             <SafeAreaView style={styles.container}>
-            <Header style={styles.header} navigation={navigation} />
-            <ScrollView
-            nestedScrollEnabled
-              contentContainerStyle={styles.pageContainer}
-            //   ref={scrollViewRef}
-              showsVerticalScrollIndicator={false}
-            >
-              <Image source={require("../../assets/FinalLogo.png")} style={styles.logo} />
-              <View style={styles.sliderContainer}>
+                <View style={styles.sideBarContainer}>
+                    <TouchableOpacity onPress={handleMenuPress} style={styles.menuButton}>
+                        {isSideBarOpen ? (
+                            <FontAwesome name="times" size={24} color="black"/>
+                        ) : (
+                            <FontAwesome name="bars" size={24} color="black"/>
+                        )}
+                    </TouchableOpacity>
+                    {isSideBarOpen && (
+                        <ScrollView
+                            ref={sidebarRef}
+                            contentContainerStyle={styles.sidebarContentContainer}
+                        >
+                            <View style={styles.languageContainer}>
+                                <TouchableOpacity
+                                    onPress={() => handleLanguageChange('EN')}
+                                    style={styles.sidebarButton}
+                                >
+                                    <Text style={styles.sidebarButtonText}>EN</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => handleLanguageChange('AR')}
+                                    style={styles.sidebarButton}
+                                >
+                                    <Text style={styles.sidebarButtonText}>AR</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => handleLanguageChange('HE')}
+                                    style={styles.sidebarButton}
+                                >
+                                    <Text style={styles.sidebarButtonText}>HE</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    handleMenuPress();
+                                    navigation.navigate('SearchScreen');
+                                }}
+                                style={styles.sidebarButton}
+                            >
+                                <Text style={styles.sidebarButtonText}>{t('navbar.search')}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    handleMenuPress();
+                                    navigation.navigate('PodcastScreen');
+                                }}
+                                style={styles.sidebarButton}
+                            >
+                                <Text style={styles.sidebarButtonText}>{t('navbar.podcast')}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    handleMenuPress();
+                                    navigation.navigate('ContactUsScreen');
+                                }}
+                                style={styles.sidebarButton}
+                            >
+                                <Text style={styles.sidebarButtonText}>{t('navbar.contact')}</Text>
+                            </TouchableOpacity>
+                        </ScrollView>
+                    )}
+                </View>
                 <ScrollView
-                  ref={scrollViewRef}
-                  nestedScrollEnabled
-                  horizontal
-                  pagingEnabled
-                  showsHorizontalScrollIndicator={false}
+                    nestedScrollEnabled
+                    contentContainerStyle={styles.pageContainer}
+                    //   ref={scrollViewRef}
+                    showsVerticalScrollIndicator={false}
                 >
-                  
-                  </ScrollView>
-                          <View style={{height: 20}}/>  
-                        
+                    <Image source={require("../../assets/FinalLogo.png")} style={styles.logo}/>
+                    <View style={styles.sliderContainer}>
+                        <ScrollView
+                            ref={scrollViewRef}
+                            nestedScrollEnabled
+                            horizontal
+                            pagingEnabled
+                            showsHorizontalScrollIndicator={false}
+                        >
+                        </ScrollView>
+                        <View style={{height: 20}}/>
                         <View style={styles.slideTextContainer}>
                             <Text style={styles.slideText}>{t('homepage.title')}</Text>
                             <Text style={styles.slideText}>{t('homepage.title_1')}</Text>
                             <Text style={styles.slideText}>{t('homepage.description')}</Text>
                         </View>
-                        <View style={{height: 30}}/> 
+                        <View style={{height: 30}}/>
                         <TouchableOpacity onPress={toggleModal} style={styles.joinButton}>
                             <Text style={styles.joinButtonText}>{t('homepage.joinus')}</Text>
                         </TouchableOpacity>
@@ -120,7 +181,6 @@ export default function App({navigation}) {
                         <View style={{height: 10}}/>
                         <Text style={styles.title}>{t('homepage.about')}</Text>
                         <View style={{height: 10}}/>
-
                         <Text style={styles.introduction}>
                             {t('homepage.description')}
                         </Text>
@@ -131,10 +191,8 @@ export default function App({navigation}) {
                             {t('homepage.description_2')}
                         </Text>
                     </View>
-
                     <View style={{marginTop: 20, paddingHorizontal: 20,}}>
                         <View style={{height: 70}}/>
-
                         <Image
                             source={require('../../assets/ourMessage.png')}
                             style={{width: 300, height: 300, marginLeft: 20}}
@@ -154,13 +212,11 @@ export default function App({navigation}) {
                                 fontSize: 30,
                                 color: "#f58723",
                                 fontWeight: "bold",
-
                             }}>{t('homepage.message.sub.title')}</Text>
                             <Text style={styles.introduction}>
                                 {t('homepage.message.desc')}
                             </Text>
                         </View>
-
                     </View>
                     <View style={{marginTop: 20, padding: 30,}}>
                         <View style={{height: 70}}/>
@@ -168,10 +224,7 @@ export default function App({navigation}) {
                             fontSize: 30,
                             color: "#f58723",
                             fontWeight: "bold",
-
                         }}>{t('homepage.goals.title')}</Text>
-                    
-
                         <View style={{flexDirection: 'row',}}>
                             {/* <FlatList
                                 data={data}
@@ -184,7 +237,6 @@ export default function App({navigation}) {
                             source={require('../../assets/goals.png')}
                             style={{width: 350, height: 310,}}
                         />
-
                     </View>
                     <View style={{marginTop: 20, paddingHorizontal: 20,}}>
                         <View style={{height: 30}}/>
@@ -198,7 +250,6 @@ export default function App({navigation}) {
                         source={require('../../assets/impact.png')}
                         style={{width: 300, height: 300, marginLeft: 20}}
                     />
-
                     <View style={{marginTop: 20, paddingHorizontal: 20,}}>
                         <View>
                             <Text style={styles.title}>{t('homepage.missfix.sub.title')}</Text>
@@ -213,11 +264,9 @@ export default function App({navigation}) {
                         style={{width: 370, height: 350}}
                     />
                     <View style={{marginTop: 40, paddingHorizontal: 20}}>
-
                         <Text style={[styles.title, {fontSize: 35}]}>{t('homepage.founder.title')}</Text>
                     </View>
                     <View style={{paddingHorizontal: 20,}}>
-
                         <View style={styles.squ}>
                             <Image
                                 source={require('../../assets/Alaa.png')}
@@ -247,14 +296,12 @@ export default function App({navigation}) {
                             <View style={{height: 20}}/>
                         </View>
                     </View>
-                    <End style={styles.End} navigation={navigation} />                 
-            </ScrollView>
-          </SafeAreaView>
-        // </I18nextProvider>
-      );
-    
+                    <End style={styles.End} navigation={navigation}/>
+                </ScrollView>
+            </SafeAreaView>
+        </I18nextProvider>
+    );
 }
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -301,9 +348,9 @@ const styles = StyleSheet.create({
     joinButton: {
         backgroundColor: "#041041",
         borderRadius: 8,
-        paddingVertical: 10,
+        paddingVertical: 12,
         paddingHorizontal: 16,
-        top:100,
+        top: 100,
         //height:60,
     },
     joinButtonText: {
@@ -312,14 +359,12 @@ const styles = StyleSheet.create({
         color: "white",
         padding: 10,
     },
-
     pageContainer: {
         flexGrow: 1,
         alignItems: "center",
         paddingBottom: 20,
         zIndex: 0,
     },
-
     logo: {
         width: 200,
         height: 75,
@@ -331,7 +376,6 @@ const styles = StyleSheet.create({
         //width: "100%",
         marginTop: 10,
         alignItems: 'center',
-
     },
     slide: {
         flex: 1,
@@ -349,7 +393,6 @@ const styles = StyleSheet.create({
         top: 50,
         width: "100%",
         alignItems: "center",
-
     },
     slideText: {
         paddingVertical: 10,
@@ -389,7 +432,6 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         height: 320,
         width: 300,
-
     },
     number: {
         fontWeight: 'bold',
@@ -398,7 +440,6 @@ const styles = StyleSheet.create({
         marginRight: 10,
         color: "#f58723",
         textAlign: "center",
-
     },
     rectangular: {
         width: Dimensions.get("window").width,
@@ -414,7 +455,6 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         padding: 10,
     },
-
     square: {
         width: 20,
         height: 30,
@@ -422,11 +462,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
-
     },
     squ: {
         width: 300,
-        backgroundColor: 'white',
         shadowColor: '#000000',
         shadowOpacity: 0.7,
         shadowRadius: 10,
@@ -454,31 +492,26 @@ const styles = StyleSheet.create({
         top: 50,
         bottom: 50,
     },
-
     Names: {
         top: 20,
         textAlign: "center",
         fontWeight: "bold",
         fontSize: 20,
     },
-
     halfReg: {
         flexDirection: 'column',
         width: (Dimensions.get("window").width / 2) + 10,
         padding: 20,
     },
-
     TextInfo: {
         fontSize: 18,
         color: "#05063F",
         textAlign: 'center',
         fontWeight: "bold",
     },
-
     info: {
         flexDirection: 'row',
     },
-
     nfo: {
         fontSize: 14,
         fontWeight: "bold",
@@ -494,5 +527,4 @@ const styles = StyleSheet.create({
     TextEnd: {
         color: 'white',
     },
-
 });
