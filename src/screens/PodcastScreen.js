@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { SafeAreaView, StyleSheet, View, ScrollView, Text, Image, FlatList, TouchableOpacity, I18nManager ,Dimensions,Linking} from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Video } from 'expo-av';
@@ -6,14 +6,25 @@ import axios from 'axios';
 import { FontAwesome } from '@expo/vector-icons';
 import End from '../components/End';
 
-
-import Header from '../components/Header';
 const window = Dimensions.get('window');
 
 export default function PodcastScreen({navigation}) {
     const [videos, setVideos] = useState([]);
     const {t, i18n} = useTranslation();
     const isRTL = I18nManager.isRTL;
+
+    // SideBar & Languages
+    const [isSideBarOpen, setSideBarOpen] = useState(false);
+    const sidebarRef = useRef(null);
+
+    const handleMenuPress = () => {
+        setSideBarOpen(!isSideBarOpen);
+    }
+
+    const handleLanguageChange = (language) => {
+        i18n.changeLanguage(language);
+        setSideBarOpen(false);
+    };
 
     useEffect(() => {
         fetchVideos();
@@ -44,10 +55,69 @@ export default function PodcastScreen({navigation}) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Header
-                style={styles.header}
-                navigation={navigation}
-            />
+            <View style={styles.sideBarContainer}>
+                <TouchableOpacity onPress={handleMenuPress} style={styles.menuButton}>
+                    {isSideBarOpen ? (
+                        <FontAwesome name="times" size={24} color="black"/>
+                    ) : (
+                        <FontAwesome name="bars" size={24} color="black"/>
+                    )}
+                </TouchableOpacity>
+                {isSideBarOpen && (
+                    <ScrollView
+                        ref={sidebarRef}
+                        contentContainerStyle={styles.sidebarContentContainer}
+                    >
+                        <View style={styles.languageContainer}>
+                            <TouchableOpacity
+                                onPress={() => handleLanguageChange('EN')}
+                                style={styles.sidebarButton}
+                            >
+                                <Text style={styles.sidebarButtonText}>EN</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => handleLanguageChange('AR')}
+                                style={styles.sidebarButton}
+                            >
+                                <Text style={styles.sidebarButtonText}>AR</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => handleLanguageChange('HE')}
+                                style={styles.sidebarButton}
+                            >
+                                <Text style={styles.sidebarButtonText}>HE</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <TouchableOpacity
+                            onPress={() => {
+                                handleMenuPress();
+                                navigation.navigate('SearchScreen');
+                            }}
+                            style={styles.sidebarButton}
+                        >
+                            <Text style={styles.sidebarButtonText}>{t('navbar.search')}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => {
+                                handleMenuPress();
+                                navigation.navigate('PodcastScreen');
+                            }}
+                            style={styles.sidebarButton}
+                        >
+                            <Text style={styles.sidebarButtonText}>{t('navbar.podcast')}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => {
+                                handleMenuPress();
+                                navigation.navigate('ContactUsScreen');
+                            }}
+                            style={styles.sidebarButton}
+                        >
+                            <Text style={styles.sidebarButtonText}>{t('navbar.contact')}</Text>
+                        </TouchableOpacity>
+                    </ScrollView>
+                )}
+            </View>
             <ScrollView  nestedScrollEnabled
               contentContainerStyle={styles.pageContainer}
             //   ref={scrollViewRef}
@@ -81,12 +151,37 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor:'white',
     },
-    header: {
+    languageContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
+    },
+    sideBarContainer: {
+        flexGrow: 1,
+    },
+    sidebarContentContainer: {
+        flexGrow: 1,
+        paddingLeft: 64,
+        paddingRight: 64,
+        width: '100%',
+        height: '100%',
+    },
+    menuButton: {
+        paddingLeft: 16,
+        paddingTop: 8,
+    },
+    sidebarButton: {
+        marginTop: 8,
+        marginBottom: 16,
+        paddingVertical: 8,
         paddingHorizontal: 16,
-        paddingTop: 30,
+        backgroundColor: '#f58723',
+        borderRadius: 8,
+    },
+    sidebarButtonText: {
+        alignSelf: 'center',
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: 'white',
     },
     logoContainer: {
         width: 200,
