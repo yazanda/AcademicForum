@@ -254,7 +254,7 @@ export default function App({navigation}) {
                     <End style={styles.End} navigation={navigation} />                 
             </ScrollView>
           </SafeAreaView>
-        </I18nextProvider>
+        // </I18nextProvider>
       );
     
 }
