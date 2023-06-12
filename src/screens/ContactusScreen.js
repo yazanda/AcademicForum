@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 import {useTranslation} from 'react-i18next';
 import { FontAwesome } from '@expo/vector-icons';
 import End from '../components/End';
-import { nameValidator, emailValidator, subjectValidator, messageValidator } from '../Validations/contactValidate';
+import { nameValidator, emailValidator, subjectValidator, messageValidator } from '../Validators/Validator';
 import {
     StyleSheet,
     Text,
