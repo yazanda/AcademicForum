@@ -1,27 +1,31 @@
 import React, {useState} from 'react';
-import {StyleSheet, SafeAreaView, Image, ScrollView, View, Text, Dimensions, FlatList, TouchableOpacity,Linking} from "react-native";
+import {StyleSheet, SafeAreaView, Image, View, Text, Dimensions, TouchableOpacity,Linking} from "react-native";
 import {FontAwesome} from '@expo/vector-icons';
 import {useTranslation} from 'react-i18next';
-import {I18nextProvider} from 'react-i18next';
-import LanguageContext from '../components/LanguageContext';
+import { Asset } from 'expo-asset';
+import * as FileSystem from 'expo-file-system';
+import * as WebBrowser from 'expo-web-browser';
 
 const window = Dimensions.get('window');
 
 const End = ({navigation}) => {
     const {t, i18n} = useTranslation();
-    const [modalVisible, setModalVisible] = useState(false);
-    // const handleOpenPDF = async () => {
-    //     try {
-         
-    //       const filePath = '../../assets/terms.pdf'; // Replace with the actual path of your file
-    //       const fileContent = await readFile(filePath, 'utf8');
-    //       console.log('File content:', fileContent);
-    //     } catch (error) {
-    //       console.log('Error opening PDF:', error);
-    //     }
-    //   };
+
+    const handleOpenPDF = async () => {
+        const filePath = await getLocalUri();
+        const fileInfo = await FileSystem.getInfoAsync(filePath);
+        if (fileInfo.exists) {
+            WebBrowser.openBrowserAsync(fileInfo.uri);
+        }
+    };
     
-   
+    const getLocalUri = async () => {
+        const asset = Asset.fromModule(require('../../assets/terms.pdf'));
+        if (!asset.localUri) {
+            await asset.downloadAsync();
+        }
+         return asset.localUri;
+    };   
       
     
     const openInstagram = () => {
@@ -88,9 +92,9 @@ const End = ({navigation}) => {
                 </View>
                 <View style={styles.halfReg}>
                     <View style={{height: 10}}/>
-                    {/* <TouchableOpacity onPress={handleOpenPDF}> */}
+                    <TouchableOpacity onPress={handleOpenPDF}>
                         <Text style={styles.TextEnd}>Privacy Policy&Terms of use</Text>
-                    {/* </TouchableOpacity> */}
+                    </TouchableOpacity>
                     <View style={{height: 30}}/>
                 </View>
             </View>

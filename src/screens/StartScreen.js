@@ -330,6 +330,7 @@ const styles = StyleSheet.create({
     menuButton: {
         paddingLeft: 16,
         paddingTop: 8,
+        height: 40,
     },
     sidebarButton: {
         marginTop: 8,
