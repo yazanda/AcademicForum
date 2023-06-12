@@ -4,7 +4,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 const DatePicker = ({ label, value, onChange, placeholder, error }) => {
     const [showDatePicker, setShowDatePicker] = useState(false);
-    const [isFocused, setIsFocused] = useState(false);
+    // const [isFocused, setIsFocused] = useState(false);
     const inputRef = useRef(null);
 
     const handleDateChange = (event, date) => {
@@ -16,17 +16,20 @@ const DatePicker = ({ label, value, onChange, placeholder, error }) => {
 
     const handleShowDatePicker = () => {
         setShowDatePicker(true);
-        setIsFocused(true);
+        // setIsFocused(true);
     };
 
     const handleHideDatePicker = () => {
         setShowDatePicker(false);
-        setIsFocused(false);
+        // setIsFocused(false);
     };
 
     const handleConfirm = () => {
         handleHideDatePicker();
         inputRef.current.blur();
+        if (value === null) {
+            onChange(new Date());
+        }
         // Handle confirmation logic here
         console.log('Selected date:', value);
     };
@@ -48,25 +51,24 @@ const DatePicker = ({ label, value, onChange, placeholder, error }) => {
 
 
     return (
-        <TouchableOpacity
+        <View
             style={styles.container}
-            activeOpacity={1}
-            onPress={handleShowDatePicker}
-            onBlur={handleHideDatePicker}
+            underlineColor="transparent"
+            mode="outlined"
         >
-            {isFocused && ( // fix this for ios
-                <Text style={[styles.label, { color: 'blue' }]}>{label}</Text>
+            {(showDatePicker || value !== null) && (
+                <Text style={[styles.label, { color: '#00008B' }]}>{label}</Text>
             )}
-            <View style={[styles.inputContainer, showDatePicker && { borderColor: 'blue' }]}>
+            <View style={[error ? styles.errorInputContainer : styles.inputContainer , showDatePicker && styles.focusedInput]}>
                 <TextInput
                     ref={inputRef}
                     style={[styles.textInput, error && styles.errorTextInput, { color: value ? 'black' : 'gray' }]}
                     value={value ? value.toDateString() : ''}
-                    placeholder={!isFocused ? placeholder : ''}
+                    placeholder={!showDatePicker ? placeholder : ''}
                     placeholderTextColor={'black'}
-                    editable={false}
-                    onTouchStart={handleShowDatePicker}
-                    onBlur={handleHideDatePicker}
+                    editable={true}
+                    onTouchStart={() => setShowDatePicker(true)}
+                    onBlur={()=> setShowDatePicker(false)}
                 />
                 {Platform.OS === 'ios' && showDatePicker && (
                     <Button
@@ -78,7 +80,7 @@ const DatePicker = ({ label, value, onChange, placeholder, error }) => {
             </View>
             {renderDatePicker()}
             {error && <Text style={styles.errorText}>{error}</Text>}
-        </TouchableOpacity>
+        </View>
     );
 };
 
@@ -91,8 +93,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 1,
         borderRadius: 5,
+        borderColor: 'gray',
         position: 'relative',
         overflow: 'hidden',
+    },
+    errorInputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderRadius: 5,
+        borderColor: '#8b0000',
+        position: 'relative',
+        overflow: 'hidden',
+    },
+    focusedInput: {
+        borderColor: '#00008B',
+        borderWidth: 1.5,
     },
     textInput: {
         flex: 1,
