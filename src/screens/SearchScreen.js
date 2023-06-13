@@ -24,6 +24,16 @@ const window = Dimensions.get('window');
 
 export default function SearchScreen({navigation}) {
     const {t, i18n} = useTranslation();
+    const getTextAlignment = () => {
+        const { i18n } = useTranslation();
+      
+        if (i18n.language === 'AR' || i18n.language === 'HE') {
+          return 'right'; // Right-to-left alignment for Spanish
+        } else {
+          return 'left'; // Left-to-right alignment for other languages
+        }
+    };
+      const textAlignment = getTextAlignment();
     const [modalVisible, setModalVisible] = useState(false);
     const [academics, setAcademics] = useState([]);
     const [city, setCity] = useState({ value: "", error: "" });
@@ -58,7 +68,6 @@ export default function SearchScreen({navigation}) {
                 <Text style={styles.city}>{item.city}</Text>
                 <Text style={styles.degree}>{item.degree}</Text>
             </View>
-        {/* <Text style={styles.videoTitle}>{item.title}</Text> */}
         </View>
     );
 
@@ -157,24 +166,22 @@ export default function SearchScreen({navigation}) {
                     />
                 </TouchableOpacity>
                 <View style={styles.slideTextContainer}>
-                     {/* <View style={{height: 50}}/>  */}
                             <Text style={styles.slideTitle}>{t('academicpage.title')}</Text>
                             <Text style={styles.slideText}>{t('academicpage.text')}</Text>
                         </View>
-                        {/* <View style={{height: 30}}/>  */}
                         
                 <TouchableOpacity onPress={toggleModal} style={styles.joinButton}>
                     <Text style={styles.joinButtonText}>{t('homepage.joinus')}</Text>
                 </TouchableOpacity>
                 <Modal modalVisible={modalVisible} toggleModal={toggleModal}/>
-                {/* <View> */}
-                {/* <View style={{height: 100}}/>  */}
-                    <Text style={styles.label}>{t('academicpage.acdemics')}</Text>
-                    <View style={styles.dropDownContainer}>
+                    <Text style={[styles.label,{ textAlign: textAlignment }]}>{t('academicpage.acdemics')}</Text>
+                    <View style={[styles.dropDownContainer,{ textAlign: textAlignment }]}>
                         <TouchableOpacity>
                             <Dropdown
                                 placeholder={t('academicpage.acdemicsField')}
-                                label={t('academicpage.acdemicsField')}
+                                label={
+                                    <Text style={{ writingDirection: 'rtl' }}>{t('academicpage.acdemicsField')}</Text>
+                                  }
                                 data={degrees.map((degree) => ({
                                   label: degree.label,
                                   value: degree.id.toString(),
@@ -182,6 +189,7 @@ export default function SearchScreen({navigation}) {
                                 value={degree.value}
                                 setValue={setDegree}
                                 errorText={degree.error}
+                                
                             />
                             <Dropdown
                                 placeholder={t('academicpage.acdemics.Area')}
@@ -197,15 +205,13 @@ export default function SearchScreen({navigation}) {
                         </TouchableOpacity>
                         
                     </View>
-                {/* </View> */}
                 
                 <View style={styles.pageContent}>
                     {filteredData.map((item) => renderItem({ item }))}
                 </View>
 
-                <End style={styles.end} navigation={navigation} /> 
-                    
-                   
+                <End style={styles.end} navigation={navigation} />
+                      
             </ScrollView>
         </SafeAreaView>
     );
@@ -239,6 +245,7 @@ const styles = StyleSheet.create({
     menuButton: {
         paddingLeft: 16,
         paddingTop: 8,
+        height: 40,
     },
     sidebarButton: {
         marginTop: 8,
@@ -307,7 +314,6 @@ const styles = StyleSheet.create({
     },
     sliderContainer: {
         height: Dimensions.get("window").height / 3,
-        //width: "100%",
         marginTop: 10,
         alignItems:'center',
 

@@ -18,8 +18,19 @@ import {
     Linking
 } from "react-native";
 const window = Dimensions.get('window');
+
 export default function App({navigation}) {
     const {t, i18n} = useTranslation();
+    const getTextAlignment = () => {
+        const { i18n } = useTranslation();
+      
+        if (i18n.language === 'AR' || i18n.language === 'HE') {
+          return 'right'; // Right-to-left alignment for Spanish
+        } else {
+          return 'left'; // Left-to-right alignment for other languages
+        }
+      };
+      const textAlignment = getTextAlignment();
     const [modalVisible, setModalVisible] = useState(false);
     // SideBar & Languages
     const [isSideBarOpen, setSideBarOpen] = useState(false);
@@ -35,51 +46,48 @@ export default function App({navigation}) {
         setModalVisible(!modalVisible);
     }
     const data = [
-        {id: 1, text: t('homepage.goals.0.desc')},
-        {id: 2, text: t('homepage.goals.1.desc')},
-        {id: 3, text: t('homepage.goals.2.desc')},
-    ];
-    // Render each item in the list
-    const renderItem = ({item}) => {
+        { id: 1, text: t('homepage.goals.0.desc') },
+        { id: 2, text: t('homepage.goals.1.desc') },
+        { id: 3, text: t('homepage.goals.2.desc') },
+      ];
+      
+      // Render each item in the list
+      const renderItem = ({ item }) => {
+        const key = item.id.toString(); // Assign the key directly
+      
         if (i18n.language === 'AR') {
-            return (
-                <View style={styles.listItem}>
-                    <Text style={styles.text}>{item.text}</Text>
-                    <View style={{width: 30}}/>
-                    <View style={styles.square}>
-                        <Text style={[styles.number]}>
-                            {item.id}
-                        </Text>
-                    </View>
-                </View>
-            );
+          return (
+            <View key={key} style={styles.listItem}>
+              <Text style={[styles.text, { textAlign: textAlignment }]}>{item.text}</Text>
+              <View style={{ width: 30 }} />
+              <View style={styles.square}>
+                <Text style={[styles.number]}>{item.id}</Text>
+              </View>
+            </View>
+          );
         } else if (i18n.language === 'EN') {
-            return (
-                <View style={styles.listItem}>
-                    <View style={styles.square}>
-                        <Text style={[styles.number]}>
-                            {item.id}
-                        </Text>
-                    </View>
-                    <View style={{width: 30}}/>
-                    <Text style={styles.text}>{item.text}</Text>
-                </View>
-            );
+          return (
+            <View key={key} style={styles.listItem}>
+              <View style={styles.square}>
+                <Text style={[styles.number]}>{item.id}</Text>
+              </View>
+              <View style={{ width: 30 }} />
+              <Text style={[styles.text, { textAlign: textAlignment }]}>{item.text}</Text>
+            </View>
+          );
         } else {
-            // Default case if language is not Arabic, Hebrew, or English
-            return (
-                <View style={styles.listItem}>
-                    <Text style={styles.text}>{item.text}</Text>
-                    <View style={{width: 30}}/>
-                    <View style={styles.square}>
-                        <Text style={[styles.number]}>
-                            {item.id}
-                        </Text>
-                    </View>
-                </View>
-            );
+          // Default case if language is not Arabic, Hebrew, or English
+          return (
+            <View key={key} style={styles.listItem}>
+              <Text style={[styles.text, { textAlign: textAlignment }]}>{item.text}</Text>
+              <View style={{ width: 30 }} />
+              <View style={styles.square}>
+                <Text style={[styles.number]}>{item.id}</Text>
+              </View>
+            </View>
+          );
         }
-    };
+      };
     const scrollViewRef = useRef(null);
     return (
         <I18nextProvider i18n={i18n}>
@@ -179,15 +187,15 @@ export default function App({navigation}) {
                     <Image source={require("../../assets/almuntda.png")} style={{width: 350, height: 250}}/>
                     <View style={styles.slideIntroductionContainer}>
                         <View style={{height: 10}}/>
-                        <Text style={styles.title}>{t('homepage.about')}</Text>
+                        <Text style={[styles.title ,{ textAlign: textAlignment }]}>{t('homepage.about')}</Text>
                         <View style={{height: 10}}/>
-                        <Text style={styles.introduction}>
+                        <Text style={[styles.introduction,,{ textAlign: textAlignment }]}>
                             {t('homepage.description')}
                         </Text>
                         <View style={{height: 50}}/>
-                        <Text style={styles.title}>{t('homepage.about_2')}</Text>
+                        <Text style={[styles.title,{ textAlign: textAlignment }]}>{t('homepage.about_2')}</Text>
                         <View style={{height: 20}}/>
-                        <Text style={styles.introduction}>
+                        <Text style={[styles.introduction,,{ textAlign: textAlignment }]}>
                             {t('homepage.description_2')}
                         </Text>
                     </View>
@@ -199,38 +207,34 @@ export default function App({navigation}) {
                         />
                         <View style={{height: 20}}/>
                         <View>
-                            <Text style={{
+                            <Text style={[{
                                 fontSize: 30,
                                 color: "#f58723",
                                 fontWeight: "bold",
-                            }}>{t('homepage.vision.sub.title')}</Text>
-                            <Text style={styles.introduction}>
+                            },{ textAlign: textAlignment }]}>{t('homepage.vision.sub.title')}</Text>
+                            <Text style={[styles.introduction,,{ textAlign: textAlignment }]}>
                                 {t('homepage.vision.desc')}
                             </Text>
                             <View style={{height: 40}}/>
-                            <Text style={{
+                            <Text style={[{
                                 fontSize: 30,
                                 color: "#f58723",
                                 fontWeight: "bold",
-                            }}>{t('homepage.message.sub.title')}</Text>
-                            <Text style={styles.introduction}>
+                            },{ textAlign: textAlignment }]}>{t('homepage.message.sub.title')}</Text>
+                            <Text style={[styles.introduction,,{ textAlign: textAlignment }]}>
                                 {t('homepage.message.desc')}
                             </Text>
                         </View>
                     </View>
                     <View style={{marginTop: 20, padding: 30,}}>
-                        <View style={{height: 70}}/>
-                        <Text style={{
+                        <View style={{height: 10}}/>
+                        <Text style={[{
                             fontSize: 30,
                             color: "#f58723",
                             fontWeight: "bold",
-                        }}>{t('homepage.goals.title')}</Text>
-                        <View style={{flexDirection: 'row',}}>
-                            {/* <FlatList
-                                data={data}
-                                renderItem={renderItem}
-                                keyExtractor={(item) => item.id.toString()}
-                            /> */}
+                        },{ textAlign: textAlignment }]}>{t('homepage.goals.title')}</Text>
+                        <View style={{flexDirection: 'column',}}>
+                        {data.map(item => renderItem({ item}))}
                         </View>
                         <View style={{height: 30}}/>
                         <Image
@@ -240,9 +244,9 @@ export default function App({navigation}) {
                     </View>
                     <View style={{marginTop: 20, paddingHorizontal: 20,}}>
                         <View style={{height: 30}}/>
-                        <Text style={styles.title}>{t('homepage.impact.sub.title')}</Text>
+                        <Text style={[styles.title,{ textAlign: textAlignment }]}>{t('homepage.impact.sub.title')}</Text>
                         <View style={{height: 30}}/>
-                        <Text style={styles.introduction}>
+                        <Text style={[styles.introduction,{ textAlign: textAlignment }]}>
                             {t('homepage.impact.desc')} </Text>
                     </View>
                     <View style={{height: 30}}/>
@@ -252,9 +256,9 @@ export default function App({navigation}) {
                     />
                     <View style={{marginTop: 20, paddingHorizontal: 20,}}>
                         <View>
-                            <Text style={styles.title}>{t('homepage.missfix.sub.title')}</Text>
+                            <Text style={[styles.title,{ textAlign: textAlignment }]}>{t('homepage.missfix.sub.title')}</Text>
                             <View style={{height: 30}}/>
-                            <Text style={styles.introduction}>
+                            <Text style={[styles.introduction,{ textAlign: textAlignment }]}>
                                 {t('homepage.missfix.desc')} </Text>
                         </View>
                     </View>
@@ -264,7 +268,7 @@ export default function App({navigation}) {
                         style={{width: 370, height: 350}}
                     />
                     <View style={{marginTop: 40, paddingHorizontal: 20}}>
-                        <Text style={[styles.title, {fontSize: 35}]}>{t('homepage.founder.title')}</Text>
+                        <Text style={[styles.title, {fontSize: 35},{ textAlign: textAlignment }]}>{t('homepage.founder.title')}</Text>
                     </View>
                     <View style={{paddingHorizontal: 20,}}>
                         <View style={styles.squ}>
@@ -275,7 +279,7 @@ export default function App({navigation}) {
                             <View style={{height: 350}}/>
                             <Text style={styles.Names}>{t('homepage.founders.1.name')}</Text>
                             <View style={{height: 30}}/>
-                            <Text style={styles.text}>{t('homepage.founders.1.desc')}</Text>
+                            <Text style={[styles.text,{ textAlign: textAlignment }]}>{t('homepage.founders.1.desc')}</Text>
                             <View style={{height: 20}}/>
                         </View>
                     </View>
@@ -292,7 +296,7 @@ export default function App({navigation}) {
                             <View style={{height: 350}}/>
                             <Text style={styles.Names}>{t('homepage.founders.0.name')}</Text>
                             <View style={{height: 20}}/>
-                            <Text style={styles.text}>{t('homepage.founders.0.desc')}</Text>
+                            <Text style={[styles.text,{ textAlign: textAlignment }]}>{t('homepage.founders.0.desc')}</Text>
                             <View style={{height: 20}}/>
                         </View>
                     </View>
@@ -451,7 +455,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         left: 10,
         top: 10,
-        // padding: 100,
+        
         fontWeight: "bold",
         padding: 10,
     },
@@ -464,19 +468,17 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     squ: {
-        width: 300,
-        shadowColor: '#000000',
-        shadowOpacity: 0.7,
-        shadowRadius: 10,
-        elevation: 2, // for Android shadows
+        marginBottom: 10,
+        backgroundColor: '#fff',
+        borderRadius: 8,
         padding: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderColor: "black",
-        top: 50,
-        minWidth: 50,
-        minHeight: 50,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        elevation: 2,
+         width: 300,
         alignSelf: 'flex-start',
+    
     },
     squar: {
         width: 300,
