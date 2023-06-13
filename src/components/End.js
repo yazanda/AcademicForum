@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, SafeAreaView, Image, View, Text, Dimensions, TouchableOpacity,Linking} from "react-native";
 import {FontAwesome} from '@expo/vector-icons';
 import {useTranslation} from 'react-i18next';
@@ -41,7 +41,7 @@ const End = ({navigation}) => {
         Linking.openURL(facebookURL);
       };
       return ( 
-        <SafeAreaView>
+        <SafeAreaView styles={styles.all}>
         <View style={{height: 70}}/>
         <View style={styles.rectangular}>
             <View style={styles.halfReg}>
@@ -145,6 +145,7 @@ end:{
     flexDirection: 'row',
     alignSelf: 'flex-start',
     bottom:0,
+    paddingtop: 100,
     position: 'absolute',
 },
 
@@ -152,6 +153,9 @@ TextEnd:{
     fontSize: 12,
     color:'white',
 },
+all: {
+    justifyContent: 'flex-end',
+}
 });
 
 

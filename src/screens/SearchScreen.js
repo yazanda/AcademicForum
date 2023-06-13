@@ -42,7 +42,7 @@ export default function SearchScreen({navigation}) {
 
     const fetchAcademics = async () => {
         try {
-          const response = await axios.get('https://almuntada.onrender.com/api/v1/academic/isApproved/true');
+          const response = await axios.get('https://almuntada.onrender.com/api/v1/academic/careers');
           setAcademics(response.data);
         } catch (error) {
           console.error(error);
@@ -50,26 +50,26 @@ export default function SearchScreen({navigation}) {
     };
 
     const renderItem = ({ item }) => (
-        <View style={styles.card} key={item.id}>
-          <Image style={styles.image} source={{ uri: item.imageUrl }} />
+        <View style={styles.card} key={item.user[0].id}>
+          <Image style={styles.image} source={{ uri: item.user[0].imageUrl }} />
             <View style={styles.detailsContainer}>
-                <Text style={styles.fullName}>{`${item.firstName} ${item.lastName}`}</Text>
-                <Text style={styles.email}>{item.email}</Text>
-                <Text style={styles.city}>{item.city}</Text>
-                <Text style={styles.degree}>{item.degree}</Text>
+                <Text style={styles.fullName}>{`${item.user[0].firstName} ${item.user[0].lastName}`}</Text>
+                <Text style={styles.email}>{item.user[0].email}</Text>
+                <Text style={styles.city}>{item.user[0].city}</Text>
+                <Text style={styles.degree}>{`${item.user[0].degree} : ${item.career}`}</Text>
             </View>
         </View>
     );
 
     const filteredData = academics.filter((item) => {
         if (city.value && degree.value) {
-          return item.city === city.value && item.degree === degree.value;
+          return item.user[0].city === city.value && item.user[0].degree === degree.value && item.user[0].isApproved;
         } else if (city.value !== '') {
-          return item.city === city.value;
+          return item.user[0].city === city.value && item.user[0].isApproved;
         } else if (degree.value !== '') {
-          return item.degree === degree.value;
+          return item.user[0].degree === degree.value && item.user[0].isApproved;
         }
-        return true; 
+        return item.user[0].isApproved; 
     });
 
     const [isSideBarOpen, setSideBarOpen] = useState(false);
@@ -333,7 +333,7 @@ end:{
 },
 
 card: {
-    flexDirection: 'column',  // Change to column layout
+    flexDirection: 'column', 
     marginBottom: 10,
     backgroundColor: '#fff',
     borderRadius: 8,
@@ -350,12 +350,12 @@ card: {
     width: '80%',
     height: '60%',
     alignSelf: 'center',
-    // borderRadius: 40,
-    marginBottom: 10,  // Move the margin to the bottom
+    borderRadius: 15,
+    marginBottom: 10, 
   },
   detailsContainer: {
     flex: 1,
-    alignItems: 'center',  // Align the details in the center
+    alignItems: 'center', 
   },
   fullName: {
     fontSize: 18,

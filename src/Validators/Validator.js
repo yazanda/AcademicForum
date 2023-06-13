@@ -21,11 +21,6 @@ export function messageValidator(message) {
     return ''
 }
 
-// export function subjectValidator(subject) {
-//     if (!subject) return "Please select a subject."
-//     return ''
-// }
-
 export function firstNameValidator(firstName) {
   const schema = Yup.string()
     .required("First Name is required.")
