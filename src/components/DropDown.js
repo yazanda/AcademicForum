@@ -59,7 +59,7 @@ const DropdownComponent = ({ placeholder, label, data, value, setValue, errorTex
       {renderLabel()}
       {value && (
         <TouchableOpacity onPress={() => setValue('')} style={styles.closeButton}>
-          <AntDesign name="close" size={16} color="gray" style={styles.close}/>
+          <AntDesign name="close" size={16} color="gray"/>
         </TouchableOpacity>
       )}
       {errorText ? <Text style={styles.error}>{errorText}</Text> : null}
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     color: 'red',
     paddingTop: 8,
   },
-  close: {
+  closeButton: {
     paddingLeft: 10,
   },
 });

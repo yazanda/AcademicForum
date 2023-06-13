@@ -8,6 +8,7 @@ import he from '../translations/he.json';
 i18n
 .use(initReactI18next)
 .init({
+  compatibilityJSON: 'v3',
   resources: {
     EN: {
       translation: en,

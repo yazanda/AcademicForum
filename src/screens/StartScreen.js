@@ -298,7 +298,7 @@ export default function App({navigation}) {
                             <View style={{height: 20}}/>
                         </View>
                     </View>
-                    <End style={styles.End} navigation={navigation}/>
+                    <End style={styles.end} navigation={navigation}/>
                 </ScrollView>
             </SafeAreaView>
         </I18nextProvider>

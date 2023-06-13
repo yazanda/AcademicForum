@@ -9,10 +9,10 @@ import {
     Platform,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 const DatePicker = ({label, value, onChange, placeholder, error}) => {
     const [showDatePicker, setShowDatePicker] = useState(false);
-    // const [isFocused, setIsFocused] = useState(false);
     const inputRef = useRef(null);
 
     const handleDateChange = (event, date) => {
@@ -24,13 +24,16 @@ const DatePicker = ({label, value, onChange, placeholder, error}) => {
 
     const handleShowDatePicker = () => {
         setShowDatePicker(true);
-        // setIsFocused(true);
     };
 
     const handleHideDatePicker = () => {
         setShowDatePicker(false);
-        // setIsFocused(false);
     };
+
+    const handleCancel = () => {
+        setShowDatePicker(false);
+        onChange(null);
+    }
 
     const handleConfirm = () => {
         handleHideDatePicker();
@@ -57,7 +60,7 @@ const DatePicker = ({label, value, onChange, placeholder, error}) => {
         return null;
     };
 
-
+    // console.log(value);
     return (
         <TouchableOpacity style={styles.container} underlineColor="transparent" mode="outlined" onPressIn={handleShowDatePicker}>
             {(showDatePicker || value !== null) && (
@@ -83,12 +86,19 @@ const DatePicker = ({label, value, onChange, placeholder, error}) => {
                     onTouchStart={handleShowDatePicker}
                 />
                 {Platform.OS === 'ios' && showDatePicker && (
+                    <TouchableOpacity onPress={handleCancel} style={styles.closeButton}>
+                        <AntDesign name="close" size={16} color="gray"/>
+                   </TouchableOpacity>
+                )}
+
+                {Platform.OS === 'ios' && showDatePicker && (
                     <Button
                         title="Confirm"
                         onPress={handleConfirm}
                         style={styles.confirmButton}
                     />
                 )}
+                
             </View>
             {renderDatePicker()}
             {error && <Text style={styles.errorText}>{error}</Text>}
@@ -153,6 +163,9 @@ const styles = StyleSheet.create({
         right: 0,
         height: '100%',
         paddingHorizontal: 16,
+    },
+    closeButton: {
+
     },
 });
 

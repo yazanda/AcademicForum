@@ -38,12 +38,6 @@ const MyModal = ({modalVisible, toggleModal}) => {
     const [image, setImage] = useState(null);
     const [checked, setChecked] = useState(false);
 
-    const [addedValue , setAddedValue] = useState({
-        company:"",
-        subject:"",
-        career:""
-    });
-
     const [addedCompany,setAddedCompany] = useState('');
     const [addedSubject,setAddedSubject] = useState('');
     const [addedCareer,setAddedCareer] = useState('');
@@ -78,7 +72,6 @@ const MyModal = ({modalVisible, toggleModal}) => {
             console.error(error);
         }
     };
-
     let validationError;
     return (
         <Modal visible={modalVisible} animationType="slide" onRequestClose={toggleModal}>
@@ -128,8 +121,7 @@ const MyModal = ({modalVisible, toggleModal}) => {
                                     value: degreeIn.id.toString(),
                                   }))}
                                   value={degree.value}
-                                  setAddedValue={setAddedValue}
-
+                                  setAddedValue={null}
                                   setValue={setDegree}
                                   errorText={degree.error}/>
                         <Dropdown placeholder={t('academicpage.dialog.subject')} label={t('academicpage.dialog.subject')}
