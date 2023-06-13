@@ -1,8 +1,17 @@
-import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Button, Platform } from 'react-native';
+import React, {useState, useRef} from 'react';
+import {
+    View,
+    Text,
+    StyleSheet,
+    TextInput,
+    TouchableOpacity,
+    Button,
+    Platform,
+    TouchableWithoutFeedback
+} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const DatePicker = ({ label, value, onChange, placeholder, error }) => {
+const DatePicker = ({label, value, onChange, placeholder, error}) => {
     const [showDatePicker, setShowDatePicker] = useState(false);
     // const [isFocused, setIsFocused] = useState(false);
     const inputRef = useRef(null);
@@ -38,7 +47,7 @@ const DatePicker = ({ label, value, onChange, placeholder, error }) => {
         if (showDatePicker) {
             return (
                 <DateTimePicker
-                    value={value ?  value : new Date()}
+                    value={value ? value : new Date()}
                     mode="date"
                     display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                     onChange={handleDateChange}
@@ -51,24 +60,28 @@ const DatePicker = ({ label, value, onChange, placeholder, error }) => {
 
 
     return (
-        <View
-            style={styles.container}
-            underlineColor="transparent"
-            mode="outlined"
-        >
+        <TouchableOpacity style={styles.container} underlineColor="transparent" mode="outlined" onPressIn={handleShowDatePicker}>
             {(showDatePicker || value !== null) && (
-                <Text style={[styles.label, { color: '#00008B' }]}>{label}</Text>
+                <Text style={[styles.label, {color: '#00008B'}]}>{label}</Text>
             )}
-            <View style={[error ? styles.errorInputContainer : styles.inputContainer , showDatePicker && styles.focusedInput]}>
+            <View
+                style={[
+                    error ? styles.errorInputContainer : styles.inputContainer,
+                    showDatePicker && styles.focusedInput,
+                ]}
+            >
                 <TextInput
                     ref={inputRef}
-                    style={[styles.textInput, error && styles.errorTextInput, { color: value ? 'black' : 'gray' }]}
+                    style={[
+                        styles.textInput,
+                        error && styles.errorTextInput,
+                        {color: value ? 'black' : 'gray'},
+                    ]}
                     value={value ? value.toDateString() : ''}
                     placeholder={!showDatePicker ? placeholder : ''}
                     placeholderTextColor={'black'}
-                    editable={true}
-                    onTouchStart={() => setShowDatePicker(true)}
-                    onBlur={()=> setShowDatePicker(false)}
+                    editable={false}
+                    onTouchStart={handleShowDatePicker}
                 />
                 {Platform.OS === 'ios' && showDatePicker && (
                     <Button
@@ -80,7 +93,7 @@ const DatePicker = ({ label, value, onChange, placeholder, error }) => {
             </View>
             {renderDatePicker()}
             {error && <Text style={styles.errorText}>{error}</Text>}
-        </View>
+        </TouchableOpacity>
     );
 };
 
@@ -130,7 +143,7 @@ const styles = StyleSheet.create({
     },
     labelFocused: {
         color: 'blue',
-        transform: [{ translateY: 0 }, { scale: 1 }],
+        transform: [{translateY: 0}, {scale: 1}],
     },
     errorText: {
         color: 'red',
