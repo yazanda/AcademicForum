@@ -1,23 +1,36 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
+import { Modal as PopModal } from 'react-native-modal';
 import {
     View,
     Modal,
-    Button,
     Text,
     TouchableOpacity,
     ScrollView,
     SafeAreaView,
     StyleSheet,
 } from 'react-native';
+import {
+    firstNameValidator,
+    lastNameValidator,
+    emailValidator,
+    ageValidator,
+    degreeValidator,
+    subjectValidator,
+    careerValidator,
+    cityValidator,
+    genderValidator,
+    phoneValidator,
+    imageUrlValidator,
+    companyValidator,
+} from '../Validators/Validator';
 import Dropdown from './DropDown';
 import DatePicker from './DatePicker';
 import TextInput from './TextInput';
-import {CheckBox, Input} from 'react-native-elements';
+import {CheckBox} from 'react-native-elements';
 import { getDegreeList } from '../lists/degree';
 import { getCityList } from '../lists/list';
 import axios from 'axios';
-import {Box, Typography} from "@mui/material";
 import {UploadImage} from "./UploadImage";
 import {DataToSelectOptions} from "../components/HelperFunction";
 
@@ -27,7 +40,7 @@ const MyModal = ({modalVisible, toggleModal}) => {
     const [firstName, setFirstName] = useState({ value: "", error: "" });
     const [lastName, setLastName] = useState({ value: "", error: "" });
     const [email, setEmail] = useState({ value: "", error: "" });
-    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedDate, setSelectedDate] = useState({ value: "", error: "" });
     const [degree, setDegree] = useState({ value: "", error: "" });
     const [subject, setSubject] = useState({ value: "", error: "" });
     const [career, setCareer] = useState({ value: "", error: "" });
@@ -41,12 +54,6 @@ const MyModal = ({modalVisible, toggleModal}) => {
     const [addedCompany,setAddedCompany] = useState('');
     const [addedSubject,setAddedSubject] = useState('');
     const [addedCareer,setAddedCareer] = useState('');
-    const handleAddedValue = (name,setFunc) => {
-        setFunc({
-            ...addedValue,
-            [name]: addedValue
-        })
-    }
 
     const [subjects, setSubjects] = useState([]);
     const [companies, setCompanies] = useState([]);
@@ -72,7 +79,76 @@ const MyModal = ({modalVisible, toggleModal}) => {
             console.error(error);
         }
     };
-    let validationError;
+
+    const handleSend = async () => {
+        if(addedCompany) setCompany({value: addedCompany, error: ''});
+        if(addedCareer) setCareer({value: addedCareer, error: ''});
+        if(addedSubject) setSubject({value: addedSubject, error: ''});
+        if(selectedDate.value) setSelectedDate(new Date(selectedDate.value).toISOString().substring(0, 10));
+        fnameError = firstNameValidator(firstName.value);
+        lnameError = lastNameValidator(lastName.value);
+        emailError = emailValidator(email.value);
+        aError = ageValidator(selectedDate.value);
+        degreeError = degreeValidator(degree.value);
+        careerError = careerValidator(career.value);
+        companyError = companyValidator(company.value);
+        subjectError = subjectValidator(subject.value);
+        cityError = cityValidator(city.value);
+        phoneError = phoneValidator(phoneNumber.value);
+        imageError = imageUrlValidator(image);
+        genderError = genderValidator(gender.value);
+
+        if(fnameError || lnameError || emailError || aError || degreeError || careerError ||
+        companyError || subjectError || cityError || phoneError || imageError || genderError){
+            setFirstName({ ...firstName, error: fnameError});
+            setLastName({ ...lastName, error: lnameError});
+            setEmail({ ...email, error: emailError});
+            setSelectedDate({ ...selectedDate, error: aError});
+            setDegree({ ...degree, error: degreeError});
+            setCareer({ ...career, error: careerError});
+            setCompany({ ...company, error: companyError});
+            setSubject({ ...subject, error: subjectError});
+            setCity({ ...city, error: cityError});
+            setPhoneNumber({ ...phoneNumber, error: phoneError});
+            setGender({ ...gender, error: genderError});
+            return;
+        }
+        try {
+            const response = await axios.post('https://almuntada.onrender.com/api/v1/academic', {
+                firstName: firstName.value,
+                lastName: lastName.value,
+                email: email.value,
+                imageUrl: image,
+                age: selectedDate.value,
+                degree: degree.value,
+                subject: subject.value,
+                career: career.value,
+                city: city.value,
+                gender: gender.value,
+                phone: phoneNumber.value,
+                company: company.value,
+                isAgree: checked,
+            });
+            console.log(response.data);
+        //   if (response.status === 201) {
+        //       setIsSuccessModalVisible(true);
+        //       // Clear form fields after successful submission
+        //       setFullName('');
+        //       setEmail('');
+        //       setSubject('');
+        //       setMessage('');
+        //     } else {
+        //       Alert.alert('Error', 'Failed to send the form. Please try again.');
+        //     }
+          } catch (error) {
+            console.error(error);
+            // Alert.alert('Error', 'An error occurred while sending the form. Please try again.');
+          }
+
+
+    }
+
+
     return (
         <Modal visible={modalVisible} animationType="slide" onRequestClose={toggleModal}>
             <SafeAreaView style={styles.modalContainer}>
@@ -95,9 +171,9 @@ const MyModal = ({modalVisible, toggleModal}) => {
                     <DatePicker
                         placeholder={t('academicpage.dialog.Birhdate')}
                         label={t('academicpage.dialog.Birhdate')}
-                        value={selectedDate}
-                        onChange={(date) => setSelectedDate(date)}
-                        error={validationError}
+                        value={selectedDate.value}
+                        onChange={(date) => setSelectedDate({value: date, error: ''})}
+                        error={selectedDate.error}
                     />
                     <TextInput  label={t('academicpage.dialog.email')}
                                 returnKeyType="next"
@@ -163,12 +239,13 @@ const MyModal = ({modalVisible, toggleModal}) => {
                         checked={checked}
                         onPress={() => {setChecked(!checked)}}
                     />
-                    <TouchableOpacity style={styles.sendButton} onPress={toggleModal}>
+                    <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
                         <Text style={styles.sendButtonText}>{t('contactpage.submit')}</Text>
                     </TouchableOpacity>
                 </ScrollView>
             </SafeAreaView>
         </Modal>
+        
     );
 };
 

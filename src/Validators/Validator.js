@@ -48,17 +48,10 @@ export function lastNameValidator(lastName) {
 }
 
 export function emailValidator(email) {
-  const schema = Yup.string()
-    .required("Email is required.")
-    .matches(/^[A-Za-z\s]+$/, 'Only English letters')
-    .email("Invalid email address");
-
-  try {
-    schema.validateSync(email);
-    return '';
-  } catch (error) {
-    return error.message;
-  }
+  const re = /\S+@\S+\.\S+/
+  if (!email) return "Email is required."
+  if (!re.test(email)) return 'Not a valid email address.'
+  return ''
 }
 
 export function phoneValidator(phone) {
