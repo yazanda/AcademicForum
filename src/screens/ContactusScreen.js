@@ -13,8 +13,8 @@ import {
     TouchableOpacity,
     Alert,
     Platform,
-    StatusBar,
 } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import TextInput from '../components/TextInput';
 import Dropdown from "../components/DropDown";
 import axios from 'axios';
@@ -83,8 +83,9 @@ import Modal from 'react-native-modal';
 
     return (
         <SafeAreaView style={styles.container}>
-            <StatusBar barStyle="dark-content" />
+            <StatusBar style="dark" />
             <View style={styles.sideBarContainer}>
+                
                 <TouchableOpacity onPress={handleMenuPress} style={styles.menuButton}>
                     {isSideBarOpen ? (
                         <FontAwesome name="times" size={24} color="black"/>

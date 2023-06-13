@@ -29,6 +29,7 @@
     "expo-sharing": "~11.2.2",
     "expo-status-bar": "~1.4.4",
     "i18next": "^22.5.0",
+    "install": "^0.13.0",
     "intl": "^1.2.5",
     "intl-pluralrules": "^2.0.0",
     "react": "18.2.0",
