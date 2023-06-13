@@ -10,8 +10,8 @@ import {
     I18nManager,
     Dimensions,
     Platform,
-    StatusBar,
 } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { useTranslation } from 'react-i18next';
 import { Video } from 'expo-av';
 import axios from 'axios';
@@ -65,7 +65,7 @@ export default function PodcastScreen({navigation}) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <StatusBar barStyle="dark-content" />
+            <StatusBar style="dark" />
             <View style={styles.sideBarContainer}>
                 <TouchableOpacity onPress={handleMenuPress} style={styles.menuButton}>
                     {isSideBarOpen ? (

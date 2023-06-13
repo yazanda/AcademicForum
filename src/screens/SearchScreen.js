@@ -2,6 +2,7 @@ import React, {useEffect, useState, useRef} from 'react';
 import {StatusBar} from 'react-native';
 import {FontAwesome} from '@expo/vector-icons';
 import {useTranslation} from 'react-i18next';
+import { StatusBar } from 'expo-status-bar';
 import axios from 'axios';
 import {
     StyleSheet,
@@ -90,6 +91,7 @@ const[subjectData,setSubjectData] = useState({value:"",error:""})
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar barStyle="dark-content"/>
+            <StatusBar style="dark" />
             <View style={styles.sideBarContainer}>
                 <TouchableOpacity onPress={handleMenuPress} style={styles.menuButton}>
                     {isSideBarOpen ? (
