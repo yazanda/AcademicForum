@@ -35,6 +35,7 @@ const MyModal = ({modalVisible, toggleModal}) => {
     const [gender, setGender] = useState({ value: "", error: "" });
     const [phoneNumber, setPhoneNumber] = useState({ value: "", error: "" });
     const [company, setCompany] = useState({ value: "", error: "" });
+    const [image, setImage] = useState(null);
     const [checked, setChecked] = useState(false);
 
     const [addedValue , setAddedValue] = useState({
@@ -61,16 +62,10 @@ const MyModal = ({modalVisible, toggleModal}) => {
     const careerOptions = DataToSelectOptions(careers,'career','career');
     const companyOptions = DataToSelectOptions(companies,'company','company');
 
-    // console.log(subjectOptions)
-    // console.log(careerOptions)
-    // console.log(companyOptions)
-
-    // Function to handle image selection
-    const [image, setImage] = useState(null)
-
     useEffect(() => {
         fetchAcademics();
     }, []);
+
     const fetchAcademics = async () => {
         try {
             const subjects = await axios.get(`https://almuntada.onrender.com/api/v1/academic/subjects`);
@@ -83,7 +78,6 @@ const MyModal = ({modalVisible, toggleModal}) => {
             console.error(error);
         }
     };
-    console.log(subject, "subject", addedValue,"Added:")
 
     let validationError;
     return (
@@ -126,7 +120,7 @@ const MyModal = ({modalVisible, toggleModal}) => {
                                   }))}
                                   value={city.value}
                                   setValue={setCity}
-                                  setAddedValue={setAddedValue}
+                                  setAddedValue={null}
                                   errorText={city.error}/>
                         <Dropdown placeholder={t('academicpage.dialog.degree')} label={t('academicpage.dialog.degree')}
                                   data={degrees.map((degreeIn) => ({
@@ -156,12 +150,11 @@ const MyModal = ({modalVisible, toggleModal}) => {
                                   setAddedValue={setAddedCareer}
                                   setValue={setCareer}
                                   errorText={career.error}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.dropDownContainer}>
                         <Dropdown placeholder={t('academicpage.dialog.sex')} label={t('academicpage.dialog.sex')}
                                   data={genderData}
                                   value={gender.value}
                                   setValue={setGender}
+                                  setAddedValue={null}
                                   errorText={gender.error}/>
                     </TouchableOpacity>
                     <TextInput  label={t('academicpage.dialog.phone')}
@@ -247,31 +240,3 @@ const genderData = [
     {label: 'Male', value: '1'},
     {label: 'Female', value: '2'},
 ];
-function CircularProgressWithLabel(
-    props,
-) {
-    return (
-        <Box sx={{position: 'relative', display: 'inline-flex'}}>
-            <CircularProgress variant="determinate" {...props} />
-            <Box
-                sx={{
-                    top: 0,
-                    left: 0,
-                    bottom: 0,
-                    right: 0,
-                    position: 'absolute',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}
-            >
-                <Typography
-                    variant="caption"
-                    component="div"
-                    color="text.secondary"
-                >{`${Math.round(props.value)}%`}</Typography>
-            </Box>
-        </Box>
-    );
-}
-

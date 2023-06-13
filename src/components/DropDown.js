@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
@@ -39,9 +39,10 @@ const DropdownComponent = ({ placeholder, label, data, value, setValue, errorTex
         value={value}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
-        onChangeText={(e)=> {
-          if(!data.includes(e)) setAddedValue(e)
-        }  }
+        onChangeText={(item)=> {
+          if(setAddedValue && !data.includes(item)) 
+            setAddedValue(item);
+        }}
         onChange={(item) => {
           setValue({value: item.label, error: ""});
           setIsFocus(false);
@@ -56,7 +57,11 @@ const DropdownComponent = ({ placeholder, label, data, value, setValue, errorTex
         )}
       />
       {renderLabel()}
-
+      {value && (
+        <TouchableOpacity onPress={() => setValue('')} style={styles.closeButton}>
+          <AntDesign name="close" size={16} color="gray" style={styles.close}/>
+        </TouchableOpacity>
+      )}
       {errorText ? <Text style={styles.error}>{errorText}</Text> : null}
     </View>
   );
@@ -124,5 +129,8 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: 'red',
     paddingTop: 8,
+  },
+  close: {
+    paddingLeft: 10,
   },
 });

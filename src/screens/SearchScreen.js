@@ -1,5 +1,4 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {StatusBar} from 'react-native';
 import {FontAwesome} from '@expo/vector-icons';
 import {useTranslation} from 'react-i18next';
 import { StatusBar } from 'expo-status-bar';
@@ -32,13 +31,12 @@ export default function SearchScreen({navigation}) {
     const [academics, setAcademics] = useState([]);
     const [city, setCity] = useState({value: "", error: ""});
     const [subject, setSubject] = useState([]);
-const[subjectData,setSubjectData] = useState({value:"",error:""})
+    const[subjectData,setSubjectData] = useState({value:"",error:""})
     const toggleModal = () => {
         setModalVisible(!modalVisible);
     }
     const subjectOptions = DataToSelectOptions(subject,'subject','subject')
     const cities = getCityList;
-    console.log(subjectOptions)
     useEffect(() => {
         fetchAcademics();
     }, []);
@@ -174,7 +172,6 @@ const[subjectData,setSubjectData] = useState({value:"",error:""})
                 <Text style={styles.label}>{t('academicpage.acdemics')}</Text>
                 <View style={styles.dropDownContainer}>
                     <TouchableOpacity>
-
                         <Dropdown
                             placeholder={t('academicpage.acdemicsField')}
                             label={t('academicpage.acdemicsField')}
@@ -194,26 +191,6 @@ const[subjectData,setSubjectData] = useState({value:"",error:""})
                             setValue={setCity}
                             errorText={city.error}
                         />
-                        {/*<AutoComplete*/}
-                        {/*    autoCapitalize="none"*/}
-                        {/*    autoCorrect={false}*/}
-                        {/*    // containerStyle={styles.autocompleteContainer}*/}
-                        {/*    //data to show in suggestion*/}
-                        {/*    data={degreeOptions.length === 1 && comp(query, degreeOptions[0].label) ? [] : degreeOptions}*/}
-                        {/*    //default value if you want to set something in input*/}
-                        {/*    defaultValue={query}*/}
-                        {/*    /*onchange of the text changing the state of the query which will trigger*/}
-                        {/*    onChangeText={text => this.setState({ query: text })}*/}
-                        {/*    placeholder="Enter the film title"*/}
-                        {/*    renderItem={({ item }) => (*/}
-                        {/*        //you can change the view you want to show in suggestion from here*/}
-                        {/*        <TouchableOpacity onPress={() => this.setState({ query: item.title })}>*/}
-                        {/*            <Text style={styles.itemText}>*/}
-                        {/*                {item.title} ({item.release_date})*/}
-                        {/*            </Text>*/}
-                        {/*        </TouchableOpacity>*/}
-                        {/*    )}*/}
-                        {/*/>*/}
                     </TouchableOpacity>
 
                 </View>
