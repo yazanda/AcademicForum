@@ -7,7 +7,6 @@ import {
     TouchableOpacity,
     Button,
     Platform,
-    TouchableWithoutFeedback
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
@@ -49,7 +48,7 @@ const DatePicker = ({label, value, onChange, placeholder, error}) => {
                 <DateTimePicker
                     value={value ? value : new Date()}
                     mode="date"
-                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                    display='spinner'
                     onChange={handleDateChange}
                     textColor={Platform.OS === 'ios' ? 'black' : 'default'}
                 />

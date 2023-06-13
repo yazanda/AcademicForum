@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
     View,
@@ -19,6 +19,7 @@ import { getCityList } from '../lists/list';
 import axios from 'axios';
 import {Box, Typography} from "@mui/material";
 import {UploadImage} from "./UploadImage";
+import {DataToSelectOptions} from "../components/HelperFunction";
 
 const MyModal = ({modalVisible, toggleModal}) => {
     const {t, i18n} = useTranslation();
@@ -27,7 +28,6 @@ const MyModal = ({modalVisible, toggleModal}) => {
     const [lastName, setLastName] = useState({ value: "", error: "" });
     const [email, setEmail] = useState({ value: "", error: "" });
     const [selectedDate, setSelectedDate] = useState(null);
-    const [age, setAge] = useState({ value: "", error: "" });
     const [degree, setDegree] = useState({ value: "", error: "" });
     const [subject, setSubject] = useState({ value: "", error: "" });
     const [career, setCareer] = useState({ value: "", error: "" });
@@ -37,8 +37,53 @@ const MyModal = ({modalVisible, toggleModal}) => {
     const [company, setCompany] = useState({ value: "", error: "" });
     const [checked, setChecked] = useState(false);
 
+    const [addedValue , setAddedValue] = useState({
+        company:"",
+        subject:"",
+        career:""
+    });
+
+    const [addedCompany,setAddedCompany] = useState('');
+    const [addedSubject,setAddedSubject] = useState('');
+    const [addedCareer,setAddedCareer] = useState('');
+    const handleAddedValue = (name,setFunc) => {
+        setFunc({
+            ...addedValue,
+            [name]: addedValue
+        })
+    }
+
+    const [subjects, setSubjects] = useState([]);
+    const [companies, setCompanies] = useState([]);
+    const [careers, setCareers] = useState([]);
+
+    const subjectOptions = DataToSelectOptions(subjects,'subject','subject');
+    const careerOptions = DataToSelectOptions(careers,'career','career');
+    const companyOptions = DataToSelectOptions(companies,'company','company');
+
+    // console.log(subjectOptions)
+    // console.log(careerOptions)
+    // console.log(companyOptions)
+
     // Function to handle image selection
     const [image, setImage] = useState(null)
+
+    useEffect(() => {
+        fetchAcademics();
+    }, []);
+    const fetchAcademics = async () => {
+        try {
+            const subjects = await axios.get(`https://almuntada.onrender.com/api/v1/academic/subjects`);
+            const careers = await axios.get(`https://almuntada.onrender.com/api/v1/academic/careers`);
+            const companies = await axios.get(`https://almuntada.onrender.com/api/v1/academic/companies`);
+            setSubjects(subjects.data);
+            setCareers(careers.data);
+            setCompanies(companies.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    console.log(subject, "subject", addedValue,"Added:")
 
     let validationError;
     return (
@@ -81,6 +126,7 @@ const MyModal = ({modalVisible, toggleModal}) => {
                                   }))}
                                   value={city.value}
                                   setValue={setCity}
+                                  setAddedValue={setAddedValue}
                                   errorText={city.error}/>
                         <Dropdown placeholder={t('academicpage.dialog.degree')} label={t('academicpage.dialog.degree')}
                                   data={degrees.map((degreeIn) => ({
@@ -88,27 +134,29 @@ const MyModal = ({modalVisible, toggleModal}) => {
                                     value: degreeIn.id.toString(),
                                   }))}
                                   value={degree.value}
+                                  setAddedValue={setAddedValue}
+
                                   setValue={setDegree}
                                   errorText={degree.error}/>
+                        <Dropdown placeholder={t('academicpage.dialog.subject')} label={t('academicpage.dialog.subject')}
+                                  data={subjectOptions}
+                                  value={addedSubject || subject.value}
+                                  setAddedValue={setAddedSubject}
+                                  setValue={setSubject}
+                                  errorText={subject.error}/>
+                        <Dropdown placeholder={t('academicpage.dialog.company')} label={t('academicpage.dialog.company')}
+                                  data={companyOptions}
+                                  value={addedCompany || company.value}
+                                  setAddedValue={setAddedCompany}
+                                  setValue={setCompany}
+                                  errorText={company.error}/>
+                        <Dropdown placeholder={t('academicpage.dialog.job')} label={t('academicpage.dialog.job')}
+                                  data={careerOptions}
+                                  value={addedCareer || career.value}
+                                  setAddedValue={setAddedCareer}
+                                  setValue={setCareer}
+                                  errorText={career.error}/>
                     </TouchableOpacity>
-                    <TextInput  label={t('academicpage.dialog.subject')}
-                                returnKeyType="next"
-                                value={subject.value}
-                                onChangeText={(text) => setSubject({ value: text, error: "" })}
-                                error={!!subject.error}
-                                errorText={subject.error}/>
-                    <TextInput  label={t('academicpage.dialog.company')}
-                                returnKeyType="next"
-                                value={company.value}
-                                onChangeText={(text) => setCompany({ value: text, error: "" })}
-                                error={!!company.error}
-                                errorText={company.error}/>
-                    <TextInput  label={t('academicpage.dialog.job')}
-                                returnKeyType="next"
-                                value={career.value}
-                                onChangeText={(text) => setCareer({ value: text, error: "" })}
-                                error={!!career.error}
-                                errorText={career.error}/>
                     <TouchableOpacity style={styles.dropDownContainer}>
                         <Dropdown placeholder={t('academicpage.dialog.sex')} label={t('academicpage.dialog.sex')}
                                   data={genderData}
