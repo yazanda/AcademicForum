@@ -2,12 +2,9 @@ import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, ScrollView, StyleSheet, Modal, SafeAreaView, Dimensions} from 'react-native';
 import {FontAwesome} from '@expo/vector-icons';
 import {useTranslation} from 'react-i18next';
-// import {I18nextProvider} from 'react-i18next';
-// import LanguageContext from '../components/LanguageContext';
 
 const Header = ({navigation}) => {
     const {t, i18n} = useTranslation();
-    const [currentLanguage, setCurrentLanguage] = useState('AR');
     const [isSidebarOpen, setSidebarOpen] = useState(false);
 
     const handleLanguageChange = (language) => {

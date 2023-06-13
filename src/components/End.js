@@ -2,9 +2,6 @@ import React from 'react';
 import {StyleSheet, SafeAreaView, Image, View, Text, Dimensions, TouchableOpacity,Linking} from "react-native";
 import {FontAwesome} from '@expo/vector-icons';
 import {useTranslation} from 'react-i18next';
-import { Asset } from 'expo-asset';
-import * as FileSystem from 'expo-file-system';
-import * as WebBrowser from 'expo-web-browser';
 
 const window = Dimensions.get('window');
 
