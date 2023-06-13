@@ -12,20 +12,9 @@ const End = ({navigation}) => {
     const {t, i18n} = useTranslation();
 
     const handleOpenPDF = async () => {
-        const filePath = await getLocalUri();
-        const fileInfo = await FileSystem.getInfoAsync(filePath);
-        if (fileInfo.exists) {
-            WebBrowser.openBrowserAsync(fileInfo.uri);
-        }
-    };
-    
-    const getLocalUri = async () => {
-        const asset = Asset.fromModule(require('../../assets/terms.pdf'));
-        if (!asset.localUri) {
-            await asset.downloadAsync();
-        }
-         return asset.localUri;
-    };   
+        const pdfURL = 'https://almuntada-test.vercel.app/terms.pdf';
+        Linking.openURL(pdfURL);
+    }; 
       
     
     const openInstagram = () => {
