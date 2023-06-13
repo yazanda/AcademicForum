@@ -9,7 +9,8 @@ import {
     TouchableOpacity,
     I18nManager,
     Dimensions,
-    Platform
+    Platform,
+    StatusBar,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Video } from 'expo-av';
@@ -64,6 +65,7 @@ export default function PodcastScreen({navigation}) {
 
     return (
         <SafeAreaView style={styles.container}>
+            <StatusBar barStyle="dark-content" />
             <View style={styles.sideBarContainer}>
                 <TouchableOpacity onPress={handleMenuPress} style={styles.menuButton}>
                     {isSideBarOpen ? (

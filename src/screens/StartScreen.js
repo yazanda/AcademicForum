@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect} from "react";
 import {I18nextProvider, useTranslation} from 'react-i18next';
 import LanguageContext from '../components/LanguageContext';
-import {I18nManager, Platform, TouchableWithoutFeedback} from "react-native";
+import {I18nManager, Platform, StatusBar} from "react-native";
 import End from "../components/End";
 import Modal from '../components/Modal';
 import {FontAwesome} from '@expo/vector-icons';
@@ -82,8 +82,10 @@ export default function App({navigation}) {
     };
     const scrollViewRef = useRef(null);
     return (
+        
         <I18nextProvider i18n={i18n}>
             <SafeAreaView style={styles.container}>
+            <StatusBar barStyle="dark-content" />
                 <View style={styles.sideBarContainer}>
                     <TouchableOpacity onPress={handleMenuPress} style={styles.menuButton}>
                         {isSideBarOpen ? (
