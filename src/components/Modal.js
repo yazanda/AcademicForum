@@ -89,10 +89,6 @@ const MyModal = ({modalVisible, toggleModal, setSentSuccefully}) => {
         }
     }, [selectedDate.value]);
 
-    // useEffect(() => {
-    //     if(selectedDate.value) {setSelectedDate(new Date(selectedDate.value).toISOString().substring(0, 10));}
-    // }, [selectedDate.value]);
-
     const fetchAcademics = async () => {
         try {
             const subjects = await axios.get(`https://almuntada.onrender.com/api/v1/academic/subjects`);

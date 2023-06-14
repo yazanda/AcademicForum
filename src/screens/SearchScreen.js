@@ -45,7 +45,7 @@ export default function SearchScreen({navigation}) {
 
     const fetchAcademics = async () => {
         try {
-            const response = await axios.get(`https://almuntada.onrender.com/api/v1/academic/isApproved/true`);
+            const response = await axios.get(`https://almuntada.onrender.com/api/v1/academic`);
             const subjects = await axios.get(`https://almuntada.onrender.com/api/v1/academic/subjects`);
             setSubject(subjects.data);
             setAcademics(response.data);
@@ -180,6 +180,7 @@ export default function SearchScreen({navigation}) {
                             data={subjectOptions}
                             value={subjectData.value}
                             setValue={setSubjectData}
+                            setAddedValue={null}
                             errorText={subjectData.error}
                         />
                         <Dropdown
@@ -191,6 +192,7 @@ export default function SearchScreen({navigation}) {
                               }))}
                             value={city.value}
                             setValue={setCity}
+                            setAddedValue={null}
                             errorText={city.error}
                         />
                     </TouchableOpacity>
