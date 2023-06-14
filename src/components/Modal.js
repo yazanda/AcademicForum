@@ -199,6 +199,7 @@ const MyModal = ({modalVisible, toggleModal, setSentSuccefully}) => {
                     <TouchableOpacity onPress={toggleModal} style={styles.closeButton}>
                         <Text style={styles.closeButtonText}>{t('academicpage.dialog.close')}</Text>
                     </TouchableOpacity>
+                    <Text style={styles.GuideText}>{t('academicpage.guide')}</Text>
                     <TextInput  label={t('academicpage.dialog.first.name')}
                                 returnKeyType="next"
                                 value={firstName.value}
@@ -312,6 +313,9 @@ const styles = StyleSheet.create({
     closeButtonText: {
         color: 'blue',
         fontSize: 16,
+    },
+    GuideText: {
+        alignSelf: 'center',
     },
     input: {
         width: '80%',
