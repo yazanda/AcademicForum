@@ -6,6 +6,11 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 const DropdownComponent = ({ placeholder, label, data, value, setValue, errorText, setAddedValue}) => {
   const [isFocus, setIsFocus] = useState(false);
 
+  const handleCancel = () => {
+    setValue({value:'', error: ''});
+    if(setAddedValue) setAddedValue('');
+  };
+
   const renderLabel = () => {
     if (value || isFocus) {
       return (
@@ -25,7 +30,7 @@ const DropdownComponent = ({ placeholder, label, data, value, setValue, errorTex
     >
       <Dropdown
         style={[errorText? styles.errorDropDown : styles.dropdown, isFocus && styles.focusedDropdown]}
-        placeholderStyle={styles.placeholderStyle}
+        placeholderStyle={errorText? styles.errorPh : styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
@@ -40,7 +45,7 @@ const DropdownComponent = ({ placeholder, label, data, value, setValue, errorTex
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         onChangeText={(item)=> {
-          if(setAddedValue && !data.includes(item)) 
+          if(setAddedValue !== null && !data.includes(item)) 
             setAddedValue(item);
         }}
         onChange={(item) => {
@@ -58,7 +63,7 @@ const DropdownComponent = ({ placeholder, label, data, value, setValue, errorTex
       />
       {renderLabel()}
       {value && (
-        <TouchableOpacity onPress={() => setValue('')} style={styles.closeButton}>
+        <TouchableOpacity onPress={handleCancel} style={styles.closeButton}>
           <AntDesign name="close" size={16} color="gray"/>
         </TouchableOpacity>
       )}
@@ -113,6 +118,9 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
+  },
+  errorPh: {
+    color: '#8b0000',
   },
   selectedTextStyle: {
     fontSize: 16,

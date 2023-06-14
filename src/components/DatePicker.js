@@ -42,8 +42,6 @@ const DatePicker = ({label, value, onChange, placeholder, error}) => {
         if (value === '') {
             onChange(new Date());
         }
-        // Handle confirmation logic here
-        console.log('Selected date:', value);
     };
 
     const renderDatePicker = () => {
@@ -64,7 +62,7 @@ const DatePicker = ({label, value, onChange, placeholder, error}) => {
     // console.log(value);
     return (
         <TouchableOpacity style={styles.container} underlineColor="transparent" mode="outlined" onPressIn={handleShowDatePicker}>
-            {(showDatePicker || value !== '') && (
+            {(showDatePicker || value) && (
                 <Text style={[styles.label, {color: '#00008B'}]}>{label}</Text>
             )}
             <View

@@ -18,7 +18,7 @@ import {
 } from 'react-native';
 import Dropdown from "../components/DropDown";
 import MyModal from '../components/Modal'
-import { Modal } from 'react-native-modal';
+import Modal from 'react-native-modal';
 import End from '../components/End';
 import { getCityList } from '../lists/list';
 import {DataToSelectOptions} from "../components/HelperFunction";
@@ -200,17 +200,18 @@ export default function SearchScreen({navigation}) {
                 <View style={styles.pageContent}>
                     {filteredData.map((item) => renderItem({item}))}
                 </View>
-                {/* <Modal isVisible={sentSuccessfully}>
+               
+                <End style={styles.end} navigation={navigation}/>
+
+            </ScrollView>
+            <Modal isVisible={sentSuccessfully}>
                     <View style={styles.modalContainer}>
                       <Text style={styles.modalText}>{t('contactpage.send.title')}</Text>
                       <TouchableOpacity style={styles.modalButton} onPress={() => setSentSuccessfully(false)}>
                         <Text style={styles.modalButtonText}>Close</Text>
                       </TouchableOpacity>
                     </View>
-                </Modal> */}
-                <End style={styles.end} navigation={navigation}/>
-
-            </ScrollView>
+                </Modal>
         </SafeAreaView>
     );
 }

@@ -32,7 +32,7 @@ import { getDegreeList } from '../lists/degree';
 import { getCityList } from '../lists/list';
 import axios from 'axios';
 import {UploadImage} from "./UploadImage";
-import {DataToSelectOptions} from "../components/HelperFunction";
+import {DataToSelectOptions, dateFormate} from "../components/HelperFunction";
 
 const MyModal = ({modalVisible, toggleModal, setSentSuccefully}) => {
     const {t, i18n} = useTranslation();
@@ -54,6 +54,7 @@ const MyModal = ({modalVisible, toggleModal, setSentSuccefully}) => {
     const [addedCompany,setAddedCompany] = useState('');
     const [addedSubject,setAddedSubject] = useState('');
     const [addedCareer,setAddedCareer] = useState('');
+    const [formatedDate,setFormatedDate] = useState('');
 
     const [subjects, setSubjects] = useState([]);
     const [companies, setCompanies] = useState([]);
@@ -66,6 +67,31 @@ const MyModal = ({modalVisible, toggleModal, setSentSuccefully}) => {
     useEffect(() => {
         fetchAcademics();
     }, []);
+
+    useEffect(() => {
+        if(addedCareer !== '') {setCareer({value: addedCareer, error: ''});}
+    }, [addedCareer]);
+
+    useEffect(() => {
+        if(addedCompany) {setCompany({value: addedCompany, error: ''});}
+    }, [addedCompany]);
+
+    useEffect(() => {
+        if(addedSubject) {setSubject({value: addedSubject, error: ''});}
+    }, [addedSubject]);
+
+    useEffect(() => {
+        if(selectedDate.value){
+            setFormatedDate(dateFormate(selectedDate.value));
+        }
+        else{
+            setFormatedDate('');
+        }
+    }, [selectedDate.value]);
+
+    // useEffect(() => {
+    //     if(selectedDate.value) {setSelectedDate(new Date(selectedDate.value).toISOString().substring(0, 10));}
+    // }, [selectedDate.value]);
 
     const fetchAcademics = async () => {
         try {
@@ -81,14 +107,10 @@ const MyModal = ({modalVisible, toggleModal, setSentSuccefully}) => {
     };
 
     const handleSend = async () => {
-        if(addedCompany) setCompany({value: addedCompany, error: ''});
-        if(addedCareer) setCareer({value: addedCareer, error: ''});
-        if(addedSubject) setSubject({value: addedSubject, error: ''});
-        if(selectedDate.value) setSelectedDate(new Date(selectedDate.value).toISOString().substring(0, 10));
         fnameError = firstNameValidator(firstName.value);
         lnameError = lastNameValidator(lastName.value);
         emailError = emailValidator(email.value);
-        aError = ageValidator(selectedDate.value);
+        aError = ageValidator(formatedDate);
         degreeError = degreeValidator(degree.value);
         careerError = careerValidator(career.value);
         companyError = companyValidator(company.value);
@@ -119,7 +141,7 @@ const MyModal = ({modalVisible, toggleModal, setSentSuccefully}) => {
                 lastName: lastName.value,
                 email: email.value,
                 imageUrl: image,
-                age: selectedDate.value,
+                age: formatedDate,
                 degree: degree.value,
                 subject: subject.value,
                 career: career.value,
@@ -136,15 +158,17 @@ const MyModal = ({modalVisible, toggleModal, setSentSuccefully}) => {
               // Clear form fields after successful submission
               setFirstName('');
               setLastName('');
+              setSelectedDate('');
               setEmail('');
               setCity('');
               setDegree('');
               setSubject('');
               setCompany('');
               setCareer('');
-              setGender('');
+              setGender({value: '', error: ''});
               setPhoneNumber('');
               setImage(null);
+              fetchAcademics();
             } else {
               Alert.alert('Error', 'Failed to send the form. Please try again.');
             }
@@ -261,11 +285,9 @@ const MyModal = ({modalVisible, toggleModal, setSentSuccefully}) => {
                     <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
                         <Text style={styles.sendButtonText}>{t('contactpage.submit')}</Text>
                     </TouchableOpacity>
+                    <View style={{height: 150}}></View>
                 </ScrollView>
             </SafeAreaView>
-            {/* {showPopup && (
-                <PopupMessage message="Form submitted successfully!" onClose={() => setShowPopup(false)} />
-            )} */}
         </Modal>
         
     );
