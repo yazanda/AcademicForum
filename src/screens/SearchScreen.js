@@ -45,7 +45,7 @@ export default function SearchScreen({navigation}) {
 
     const fetchAcademics = async () => {
         try {
-            const response = await axios.get(`https://almuntada.onrender.com/api/v1/academic`);
+            const response = await axios.get(`https://almuntada.onrender.com/api/v1/academic/isApproved/true`);
             const subjects = await axios.get(`https://almuntada.onrender.com/api/v1/academic/subjects`);
             setSubject(subjects.data);
             setAcademics(response.data);

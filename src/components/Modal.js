@@ -312,6 +312,7 @@ const styles = StyleSheet.create({
     },
     GuideText: {
         alignSelf: 'center',
+        paddingHorizontal: 12
     },
     input: {
         width: '80%',
