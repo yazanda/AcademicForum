@@ -1,6 +1,8 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {FontAwesome} from '@expo/vector-icons';
 import {useTranslation} from 'react-i18next';
+import LanguageContext from '../components/LanguageContext';
+import {I18nManager, Platform, TouchableWithoutFeedback} from "react-native";
 import { StatusBar } from 'expo-status-bar';
 import axios from 'axios';
 import {
@@ -12,14 +14,13 @@ import {
     ScrollView,
     TouchableOpacity,
     Dimensions,
-    Platform,
+    // Platform,
 } from 'react-native';
 import Dropdown from "../components/DropDown";
-import Modal from '../components/Modal'
-// import { getDegreeList } from '../lists/degree';
-import {getCityList} from '../lists/list';
+import MyModal from '../components/Modal'
+import { Modal } from 'react-native-modal';
 import End from '../components/End';
-// import {AutoComplete} from "../components/AutoComplete";
+import { getCityList } from '../lists/list';
 import {DataToSelectOptions} from "../components/HelperFunction";
 
 const window = Dimensions.get('window');
@@ -32,6 +33,7 @@ export default function SearchScreen({navigation}) {
     const [city, setCity] = useState({value: "", error: ""});
     const [subject, setSubject] = useState([]);
     const[subjectData,setSubjectData] = useState({value:"",error:""})
+    const [sentSuccessfully, setSentSuccessfully] = useState(false);
     const toggleModal = () => {
         setModalVisible(!modalVisible);
     }
@@ -168,7 +170,7 @@ export default function SearchScreen({navigation}) {
                 <TouchableOpacity onPress={toggleModal} style={styles.joinButton}>
                     <Text style={styles.joinButtonText}>{t('homepage.joinus')}</Text>
                 </TouchableOpacity>
-                <Modal modalVisible={modalVisible} toggleModal={toggleModal}/>
+                <MyModal modalVisible={modalVisible} toggleModal={toggleModal} setSentSuccefully={setSentSuccessfully}/>
                 <Text style={styles.label}>{t('academicpage.acdemics')}</Text>
                 <View style={styles.dropDownContainer}>
                     <TouchableOpacity>
@@ -198,7 +200,14 @@ export default function SearchScreen({navigation}) {
                 <View style={styles.pageContent}>
                     {filteredData.map((item) => renderItem({item}))}
                 </View>
-
+                {/* <Modal isVisible={sentSuccessfully}>
+                    <View style={styles.modalContainer}>
+                      <Text style={styles.modalText}>{t('contactpage.send.title')}</Text>
+                      <TouchableOpacity style={styles.modalButton} onPress={() => setSentSuccessfully(false)}>
+                        <Text style={styles.modalButtonText}>Close</Text>
+                      </TouchableOpacity>
+                    </View>
+                </Modal> */}
                 <End style={styles.end} navigation={navigation}/>
 
             </ScrollView>
@@ -383,4 +392,27 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 16,
     },
+    modalContainer: {
+        backgroundColor: 'white',
+        padding: 16,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 8,
+      },
+      modalText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 16,
+      },
+      modalButton: {
+        backgroundColor: 'green',
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+        borderRadius: 8,
+      },
+      modalButtonText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
 })

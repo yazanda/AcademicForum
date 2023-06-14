@@ -32,13 +32,14 @@ const DatePicker = ({label, value, onChange, placeholder, error}) => {
 
     const handleCancel = () => {
         setShowDatePicker(false);
-        onChange(null);
+        onChange('');
+        console.log(value);
     }
 
     const handleConfirm = () => {
         handleHideDatePicker();
         inputRef.current.blur();
-        if (value === null) {
+        if (value === '') {
             onChange(new Date());
         }
         // Handle confirmation logic here
@@ -63,7 +64,7 @@ const DatePicker = ({label, value, onChange, placeholder, error}) => {
     // console.log(value);
     return (
         <TouchableOpacity style={styles.container} underlineColor="transparent" mode="outlined" onPressIn={handleShowDatePicker}>
-            {(showDatePicker || value !== null) && (
+            {(showDatePicker || value !== '') && (
                 <Text style={[styles.label, {color: '#00008B'}]}>{label}</Text>
             )}
             <View

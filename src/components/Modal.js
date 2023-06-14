@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import { Modal as PopModal } from 'react-native-modal';
 import {
     View,
     Modal,
@@ -9,6 +8,7 @@ import {
     ScrollView,
     SafeAreaView,
     StyleSheet,
+    Alert,
 } from 'react-native';
 import {
     firstNameValidator,
@@ -34,7 +34,7 @@ import axios from 'axios';
 import {UploadImage} from "./UploadImage";
 import {DataToSelectOptions} from "../components/HelperFunction";
 
-const MyModal = ({modalVisible, toggleModal}) => {
+const MyModal = ({modalVisible, toggleModal, setSentSuccefully}) => {
     const {t, i18n} = useTranslation();
 
     const [firstName, setFirstName] = useState({ value: "", error: "" });
@@ -130,18 +130,37 @@ const MyModal = ({modalVisible, toggleModal}) => {
                 isAgree: checked,
             });
             console.log(response.data);
-        //   if (response.status === 201) {
-        //       setIsSuccessModalVisible(true);
-        //       // Clear form fields after successful submission
-        //       setFullName('');
-        //       setEmail('');
-        //       setSubject('');
-        //       setMessage('');
-        //     } else {
-        //       Alert.alert('Error', 'Failed to send the form. Please try again.');
-        //     }
+          if (response.status === 201) {
+              toggleModal();
+              setSentSuccefully(true);
+              // Clear form fields after successful submission
+              setFirstName('');
+              setLastName('');
+              setEmail('');
+              setCity('');
+              setDegree('');
+              setSubject('');
+              setCompany('');
+              setCareer('');
+              setGender('');
+              setPhoneNumber('');
+              setImage(null);
+            } else {
+              Alert.alert('Error', 'Failed to send the form. Please try again.');
+            }
           } catch (error) {
-            console.error(error);
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                console.log('Status:', error.response.status);
+                console.log('Data:', error.response.data);
+              } else if (error.request) {
+                // The request was made but no response was received
+                console.log('Request:', error.request);
+              } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error:', error.message);
+              }
+              console.log('Config:', error.config);
             // Alert.alert('Error', 'An error occurred while sending the form. Please try again.');
           }
 
@@ -244,6 +263,9 @@ const MyModal = ({modalVisible, toggleModal}) => {
                     </TouchableOpacity>
                 </ScrollView>
             </SafeAreaView>
+            {/* {showPopup && (
+                <PopupMessage message="Form submitted successfully!" onClose={() => setShowPopup(false)} />
+            )} */}
         </Modal>
         
     );

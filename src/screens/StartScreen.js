@@ -1,9 +1,8 @@
-import React, {useState, useRef, useEffect} from "react";
+import React, {useState, useRef} from "react";
 import {I18nextProvider, useTranslation} from 'react-i18next';
-import LanguageContext from '../components/LanguageContext';
-import {I18nManager, Platform, TouchableWithoutFeedback} from "react-native";
+import {Platform} from "react-native";
 import End from "../components/End";
-import Modal from '../components/Modal';
+import MyModal from '../components/Modal';
 import {FontAwesome} from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import {
@@ -14,16 +13,17 @@ import {
     View,
     Text,
     Dimensions,
-    FlatList,
     TouchableOpacity,
-    Linking
 } from "react-native";
+import Modal from 'react-native-modal';
+
 const window = Dimensions.get('window');
 export default function App({navigation}) {
     const {t, i18n} = useTranslation();
     const [modalVisible, setModalVisible] = useState(false);
     // SideBar & Languages
     const [isSideBarOpen, setSideBarOpen] = useState(false);
+    const [sentSuccessfully, setSentSuccessfully] = useState(false);
     const sidebarRef = useRef(null);
     const handleMenuPress = () => {
         setSideBarOpen(!isSideBarOpen);
@@ -175,7 +175,7 @@ export default function App({navigation}) {
                         <TouchableOpacity onPress={toggleModal} style={styles.joinButton}>
                             <Text style={styles.joinButtonText}>{t('homepage.joinus')}</Text>
                         </TouchableOpacity>
-                        <Modal modalVisible={modalVisible} toggleModal={toggleModal}/>
+                        <MyModal modalVisible={modalVisible} toggleModal={toggleModal} setSentSuccefully={setSentSuccessfully}/>
                     </View>
                     <View style={{height: 200}}/>
                     <Image source={require("../../assets/almuntda.png")} style={{width: 350, height: 250}}/>
@@ -298,7 +298,16 @@ export default function App({navigation}) {
                             <View style={{height: 20}}/>
                         </View>
                     </View>
+                    <Modal isVisible={sentSuccessfully}>
+                    <View style={styles.modalContainer}>
+                      <Text style={styles.modalText}>{t('contactpage.send.title')}</Text>
+                      <TouchableOpacity style={styles.modalButton} onPress={() => setSentSuccessfully(false)}>
+                        <Text style={styles.modalButtonText}>Close</Text>
+                      </TouchableOpacity>
+                    </View>
+                    </Modal>
                     <End style={styles.end} navigation={navigation}/>
+                    
                 </ScrollView>
             </SafeAreaView>
         </I18nextProvider>
@@ -531,4 +540,27 @@ const styles = StyleSheet.create({
     TextEnd: {
         color: 'white',
     },
+    modalContainer: {
+        backgroundColor: 'white',
+        padding: 16,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 8,
+      },
+      modalText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 16,
+      },
+      modalButton: {
+        backgroundColor: 'green',
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+        borderRadius: 8,
+      },
+      modalButtonText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
 });
