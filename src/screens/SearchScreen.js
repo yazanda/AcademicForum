@@ -1,6 +1,8 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {FontAwesome} from '@expo/vector-icons';
 import {useTranslation} from 'react-i18next';
+import LanguageContext from '../components/LanguageContext';
+import {I18nManager, Platform, TouchableWithoutFeedback} from "react-native";
 import { StatusBar } from 'expo-status-bar';
 import axios from 'axios';
 import {
@@ -12,13 +14,14 @@ import {
     ScrollView,
     TouchableOpacity,
     Dimensions,
-    Platform,
+    // Platform,
 } from 'react-native';
 import Dropdown from "../components/DropDown";
-import Modal from '../components/Modal'
-import { getDegreeList } from '../lists/degree';
-import { getCityList } from '../lists/list';
+import MyModal from '../components/Modal'
+import Modal from 'react-native-modal';
 import End from '../components/End';
+import { getCityList } from '../lists/list';
+import {DataToSelectOptions} from "../components/HelperFunction";
 
 const window = Dimensions.get('window');
 
@@ -37,50 +40,51 @@ export default function SearchScreen({navigation}) {
       const textAlignment = getTextAlignment();
     const [modalVisible, setModalVisible] = useState(false);
     const [academics, setAcademics] = useState([]);
-    const [city, setCity] = useState({ value: "", error: "" });
-    const [degree, setDegree] = useState({ value: "", error: "" });
-
+    const [city, setCity] = useState({value: "", error: ""});
+    const [subject, setSubject] = useState([]);
+    const[subjectData,setSubjectData] = useState({value:"",error:""})
+    const [sentSuccessfully, setSentSuccessfully] = useState(false);
     const toggleModal = () => {
         setModalVisible(!modalVisible);
     }
-
+    const subjectOptions = DataToSelectOptions(subject,'subject','subject')
     const cities = getCityList;
-    const degrees = getDegreeList;
-
     useEffect(() => {
         fetchAcademics();
     }, []);
 
     const fetchAcademics = async () => {
         try {
-          const response = await axios.get('https://almuntada.onrender.com/api/v1/academic/careers');
-          setAcademics(response.data);
+            const response = await axios.get(`https://almuntada.onrender.com/api/v1/academic/isApproved/true`);
+            const subjects = await axios.get(`https://almuntada.onrender.com/api/v1/academic/subjects`);
+            setSubject(subjects.data);
+            setAcademics(response.data);
         } catch (error) {
-          console.error(error);
+            console.error(error);
         }
     };
 
-    const renderItem = ({ item }) => (
-        <View style={styles.card} key={item.user[0].id}>
-          <Image style={styles.image} source={{ uri: item.user[0].imageUrl }} />
+    const renderItem = ({item}) => (
+        <View style={styles.card} key={item.id}>
+            <Image style={styles.image} source={{uri: item.imageUrl}}/>
             <View style={styles.detailsContainer}>
-                <Text style={styles.fullName}>{`${item.user[0].firstName} ${item.user[0].lastName}`}</Text>
-                <Text style={styles.email}>{item.user[0].email}</Text>
-                <Text style={styles.city}>{item.user[0].city}</Text>
-                <Text style={styles.degree}>{`${item.user[0].degree} : ${item.career}`}</Text>
+                <Text style={styles.fullName}>{`${item.firstName} ${item.lastName}`}</Text>
+                <Text style={styles.email}>{item.email}</Text>
+                <Text style={styles.city}>{item.city}</Text>
+                <Text style={styles.degree}>{`${item.degree} : ${item.career.career}`}</Text>
             </View>
         </View>
     );
 
     const filteredData = academics.filter((item) => {
-        if (city.value && degree.value) {
-          return item.user[0].city === city.value && item.user[0].degree === degree.value && item.user[0].isApproved;
-        } else if (city.value !== '') {
-          return item.user[0].city === city.value && item.user[0].isApproved;
-        } else if (degree.value !== '') {
-          return item.user[0].degree === degree.value && item.user[0].isApproved;
+        if (city?.value && subjectData?.value) {
+            return item.city === city?.value && item.subject.subject === subjectData?.value;
+        } else if (city?.value !== '') {
+            return item.city === city?.value ;
+        } else if (subjectData?.value !== '') {
+            return item.subject.subject === subjectData?.value;
         }
-        return item.user[0].isApproved; 
+        return true;
     });
 
     const [isSideBarOpen, setSideBarOpen] = useState(false);
@@ -96,6 +100,7 @@ export default function SearchScreen({navigation}) {
     };
     return (
         <SafeAreaView style={styles.container}>
+            <StatusBar barStyle="dark-content"/>
             <StatusBar style="dark" />
             <View style={styles.sideBarContainer}>
                 <TouchableOpacity onPress={handleMenuPress} style={styles.menuButton}>
@@ -168,53 +173,57 @@ export default function SearchScreen({navigation}) {
                     />
                 </TouchableOpacity>
                 <View style={styles.slideTextContainer}>
-                            <Text style={styles.slideTitle}>{t('academicpage.title')}</Text>
-                            <Text style={styles.slideText}>{t('academicpage.text')}</Text>
-                        </View>
-                        
+                    <Text style={styles.slideTitle}>{t('academicpage.title')}</Text>
+                    <Text style={styles.slideText}>{t('academicpage.text')}</Text>
+                </View>
+
                 <TouchableOpacity onPress={toggleModal} style={styles.joinButton}>
                     <Text style={styles.joinButtonText}>{t('homepage.joinus')}</Text>
                 </TouchableOpacity>
-                <Modal modalVisible={modalVisible} toggleModal={toggleModal}/>
-                    <Text style={[styles.label,{ textAlign: textAlignment }]}>{t('academicpage.acdemics')}</Text>
-                    <View style={[styles.dropDownContainer,{ textAlign: textAlignment }]}>
-                        <TouchableOpacity>
-                            <Dropdown
-                                placeholder={t('academicpage.acdemicsField')}
-                                label={
-                                    <Text style={{ writingDirection: 'rtl' }}>{t('academicpage.acdemicsField')}</Text>
-                                  }
-                                data={degrees.map((degree) => ({
-                                  label: degree.label,
-                                  value: degree.id.toString(),
-                                }))}
-                                value={degree.value}
-                                setValue={setDegree}
-                                errorText={degree.error}
-                                
-                            />
-                            <Dropdown
-                                placeholder={t('academicpage.acdemics.Area')}
-                                label={t('academicpage.acdemics.Area')}
-                                data={cities.map((city) => ({
-                                    label: city.label,
-                                    value: city.label,
-                                  }))}
-                                value={city.value}
-                                setValue={setCity}
-                                errorText={city.error}
-                            />
-                        </TouchableOpacity>
-                        
-                    </View>
-                
-                <View style={styles.pageContent}>
-                    {filteredData.map((item) => renderItem({ item }))}
+                <MyModal modalVisible={modalVisible} toggleModal={toggleModal} setSentSuccefully={setSentSuccessfully}/>
+                <Text style={styles.label}>{t('academicpage.acdemics')}</Text>
+                <View style={styles.dropDownContainer}>
+                    <TouchableOpacity>
+                        <Dropdown
+                            placeholder={t('academicpage.acdemicsField')}
+                            label={t('academicpage.acdemicsField')}
+                            data={subjectOptions}
+                            value={subjectData.value}
+                            setValue={setSubjectData}
+                            setAddedValue={null}
+                            errorText={subjectData.error}
+                        />
+                        <Dropdown
+                            placeholder={t('academicpage.acdemics.Area')}
+                            label={t('academicpage.acdemics.Area')}
+                            data={cities.map((city) => ({
+                                label: city.label,
+                                value: city.label,
+                              }))}
+                            value={city.value}
+                            setValue={setCity}
+                            setAddedValue={null}
+                            errorText={city.error}
+                        />
+                    </TouchableOpacity>
+
                 </View>
 
-                <End style={styles.end} navigation={navigation} />
-                      
+                <View style={styles.pageContent}>
+                    {filteredData.map((item) => renderItem({item}))}
+                </View>
+               
+                <End style={styles.end} navigation={navigation}/>
+
             </ScrollView>
+            <Modal isVisible={sentSuccessfully}>
+                    <View style={styles.modalContainer}>
+                      <Text style={styles.modalText}>{t('contactpage.send.title')}</Text>
+                      <TouchableOpacity style={styles.modalButton} onPress={() => setSentSuccessfully(false)}>
+                        <Text style={styles.modalButtonText}>Close</Text>
+                      </TouchableOpacity>
+                    </View>
+                </Modal>
         </SafeAreaView>
     );
 }
@@ -222,7 +231,7 @@ export default function SearchScreen({navigation}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor:"white",
+        backgroundColor: "white",
         flexGrow: 1,
         ...Platform.select({
             android: {
@@ -267,12 +276,12 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         alignItems: "center",
         paddingBottom: 20,
-        
+
     },
     logoContainer: {
         width: 200,
         height: 75,
-        alignSelf: 'center', 
+        alignSelf: 'center',
         resizeMode: "contain",
     },
     logo: {
@@ -287,17 +296,17 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 16,
         alignSelf: 'center',
-        
+
     },
     joinButtonText: {
         fontSize: 16,
         fontWeight: "bold",
         color: "white",
-        padding:10,
+        padding: 10,
     },
     slideTextContainer: {
         marginTop: 10,
-        alignItems:'center',
+        alignItems: 'center',
         padding: 10,
 
     },
@@ -306,7 +315,7 @@ const styles = StyleSheet.create({
         fontSize: 22,
         color: 'darkorange',
         fontWeight: "bold",
-        padding:20,
+        padding: 20,
     },
     dropDownContainer: {
         paddingTop: 16,
@@ -317,83 +326,106 @@ const styles = StyleSheet.create({
     sliderContainer: {
         height: Dimensions.get("window").height / 3,
         marginTop: 10,
-        alignItems:'center',
+        alignItems: 'center',
 
     },
-    slideTitle:{
+    slideTitle: {
         paddingVertical: 10,
         fontSize: 25,
         fontWeight: "bold",
         color: '#041041',
-        padding:10,
+        padding: 10,
         borderColor: "blue",
         textAlign: "center",
     },
-    slideText:{
+    slideText: {
         paddingVertical: 10,
         fontSize: 20,
         fontWeight: "bold",
         color: '#041041',
-        padding:10,
+        padding: 10,
         borderColor: "blue",
         textAlign: "center",
     },
-end:{
-    width:Dimensions.get("window").width,
-    backgroundColor:'#092D82',
-    flexDirection: 'row',
-    alignSelf: 'flex-start',
-    bottom:0,
-    position: 'absolute',
-},
+    end: {
+        width: Dimensions.get("window").width,
+        backgroundColor: '#092D82',
+        flexDirection: 'row',
+        alignSelf: 'flex-start',
+        bottom: 0,
+        position: 'absolute',
+    },
 
-card: {
-    flexDirection: 'column', 
-    marginBottom: 10,
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    padding: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    elevation: 2,
-    width: '70%',
-    height: 320,
-    alignSelf: 'center'
-  },
-  image: {
-    width: '80%',
-    height: '60%',
-    alignSelf: 'center',
-    borderRadius: 15,
-    marginBottom: 10, 
-  },
-  detailsContainer: {
-    flex: 1,
-    alignItems: 'center', 
-  },
-  fullName: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  email: {
-    fontSize: 16,
-    marginBottom: 5,
-  },
-  city: {
-    fontSize: 14,
-    marginBottom: 5,
-  },
-  degree: {
-    fontSize: 14,
-    color: 'gray',
-  },
-  
-  pageContent: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 16,
-},
+    card: {
+        flexDirection: 'column',
+        marginBottom: 10,
+        backgroundColor: '#fff',
+        borderRadius: 8,
+        padding: 10,
+        shadowColor: '#000',
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 0.2,
+        elevation: 2,
+        width: '70%',
+        height: 320,
+        alignSelf: 'center'
+    },
+    image: {
+        width: '80%',
+        height: '60%',
+        alignSelf: 'center',
+        borderRadius: 15,
+        marginBottom: 10,
+    },
+    detailsContainer: {
+        flex: 1,
+        alignItems: 'center',
+    },
+    fullName: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 5,
+    },
+    email: {
+        fontSize: 16,
+        marginBottom: 5,
+    },
+    city: {
+        fontSize: 14,
+        marginBottom: 5,
+    },
+    degree: {
+        fontSize: 14,
+        color: 'gray',
+    },
+
+    pageContent: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 16,
+    },
+    modalContainer: {
+        backgroundColor: 'white',
+        padding: 16,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 8,
+      },
+      modalText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 16,
+      },
+      modalButton: {
+        backgroundColor: 'green',
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+        borderRadius: 8,
+      },
+      modalButtonText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
 })

@@ -186,6 +186,7 @@ import Modal from 'react-native-modal';
                             data={data}
                             value={subject.value}
                             setValue={setSubject}
+                            setAddedValue={null}
                             errorText={subject.error}
                         />
                     </TouchableOpacity>

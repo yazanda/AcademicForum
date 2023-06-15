@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
-const DropdownComponent = ({ placeholder, label, data, value, setValue, errorText }) => {
+const DropdownComponent = ({ placeholder, label, data, value, setValue, errorText, setAddedValue}) => {
   const [isFocus, setIsFocus] = useState(false);
+
+  const handleCancel = () => {
+    setValue({value:'', error: ''});
+    if(setAddedValue) setAddedValue('');
+  };
 
   const renderLabel = () => {
     if (value || isFocus) {
@@ -25,7 +30,7 @@ const DropdownComponent = ({ placeholder, label, data, value, setValue, errorTex
     >
       <Dropdown
         style={[errorText? styles.errorDropDown : styles.dropdown, isFocus && styles.focusedDropdown]}
-        placeholderStyle={styles.placeholderStyle}
+        placeholderStyle={errorText? styles.errorPh : styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
@@ -39,6 +44,10 @@ const DropdownComponent = ({ placeholder, label, data, value, setValue, errorTex
         value={value}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
+        onChangeText={(item)=> {
+          if(setAddedValue !== null && !data.includes(item)) 
+            setAddedValue(item);
+        }}
         onChange={(item) => {
           setValue({value: item.label, error: ""});
           setIsFocus(false);
@@ -53,7 +62,11 @@ const DropdownComponent = ({ placeholder, label, data, value, setValue, errorTex
         )}
       />
       {renderLabel()}
-
+      {value && (
+        <TouchableOpacity onPress={handleCancel} style={styles.closeButton}>
+          <AntDesign name="close" size={16} color="gray"/>
+        </TouchableOpacity>
+      )}
       {errorText ? <Text style={styles.error}>{errorText}</Text> : null}
     </View>
   );
@@ -106,6 +119,9 @@ const styles = StyleSheet.create({
   placeholderStyle: {
     fontSize: 16,
   },
+  errorPh: {
+    color: '#8b0000',
+  },
   selectedTextStyle: {
     fontSize: 16,
   },
@@ -121,5 +137,8 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: 'red',
     paddingTop: 8,
+  },
+  closeButton: {
+    paddingLeft: 10,
   },
 });
