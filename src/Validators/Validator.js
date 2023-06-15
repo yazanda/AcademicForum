@@ -1,6 +1,7 @@
 
 import * as Yup from 'yup';
-
+import axios from 'axios';
+import { DataToSelectOptions } from '../components/HelperFunction';
 
 export function nameValidator(name) {
   const schema = Yup.string()
@@ -168,4 +169,14 @@ export function genderValidator(gender) {
   }
 }
 
-
+// export async function emailExists(mail){
+//   try {
+//       const emails = await axios.get(`https://almuntada.onrender.com/api/v1/academic/emails`);
+//       if(DataToSelectOptions(emails.data).includes(mail)){
+//         return 'Used Email.';
+//       }
+//   } catch (error) {
+//       console.error(error);
+//   }
+//   return '';
+// }

@@ -34,6 +34,7 @@ export default function SearchScreen({navigation}) {
     const [subject, setSubject] = useState([]);
     const[subjectData,setSubjectData] = useState({value:"",error:""})
     const [sentSuccessfully, setSentSuccessfully] = useState(false);
+    const [message, setMessage] = useState('');
     const toggleModal = () => {
         setModalVisible(!modalVisible);
     }
@@ -132,7 +133,7 @@ export default function SearchScreen({navigation}) {
                             }}
                             style={styles.sidebarButton}
                         >
-                            <Text style={styles.sidebarButtonText}>{t('navbar.search')}</Text>
+                            <Text style={styles.sidebarButtonText}>{t('navbar.academic')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => {
@@ -170,7 +171,7 @@ export default function SearchScreen({navigation}) {
                 <TouchableOpacity onPress={toggleModal} style={styles.joinButton}>
                     <Text style={styles.joinButtonText}>{t('homepage.joinus')}</Text>
                 </TouchableOpacity>
-                <MyModal modalVisible={modalVisible} toggleModal={toggleModal} setSentSuccefully={setSentSuccessfully}/>
+                <MyModal modalVisible={modalVisible} toggleModal={toggleModal} setSentSuccefully={setSentSuccessfully} setMessage={setMessage}/>
                 <Text style={styles.label}>{t('academicpage.acdemics')}</Text>
                 <View style={styles.dropDownContainer}>
                     <TouchableOpacity>
@@ -207,13 +208,13 @@ export default function SearchScreen({navigation}) {
 
             </ScrollView>
             <Modal isVisible={sentSuccessfully}>
-                    <View style={styles.modalContainer}>
-                      <Text style={styles.modalText}>{t('contactpage.send.title')}</Text>
-                      <TouchableOpacity style={styles.modalButton} onPress={() => setSentSuccessfully(false)}>
+                <View style={styles.modalContainer}>
+                    <Text style={styles.modalText}>{message? message : t('contactpage.send.title')}</Text>
+                      <TouchableOpacity style={message? styles.modalButtonError : styles.modalButton} onPress={() => setSentSuccessfully(false)}>
                         <Text style={styles.modalButtonText}>Close</Text>
-                      </TouchableOpacity>
-                    </View>
-                </Modal>
+                    </TouchableOpacity>
+                </View>
+            </Modal>
         </SafeAreaView>
     );
 }
@@ -406,6 +407,12 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 16,
+      },
+      modalButton: {
+        backgroundColor: 'green',
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+        borderRadius: 8,
       },
       modalButton: {
         backgroundColor: 'green',
