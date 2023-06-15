@@ -142,7 +142,7 @@ export function careerValidator(career) {
 
 export function ageValidator(age) {
   const schema = Yup.string()
-    .required("Age is required.");
+    .required("Date is required.");
 
   try {
     schema.validateSync(age);
@@ -167,7 +167,7 @@ export function companyValidator(company) {
 
 export function imageUrlValidator(imageUrl) {
   const schema = Yup.string()
-    .required("Image URL is required.");
+    .required("Image is required.");
 
   try {
     schema.validateSync(imageUrl);

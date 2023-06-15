@@ -2,7 +2,7 @@ import {View, Text, ActivityIndicator, TouchableOpacity, StyleSheet} from 'react
 import React, {useState} from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import {useTranslation} from 'react-i18next';
-export const UploadImage = ({setImage}) => {
+export const UploadImage = ({setImage, error}) => {
     const {t, i18n} = useTranslation();
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState(false);
@@ -55,6 +55,7 @@ export const UploadImage = ({setImage}) => {
             ) : success ? (
                 <Text style={styles.successText}>Uploaded Successfully</Text>
             ) : null}
+            {error && <Text style={styles.errorText}>{error}</Text>}
         </View>
     )
 }
@@ -82,6 +83,12 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: 'bold',
         color: 'green',
+        textAlign: 'center',
+    },
+    errorText: {
+        fontSize: 14,
+        // fontWeight: 'bold',
+        color: 'red',
         textAlign: 'center',
     },
 });

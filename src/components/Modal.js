@@ -48,7 +48,7 @@ const MyModal = ({modalVisible, toggleModal, setSentSuccefully, setMessage}) => 
     const [gender, setGender] = useState({ value: "", error: "" });
     const [phoneNumber, setPhoneNumber] = useState({ value: "", error: "" });
     const [company, setCompany] = useState({ value: "", error: "" });
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState({ value: "", error: "" });
     const [checked, setChecked] = useState(false);
 
     const [addedCompany,setAddedCompany] = useState('');
@@ -113,7 +113,7 @@ const MyModal = ({modalVisible, toggleModal, setSentSuccefully, setMessage}) => 
         const subjectError = subjectValidator(subject.value);
         const cityError = cityValidator(city.value);
         const phoneError = phoneValidator(phoneNumber.value);
-        const imageError = imageUrlValidator(image);
+        const imageError = imageUrlValidator(image.value);
         const genderError = genderValidator(gender.value);
 
         if(fnameError || lnameError || emailError || aError || degreeError || careerError ||
@@ -129,6 +129,7 @@ const MyModal = ({modalVisible, toggleModal, setSentSuccefully, setMessage}) => 
             setCity({ ...city, error: cityError});
             setPhoneNumber({ ...phoneNumber, error: phoneError});
             setGender({ ...gender, error: genderError});
+            setImage({ ...image, error: imageError});
             return;
         }
         try {
@@ -136,7 +137,7 @@ const MyModal = ({modalVisible, toggleModal, setSentSuccefully, setMessage}) => 
                 firstName: firstName.value,
                 lastName: lastName.value,
                 email: email.value,
-                imageUrl: image,
+                imageUrl: image.value,
                 age: formatedDate,
                 degree: degree.value,
                 subject: subject.value,
@@ -284,7 +285,8 @@ const MyModal = ({modalVisible, toggleModal, setSentSuccefully, setMessage}) => 
                                 error={!!phoneNumber.error}
                                 errorText={phoneNumber.error} />
                     <UploadImage
-                        setImage={setImage}
+                        setImage={(val) => setImage({value: val, error: ''})}
+                        error={image.error}
                     />
                     <CheckBox
                         title={t('academicpage.dialog.checkbox')}
