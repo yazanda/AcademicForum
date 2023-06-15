@@ -224,7 +224,7 @@ export default function App({navigation}) {
                                 color: "#f58723",
                                 fontWeight: "bold",
                             },{ textAlign: textAlignment }]}>{t('homepage.message.sub.title')}</Text>
-                            <Text style={[styles.introduction,,{ textAlign: textAlignment }]}>
+                            <Text style={[styles.introduction,{ textAlign: textAlignment }]}>
                                 {t('homepage.message.desc')}
                             </Text>
                         </View>

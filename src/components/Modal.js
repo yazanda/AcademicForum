@@ -185,7 +185,17 @@ const MyModal = ({modalVisible, toggleModal, setSentSuccefully, setMessage}) => 
             // Alert.alert('Error', 'An error occurred while sending the form. Please try again.');
           }
 
-
+          const {t, i18n} = useTranslation();
+          const getTextAlignment = () => {
+              const { i18n } = useTranslation();
+            
+              if (i18n.language === 'AR' || i18n.language === 'HE') {
+                return 'right'; // Right-to-left alignment for Spanish
+              } else {
+                return 'left'; // Left-to-right alignment for other languages
+              }
+          };
+            const textAlignment = getTextAlignment();
     }
 
 
@@ -202,7 +212,8 @@ const MyModal = ({modalVisible, toggleModal, setSentSuccefully, setMessage}) => 
                                 value={firstName.value}
                                 onChangeText={(text) => setFirstName({ value: text, error: "" })}
                                 error={!!firstName.error}
-                                errorText={firstName.error}/>
+                                errorText={firstName.error}
+                                />
                     <TextInput  label={t('academicpage.dialog.last.name')}
                                 returnKeyType="next"
                                 value={lastName.value}
