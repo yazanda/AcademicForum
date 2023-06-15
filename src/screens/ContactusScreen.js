@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 import {useTranslation} from 'react-i18next';
 import { FontAwesome } from '@expo/vector-icons';
 import End from '../components/End';
-import { nameValidator, emailValidator, subjectValidator, messageValidator } from '../Validations/contactValidate';
+import { nameValidator, emailValidator, subjectValidator, messageValidator } from '../Validators/Validator';
 import {
     StyleSheet,
     Text,
@@ -14,6 +14,7 @@ import {
     Alert,
     Platform,
 } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import TextInput from '../components/TextInput';
 import Dropdown from "../components/DropDown";
 import axios from 'axios';
@@ -82,7 +83,9 @@ import Modal from 'react-native-modal';
 
     return (
         <SafeAreaView style={styles.container}>
+            <StatusBar style="dark" />
             <View style={styles.sideBarContainer}>
+                
                 <TouchableOpacity onPress={handleMenuPress} style={styles.menuButton}>
                     {isSideBarOpen ? (
                         <FontAwesome name="times" size={24} color="black"/>
@@ -244,6 +247,7 @@ const styles = StyleSheet.create({
     menuButton: {
         paddingLeft: 16,
         paddingTop: 8,
+        height: 40,
     },
     sidebarButton: {
         marginTop: 8,

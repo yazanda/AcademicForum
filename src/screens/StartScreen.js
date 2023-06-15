@@ -5,6 +5,7 @@ import {I18nManager, Platform, TouchableWithoutFeedback} from "react-native";
 import End from "../components/End";
 import Modal from '../components/Modal';
 import {FontAwesome} from '@expo/vector-icons';
+import { StatusBar } from 'expo-status-bar';
 import {
     StyleSheet,
     SafeAreaView,
@@ -92,6 +93,7 @@ export default function App({navigation}) {
     return (
         <I18nextProvider i18n={i18n}>
             <SafeAreaView style={styles.container}>
+                <StatusBar style="dark" />
                 <View style={styles.sideBarContainer}>
                     <TouchableOpacity onPress={handleMenuPress} style={styles.menuButton}>
                         {isSideBarOpen ? (
@@ -334,6 +336,7 @@ const styles = StyleSheet.create({
     menuButton: {
         paddingLeft: 16,
         paddingTop: 8,
+        height: 40
     },
     sidebarButton: {
         marginTop: 8,
@@ -471,10 +474,11 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         backgroundColor: '#fff',
         borderRadius: 8,
+        shadowOpacity: 0.7,
+        shadowRadius: 10,
         padding: 10,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
         elevation: 2,
          width: 300,
         alignSelf: 'flex-start',

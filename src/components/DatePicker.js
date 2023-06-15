@@ -1,10 +1,19 @@
-import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Button, Platform } from 'react-native';
+import React, {useState, useRef} from 'react';
+import {
+    View,
+    Text,
+    StyleSheet,
+    TextInput,
+    TouchableOpacity,
+    Button,
+    Platform,
+    TouchableWithoutFeedback
+} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const DatePicker = ({ label, value, onChange, placeholder, error }) => {
+const DatePicker = ({label, value, onChange, placeholder, error}) => {
     const [showDatePicker, setShowDatePicker] = useState(false);
-    const [isFocused, setIsFocused] = useState(false);
+    // const [isFocused, setIsFocused] = useState(false);
     const inputRef = useRef(null);
 
     const handleDateChange = (event, date) => {
@@ -16,17 +25,20 @@ const DatePicker = ({ label, value, onChange, placeholder, error }) => {
 
     const handleShowDatePicker = () => {
         setShowDatePicker(true);
-        setIsFocused(true);
+        // setIsFocused(true);
     };
 
     const handleHideDatePicker = () => {
         setShowDatePicker(false);
-        setIsFocused(false);
+        // setIsFocused(false);
     };
 
     const handleConfirm = () => {
         handleHideDatePicker();
         inputRef.current.blur();
+        if (value === null) {
+            onChange(new Date());
+        }
         // Handle confirmation logic here
         console.log('Selected date:', value);
     };
@@ -35,7 +47,7 @@ const DatePicker = ({ label, value, onChange, placeholder, error }) => {
         if (showDatePicker) {
             return (
                 <DateTimePicker
-                    value={value ?  value : new Date()}
+                    value={value ? value : new Date()}
                     mode="date"
                     display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                     onChange={handleDateChange}
@@ -48,25 +60,28 @@ const DatePicker = ({ label, value, onChange, placeholder, error }) => {
 
 
     return (
-        <TouchableOpacity
-            style={styles.container}
-            activeOpacity={1}
-            onPress={handleShowDatePicker}
-            onBlur={handleHideDatePicker}
-        >
-            {isFocused && ( // fix this for ios
-                <Text style={[styles.label, { color: 'blue' }]}>{label}</Text>
+        <TouchableOpacity style={styles.container} underlineColor="transparent" mode="outlined" onPressIn={handleShowDatePicker}>
+            {(showDatePicker || value !== null) && (
+                <Text style={[styles.label, {color: '#00008B'}]}>{label}</Text>
             )}
-            <View style={[styles.inputContainer, showDatePicker && { borderColor: 'blue' }]}>
+            <View
+                style={[
+                    error ? styles.errorInputContainer : styles.inputContainer,
+                    showDatePicker && styles.focusedInput,
+                ]}
+            >
                 <TextInput
                     ref={inputRef}
-                    style={[styles.textInput, error && styles.errorTextInput, { color: value ? 'black' : 'gray' }]}
+                    style={[
+                        styles.textInput,
+                        error && styles.errorTextInput,
+                        {color: value ? 'black' : 'gray'},
+                    ]}
                     value={value ? value.toDateString() : ''}
-                    placeholder={!isFocused ? placeholder : ''}
+                    placeholder={!showDatePicker ? placeholder : ''}
                     placeholderTextColor={'black'}
                     editable={false}
                     onTouchStart={handleShowDatePicker}
-                    onBlur={handleHideDatePicker}
                 />
                 {Platform.OS === 'ios' && showDatePicker && (
                     <Button
@@ -91,8 +106,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 1,
         borderRadius: 5,
+        borderColor: 'gray',
         position: 'relative',
         overflow: 'hidden',
+    },
+    errorInputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderRadius: 5,
+        borderColor: '#8b0000',
+        position: 'relative',
+        overflow: 'hidden',
+    },
+    focusedInput: {
+        borderColor: '#00008B',
+        borderWidth: 1.5,
     },
     textInput: {
         flex: 1,
@@ -114,7 +143,7 @@ const styles = StyleSheet.create({
     },
     labelFocused: {
         color: 'blue',
-        transform: [{ translateY: 0 }, { scale: 1 }],
+        transform: [{translateY: 0}, {scale: 1}],
     },
     errorText: {
         color: 'red',

@@ -34,7 +34,7 @@ const DropdownComponent = ({ placeholder, label, data, value, setValue, errorTex
         maxHeight={300}
         labelField="label"
         valueField="value"
-        placeholder={value? value : !isFocus ? placeholder || 'Select item' : '...'}
+        placeholder={value ? value : !isFocus ? placeholder || 'Select item' : '...'}
         searchPlaceholder="Search..."
         value={value}
         onFocus={() => setIsFocus(true)}
