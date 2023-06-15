@@ -111,34 +111,31 @@
   "contactpage.subject": "Subject",
   "contactpage.subjects": [
     {
-      "name": ""
+      "label": "Publication of an academic ad for academics"
     },
     {
-      "name": "Publication of an academic ad for academics"
+      "label": "Podcast Hosting Request \"We Heard Your Voice\""
     },
     {
-      "name": "Podcast Hosting Request \"We Heard Your Voice\""
+      "label": "Cooperation of operators or institutions"
     },
     {
-      "name": "Cooperation of operators or institutions"
+      "label": "Find a workshop or training"
     },
     {
-      "name": "Find a workshop or training"
+      "label": "Advice for choosing a career"
     },
     {
-      "name": "Advice for choosing a career"
+      "label": "Find a job"
     },
     {
-      "name": "Find a job"
+      "label": "I would like to volunteer for the forum"
     },
     {
-      "name": "I would like to volunteer for the forum"
+      "label": "Find a scholarship"
     },
     {
-      "name": "Find a scholarship"
-    },
-    {
-      "name": "Other"
+      "label": "Other"
     }
   ],
   "podcastpage.desc": "\"Let's hear your voice\" podcast.\nThe podcast aims to discuss academic and professional topics as well as experience sharing by successful individuals.   ",
