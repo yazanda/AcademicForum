@@ -80,7 +80,7 @@ const DatePicker = ({label, value, onChange, placeholder, error}) => {
                     ]}
                     value={value ? value.toDateString() : ''}
                     placeholder={!showDatePicker ? placeholder : ''}
-                    placeholderTextColor={'black'}
+                    placeholderTextColor={error? '#8b0000' : 'black'}
                     editable={false}
                     onTouchStart={handleShowDatePicker}
                 />
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     errorInputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        borderWidth: 1,
+        borderWidth: 2,
         borderRadius: 5,
         borderColor: '#8b0000',
         position: 'relative',

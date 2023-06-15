@@ -125,7 +125,7 @@ import Modal from 'react-native-modal';
                             }}
                             style={styles.sidebarButton}
                         >
-                            <Text style={styles.sidebarButtonText}>{t('navbar.search')}</Text>
+                            <Text style={styles.sidebarButtonText}>{t('navbar.academic')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => {

@@ -35,6 +35,7 @@ export default function App({navigation}) {
     // SideBar & Languages
     const [isSideBarOpen, setSideBarOpen] = useState(false);
     const [sentSuccessfully, setSentSuccessfully] = useState(false);
+    const [message, setMessage]  = useState('');
     const sidebarRef = useRef(null);
     const handleMenuPress = () => {
         setSideBarOpen(!isSideBarOpen);
@@ -134,7 +135,7 @@ export default function App({navigation}) {
                                 }}
                                 style={styles.sidebarButton}
                             >
-                                <Text style={styles.sidebarButtonText}>{t('navbar.search')}</Text>
+                                <Text style={styles.sidebarButtonText}>{t('navbar.academic')}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => {
@@ -183,7 +184,7 @@ export default function App({navigation}) {
                         <TouchableOpacity onPress={toggleModal} style={styles.joinButton}>
                             <Text style={styles.joinButtonText}>{t('homepage.joinus')}</Text>
                         </TouchableOpacity>
-                        <MyModal modalVisible={modalVisible} toggleModal={toggleModal} setSentSuccefully={setSentSuccessfully}/>
+                        <MyModal modalVisible={modalVisible} toggleModal={toggleModal} setSentSuccefully={setSentSuccessfully} setMessage={setMessage}/>
                     </View>
                     <View style={{height: 200}}/>
                     <Image source={require("../../assets/almuntda.png")} style={{width: 350, height: 250}}/>
@@ -304,8 +305,8 @@ export default function App({navigation}) {
                     </View>
                     <Modal isVisible={sentSuccessfully}>
                     <View style={styles.modalContainer}>
-                      <Text style={styles.modalText}>{t('contactpage.send.title')}</Text>
-                      <TouchableOpacity style={styles.modalButton} onPress={() => setSentSuccessfully(false)}>
+                      <Text style={styles.modalText}>{message? message : t('contactpage.send.title')}</Text>
+                      <TouchableOpacity style={message? styles.modalButtonError : styles.modalButton} onPress={() => setSentSuccessfully(false)}>
                         <Text style={styles.modalButtonText}>Close</Text>
                       </TouchableOpacity>
                     </View>
@@ -553,9 +554,16 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 16,
+        alignSelf: 'center',
       },
       modalButton: {
         backgroundColor: 'green',
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+        borderRadius: 8,
+      },
+      modalButtonError: {
+        backgroundColor: 'red',
         paddingVertical: 8,
         paddingHorizontal: 16,
         borderRadius: 8,

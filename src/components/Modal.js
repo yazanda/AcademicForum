@@ -34,7 +34,7 @@ import axios from 'axios';
 import {UploadImage} from "./UploadImage";
 import {DataToSelectOptions, dateFormate} from "../components/HelperFunction";
 
-const MyModal = ({modalVisible, toggleModal, setSentSuccefully}) => {
+const MyModal = ({modalVisible, toggleModal, setSentSuccefully, setMessage}) => {
     const {t, i18n} = useTranslation();
 
     const [firstName, setFirstName] = useState({ value: "", error: "" });
@@ -147,7 +147,8 @@ const MyModal = ({modalVisible, toggleModal, setSentSuccefully}) => {
                 company: company.value,
                 isAgree: checked,
             });
-            console.log(response.data);
+            setMessage(response.data.message);
+            console.log(response.data.message);
           if (response.status === 201) {
               toggleModal();
               setSentSuccefully(true);
