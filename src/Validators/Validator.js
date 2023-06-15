@@ -1,7 +1,7 @@
 
 import * as Yup from 'yup';
-import axios from 'axios';
-import { DataToSelectOptions } from '../components/HelperFunction';
+
+
 
 export function nameValidator(name) {
   const schema = Yup.string()
@@ -50,11 +50,9 @@ export function lastNameValidator(lastName) {
 
 export function emailValidator(email) {
   const emailRegex = /\S+@\S+\.\S+/
-  // if (!email) return "Email is required."
-  // if (!re.test(email)) return 'Not a valid email address.'
   const schema = Yup.string()
     .required("Phone number is required.")
-    .matches(emailRegex, 'Invalid phone number')
+    .matches(emailRegex, 'Invalid email.')
     .email('Email Address is not valid.');
 
   try {
@@ -98,6 +96,18 @@ export function degreeValidator(degree) {
 
   try {
     schema.validateSync(degree);
+    return '';
+  } catch (error) {
+    return error.message;
+  }
+}
+
+export function ContactSubjectValidator(subject) {
+  const schema = Yup.string()
+    .required("Subject is required.")
+
+  try {
+    schema.validateSync(subject);
     return '';
   } catch (error) {
     return error.message;

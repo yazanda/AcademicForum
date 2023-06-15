@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 import {useTranslation} from 'react-i18next';
 import { FontAwesome } from '@expo/vector-icons';
 import End from '../components/End';
-import { nameValidator, emailValidator, subjectValidator, messageValidator } from '../Validators/Validator';
+import { nameValidator, emailValidator, ContactSubjectValidator, messageValidator } from '../Validators/Validator';
 import {
     StyleSheet,
     Text,
@@ -45,7 +45,7 @@ import Modal from 'react-native-modal';
       const nameError = nameValidator(fullName.value);
       const emailError = emailValidator(email.value);
       const messageError = messageValidator(message.value);
-      const subjectError = subjectValidator(subject.value);
+      const subjectError = ContactSubjectValidator(subject.value);
       if(nameError || emailError || messageError || subjectError){
         setFullName({ ...fullName, error: nameError });
         setEmail({ ...email, error: emailError });
