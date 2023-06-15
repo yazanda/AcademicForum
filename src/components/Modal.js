@@ -34,7 +34,7 @@ import axios from 'axios';
 import {UploadImage} from "./UploadImage";
 import {DataToSelectOptions, dateFormate} from "../components/HelperFunction";
 
-const MyModal = ({modalVisible, toggleModal, setSentSuccefully, setMessage}) => {
+const MyModal = ({modalVisible, toggleModal, setIsConfirmed, setMessage, setErrorResponse}) => {
     const {t, i18n} = useTranslation();
 
     const [firstName, setFirstName] = useState({ value: "", error: "" });
@@ -148,11 +148,12 @@ const MyModal = ({modalVisible, toggleModal, setSentSuccefully, setMessage}) => 
                 company: company.value,
                 isAgree: checked,
             });
-            setMessage(response.data.message);
-            console.log(response.data.message);
-          if (response.status === 201) {
+            
+            console.log(response.data);
+          if (response.data.status === 201) {
+              setMessage(t('academicpage.dialog.success'));
               toggleModal();
-              setSentSuccefully(true);
+              setIsConfirmed(true);
               // Clear form fields after successful submission
               setFirstName('');
               setLastName('');
@@ -165,10 +166,18 @@ const MyModal = ({modalVisible, toggleModal, setSentSuccefully, setMessage}) => 
               setCareer('');
               setGender({value: '', error: ''});
               setPhoneNumber('');
-              setImage(null);
+              setImage('');
               fetchAcademics();
+            } else if (response.data.status === 409) {
+                setMessage(t('academicpage.dialog.error.email'));
+                setErrorResponse(true);
+                toggleModal();
+                setIsConfirmed(true);
             } else {
-              Alert.alert('Error', 'Failed to send the form. Please try again.');
+                setMessage(t('academicpage.dialog.error'));
+                setErrorResponse(true);
+                toggleModal();
+                setIsConfirmed(true);
             }
           } catch (error) {
             if (error.response) {
@@ -185,19 +194,18 @@ const MyModal = ({modalVisible, toggleModal, setSentSuccefully, setMessage}) => 
               console.log('Config:', error.config);
             // Alert.alert('Error', 'An error occurred while sending the form. Please try again.');
           }
-
-          const {t, i18n} = useTranslation();
-          const getTextAlignment = () => {
-              const { i18n } = useTranslation();
-            
-              if (i18n.language === 'AR' || i18n.language === 'HE') {
-                return 'right'; // Right-to-left alignment for Spanish
-              } else {
-                return 'left'; // Left-to-right alignment for other languages
-              }
-          };
-            const textAlignment = getTextAlignment();
     }
+
+    const getTextAlignment = () => {
+        const { i18n } = useTranslation();
+        if (i18n.language === 'AR' || i18n.language === 'HE') {
+          return 'right'; // Right-to-left alignment for Spanish
+        } else {
+          return 'left'; // Left-to-right alignment for other languages
+        }
+    };
+
+    const textAlignment = getTextAlignment();
 
 
     return (
@@ -309,7 +317,6 @@ export default MyModal;
 const styles = StyleSheet.create({
     modalContainer: {
         flex: 1,
-        // backgroundColor: 'white',
         padding: 16,
         justifyContent: "center",
     },
