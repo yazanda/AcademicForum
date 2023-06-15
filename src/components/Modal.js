@@ -103,18 +103,18 @@ const MyModal = ({modalVisible, toggleModal, setSentSuccefully, setMessage}) => 
     };
 
     const handleSend = async () => {
-        fnameError = firstNameValidator(firstName.value);
-        lnameError = lastNameValidator(lastName.value);
-        emailError = emailValidator(email.value);
-        aError = ageValidator(formatedDate);
-        degreeError = degreeValidator(degree.value);
-        careerError = careerValidator(career.value);
-        companyError = companyValidator(company.value);
-        subjectError = subjectValidator(subject.value);
-        cityError = cityValidator(city.value);
-        phoneError = phoneValidator(phoneNumber.value);
-        imageError = imageUrlValidator(image);
-        genderError = genderValidator(gender.value);
+        const fnameError = firstNameValidator(firstName.value);
+        const lnameError = lastNameValidator(lastName.value);
+        const emailError = emailValidator(email.value);
+        const aError = ageValidator(formatedDate);
+        const degreeError = degreeValidator(degree.value);
+        const careerError = careerValidator(career.value);
+        const companyError = companyValidator(company.value);
+        const subjectError = subjectValidator(subject.value);
+        const cityError = cityValidator(city.value);
+        const phoneError = phoneValidator(phoneNumber.value);
+        const imageError = imageUrlValidator(image);
+        const genderError = genderValidator(gender.value);
 
         if(fnameError || lnameError || emailError || aError || degreeError || careerError ||
         companyError || subjectError || cityError || phoneError || imageError || genderError){
