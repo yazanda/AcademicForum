@@ -49,10 +49,20 @@ export function lastNameValidator(lastName) {
 }
 
 export function emailValidator(email) {
-  const re = /\S+@\S+\.\S+/
-  if (!email) return "Email is required."
-  if (!re.test(email)) return 'Not a valid email address.'
-  return ''
+  const emailRegex = /\S+@\S+\.\S+/
+  // if (!email) return "Email is required."
+  // if (!re.test(email)) return 'Not a valid email address.'
+  const schema = Yup.string()
+    .required("Phone number is required.")
+    .matches(emailRegex, 'Invalid phone number')
+    .email('Email Address is not valid.');
+
+  try {
+    schema.validateSync(email);
+    return '';
+  } catch (error) {
+    return error.message;
+  }
 }
 
 export function phoneValidator(phone) {
@@ -168,15 +178,3 @@ export function genderValidator(gender) {
     return error.message;
   }
 }
-
-// export async function emailExists(mail){
-//   try {
-//       const emails = await axios.get(`https://almuntada.onrender.com/api/v1/academic/emails`);
-//       if(DataToSelectOptions(emails.data).includes(mail)){
-//         return 'Used Email.';
-//       }
-//   } catch (error) {
-//       console.error(error);
-//   }
-//   return '';
-// }
