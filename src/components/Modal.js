@@ -206,7 +206,7 @@ const MyModal = ({modalVisible, toggleModal, setSentSuccefully, setMessage}) => 
                     <TouchableOpacity onPress={toggleModal} style={styles.closeButton}>
                         <Text style={styles.closeButtonText}>{t('academicpage.dialog.close')}</Text>
                     </TouchableOpacity>
-                    <Text style={styles.GuideText}>{t('academicpage.guide')}</Text>
+                    <Text style={styles.GuideText}>{t('academicpage.dialog.sub.title')}</Text>
                     <TextInput  label={t('academicpage.dialog.first.name')}
                                 returnKeyType="next"
                                 value={firstName.value}

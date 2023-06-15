@@ -1,14 +1,15 @@
 {
   "page.home.head.title": "Al-Muntada - The Arab Academic Imprint",
+  "navbar.search":"search",
+  "homepage.title_2": "For collaboration, sharing and support",
   "navbar.podcast": "Podcast",
   "navbar.academic": "List of Academics",
   "navbar.contact": "Contact Us",
   "homepage.joinus": "Join Us",
   "homepage.title": "Al-Muntada",
   "homepage.title_1": "The Arab Academic Imprint",
-  "homepage.subtitle": "Aspiring to provide academics with the opportunity to establish an Arab academic network for multilateral sharing of knowledge related to the academic world.",
   "homepage.about": "About the Project",
-  "homepage.description": "Almuntada – The Arab Academic Imprint is a forum aiming for the advancement of academic achievements in the Arabic community. It does so by providing a platform for Arab academics of various educational backgrounds to meet, network, exchange experiences and create new opportunities.  Moreover, the forum aims to place itself as the main reference for the younger generation hoping to pursue an academic degree.",
+  "homepage.description": "To provide academics with the opportunity to establish an Arab academic network and to share all academic information.",
   "homepage.about_2": "We believe that education in general and taking part in an academic journey in specific is considered one of the means for shrinking the gaps of poverty.  ",
   "homepage.description_2": "Studies have shown that the percentage of Arab academics is lower than Jewish academics in the country. \nThe Arab society faces many challenges represented in the socio-economic gaps, which is also reflected in the educational system in general and in the employment opportunities in specific.  Our forum would like to join the voices calling for fighting poverty.\n",
   "homepage.impact.sub.title": "We are the ones making the future",
@@ -22,7 +23,7 @@
   "homepage.goals.title": "Our goals ",
   "homepage.goals": [
     {
-      "desc": "Management and operation: \nAl-Muntada is a social platform for academy students as well as academy graduates in the Arab society. The platform is constantly growing and evolving as is open for new members wanting to take part in knowledge sharing, cooperation, and much more.   \n"
+      "desc": "Management and operation: \nAl-Muntada is a social platform for academy students as well as academy graduates in the Arab society. The platform is constantly growing and evolving as is open for new members wanting to take part in knowledge sharing, cooperation, and much\n more.   \n"
     },
     {
       "desc": "Academic podcast “let’s hear you”:\nThe podcast will host academics who will be sharing their experience in the academy as well as in their career. The podcast aims to raise awareness for the possibilities that the Arab community could seek in the studies field, as well as in possible career paths.\n"
@@ -44,22 +45,21 @@
       "image": "/ala.jpeg"
     }
   ],
-  "homepage.cofounders.title": "Board members",
   "homepage.cofounders": [
     {
       "name": "Hanaa adsi",
       "desc": "A biology graduate with a master's in biochemistry, Hanaa is currently pursuing a doctoral degree in biological sciences and biochemistry at Tel Aviv University.",
-      "image": "/hanaa.jpeg"
+      "image": ""
     },
     {
       "name": "Ahmed Hasona",
       "desc": "A graduate of Or Yehuda College with a bachelor's degree in social education, and a master's degree in management and organization of formal and informal education systems, of krait ono.",
-      "image": "/ahmad.jpeg"
+      "image": ""
     },
     {
       "name": "Kayan Bsoul",
       "desc": "A graduate of a bachelor degree in pharmacy, B.Sc.Pharm by the Hebrew university of Jerusalem. Also a graduate of  Masters in Law from Bar Ilan university.  ",
-      "image": "/kayan.jpeg"
+      "image": ""
     },
     {
       "name": "Nahad Abu Din",
@@ -74,15 +74,19 @@
     {
       "name": "Safa Abu-Sbeet",
       "desc": "BSc degree from Ben Gurion University in the field of Chemistry and is now a student for a master's degree in business administration.",
-      "image": "/safaa.jpeg"
+      "image": ""
     }
   ],
+  "academicpage.guide": "Please fill in the following details to register as an academic in English",
   "academicpage.title": "The Arab Academic list",
-  "academicpage.text": "Our ability to communicate and collaborate with one another as an Arab society is the key to societal change for the better. Join us for a listing of Arab academics of various academic backgrounds and specializations from all around the country.",
+  "academicpage.text": " Our ability to communicate and collaborate with one another as an Arab society is the key to societal change for the better. Join us for a listing of Arab academics from countries and regions worldwide",
   "academicpage.acdemics": "List of Arab academics by location and specialization",
+  "academicpage.acdemicsField":"By Field",
+  "academicpage.acdemics.Area":"By Area",
   "academicpage.dialog.title": "Register as an academic",
   "academicpage.dialog.sub.title": "Please fill in the following details to register as an academic in English",
   "academicpage.dialog.first.name": "First Name",
+  "academicpage.dialog.Birhdate": "BirthDate",
   "academicpage.dialog.last.name": "Last Name",
   "academicpage.dialog.email": "Email",
   "academicpage.dialog.age": "Age",
@@ -95,23 +99,23 @@
   "academicpage.dialog.required": "Required",
   "academicpage.dialog.sex": "Gender",
   "academicpage.dialog.company": "Company",
-  "academicpage.dialog.success": "Your registration has been successfully completed",
-  "academicpage.dialog.error": "Error in registration please try again later",
-  "academicpage.dialog.error.email": "Email already exists",
   "academicpage.dialog.phone": "Phone Number",
-  "academicpage.dialog.checkbox": "I confirm that I have read the privacy policy, I confirm that the information I provided is accurate and reliable, I agree to bear the responsibility for any inaccurate or unreliable information provided by myself. \nIn addition, I consent to the publishing of my personal profile picture on the website and in the ALMUNTADA forum's database and it's partners' database.",
+  "academicpage.dialog.upload": "UPLOAD PICTURE",
+  "academicpage.dialog.checkbox": "I confirm that the information I have provided is reliable and accurate and I agree to bear the responsibility for publishing unreliable information. I also agree to publish my profile picture, which does not have any copy rights, publicly on the website and on the application database of the Arab Academic Forum.",
   "contactpage.title": "Contact Us",
   "contactpage.text": "For contact us please fill the form below",
   "contactpage.submit": "Submit",
+  "academicpage.dialog.close":"close",
   "contactpage.fullname": "Full Name",
   "contactpage.email": "Email",
   "contactpage.message": "Message",
   "contactpage.required": "Required",
   "contactpage.dialog.title": "The message has been sent successfully",
+  "contactpage.send.title": "Your messege sent successfully",
   "contactpage.subject": "Subject",
   "contactpage.subjects": [
     {
-      "label": "Publication of an academic ad for academics"
+      "label": "Publication in the monthly magazine"
     },
     {
       "label": "Podcast Hosting Request \"We Heard Your Voice\""
@@ -129,16 +133,13 @@
       "label": "Find a job"
     },
     {
-      "label": "I would like to volunteer for the forum"
-    },
-    {
       "label": "Find a scholarship"
     },
     {
       "label": "Other"
     }
   ],
-  "podcastpage.desc": "\"Let's hear your voice\" podcast.\nThe podcast aims to discuss academic and professional topics as well as experience sharing by successful individuals.   ",
-  "podcastpage.subdesc": "Would you like to join us in one of our podcasts and share your experience?\nLeave us your details here below and we will contact you to set a meeting.",
+  "podcastpage.desc": "Podcast \"We heard your voice\". An individual and talk show program aimed at researching academic personalities from the Arab community who wish to share their experience with their community and discuss academic and professional issues.",
+  "podcastpage.subdesc": "Meaning participate in a podcast meeting with us. Leave your details and we will contact you",
   "footer.contactus": "Contact Us"
 }
