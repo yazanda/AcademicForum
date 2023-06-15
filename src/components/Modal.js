@@ -291,7 +291,7 @@ const MyModal = ({modalVisible, toggleModal, setSentSuccefully, setMessage}) => 
                         checked={checked}
                         onPress={() => {setChecked(!checked)}}
                     />
-                    <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
+                    <TouchableOpacity style={checked? styles.sendButton : styles.sendButtonCheck} onPress={handleSend} disabled={!checked}>
                         <Text style={styles.sendButtonText}>{t('contactpage.submit')}</Text>
                     </TouchableOpacity>
                     <View style={{height: 150}}></View>
@@ -350,6 +350,16 @@ const styles = StyleSheet.create({
         width: '50%',
         alignSelf: 'center', // Add this line to center the button
         marginTop: 20, // Add margin-top to create some space between the checkbox and the button
+        alignItems: 'center',
+    },
+    sendButtonCheck: {
+        backgroundColor: 'lightgreen',
+        borderRadius: 8,
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+        width: '50%',
+        alignSelf: 'center', 
+        marginTop: 20, 
         alignItems: 'center',
     },
     sendButtonText: {
