@@ -1,14 +1,10 @@
 
 import * as Yup from 'yup';
 
-
-
 export function nameValidator(name) {
   const schema = Yup.string()
     .required("Full Name is required.")
     .matches(/^[A-Za-z\s]+$/, 'Only English letters');
-    
-
   try {
     schema.validateSync(name);
     return '';
@@ -26,7 +22,6 @@ export function firstNameValidator(firstName) {
   const schema = Yup.string()
     .required("First Name is required.")
     .matches(/^[A-Za-z\s]+$/, 'Only English letters');
-
   try {
     schema.validateSync(firstName);
     return '';
@@ -39,7 +34,6 @@ export function lastNameValidator(lastName) {
   const schema = Yup.string()
     .required("Last Name is required.")
     .matches(/^[A-Za-z\s]+$/, 'Only English letters');
-
   try {
     schema.validateSync(lastName);
     return '';
@@ -54,7 +48,6 @@ export function emailValidator(email) {
     .required("Phone number is required.")
     .matches(emailRegex, 'Invalid email.')
     .email('Email Address is not valid.');
-
   try {
     schema.validateSync(email);
     return '';
@@ -68,7 +61,6 @@ export function phoneValidator(phone) {
     const schema = Yup.string()
       .required("Phone number is required.")
       .matches(phoneRegex, 'Invalid phone number');
-
     try {
       schema.validateSync(phone);
       return '';
@@ -80,7 +72,6 @@ export function phoneValidator(phone) {
 export function cityValidator(city) {
   const schema = Yup.string()
     .required("City is required.");
-
   try {
     schema.validateSync(city);
     return '';
@@ -93,7 +84,6 @@ export function degreeValidator(degree) {
   const schema = Yup.string()
     .required("Degree is required.")
     .matches(/^[A-Za-z\s]+$/, 'Only English letters');
-
   try {
     schema.validateSync(degree);
     return '';
@@ -105,7 +95,6 @@ export function degreeValidator(degree) {
 export function ContactSubjectValidator(subject) {
   const schema = Yup.string()
     .required("Subject is required.")
-
   try {
     schema.validateSync(subject);
     return '';
@@ -118,7 +107,6 @@ export function subjectValidator(subject) {
   const schema = Yup.string()
     .required("Subject is required.")
     .matches(/^[A-Za-z\s]+$/, 'Only English letters');
-
   try {
     schema.validateSync(subject);
     return '';
@@ -131,7 +119,6 @@ export function careerValidator(career) {
   const schema = Yup.string()
     .required("Career is required.")
     .matches(/^[A-Za-z\s]+$/, 'Only English letters');
-
   try {
     schema.validateSync(career);
     return '';
@@ -143,7 +130,6 @@ export function careerValidator(career) {
 export function ageValidator(age) {
   const schema = Yup.string()
     .required("Date is required.");
-
   try {
     schema.validateSync(age);
     return '';
@@ -156,7 +142,6 @@ export function companyValidator(company) {
   const schema = Yup.string()
     .required("Company is required.")
     .matches(/^[A-Za-z\s]+$/, 'Only English letters');
-
   try {
     schema.validateSync(company);
     return '';
@@ -168,7 +153,6 @@ export function companyValidator(company) {
 export function imageUrlValidator(imageUrl) {
   const schema = Yup.string()
     .required("Image is required.");
-
   try {
     schema.validateSync(imageUrl);
     return '';
@@ -180,7 +164,6 @@ export function imageUrlValidator(imageUrl) {
 export function genderValidator(gender) {
   const schema = Yup.string()
     .required("Gender is required.");
-
   try {
     schema.validateSync(gender);
     return '';
