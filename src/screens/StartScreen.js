@@ -481,7 +481,7 @@ const styles = StyleSheet.create({
     square: {
         width: 20,
         height: 30,
-        backgroundColor: '#00008b',
+        backgroundColor: 'lightgray',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
