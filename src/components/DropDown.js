@@ -45,7 +45,7 @@ const DropdownComponent = ({ placeholder, label, data, value, setValue, errorTex
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         onChangeText={(item)=> {
-          if(setAddedValue !== null && !data.includes(item)) 
+          if(setAddedValue !== null) 
             setAddedValue(item);
         }}
         onChange={(item) => {
