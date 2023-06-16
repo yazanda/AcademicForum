@@ -6,9 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="0fde6ac4-8533-427d-81df-75737bc70cc2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Modal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Modal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/SearchScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/SearchScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/StartScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/StartScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/translations/ar.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/translations/ar.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/translations/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/translations/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/translations/he.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/translations/he.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +75,8 @@
       <workItem from="1686484708402" duration="5077000" />
       <workItem from="1686748654178" duration="15000" />
       <workItem from="1686748697234" duration="2258000" />
-      <workItem from="1686845878711" duration="1508000" />
+      <workItem from="1686845878711" duration="1662000" />
+      <workItem from="1686917925324" duration="5263000" />
     </task>
     <servers />
   </component>

@@ -52,7 +52,8 @@ export default function App({navigation}) {
         { id: 2, text: t('homepage.goals.1.desc') },
         { id: 3, text: t('homepage.goals.2.desc') },
       ];
-      
+    const founders = t("homepage.founders" , {returnObjects: true});
+    const cofounders = t("homepage.cofounders" , {returnObjects: true});
       // Render each item in the list
       const renderItem = ({ item }) => {
         const key = item.id.toString(); // Assign the key directly
@@ -90,6 +91,49 @@ export default function App({navigation}) {
           );
         }
       };
+    const renderFounders = (founders) => {
+        return founders.map((founder, index) => (
+            <View key={index} style={{ paddingHorizontal: 20 }}>
+                <View style={styles.squ}>
+                    <Image
+                        source={getImageSource(founder.image)}
+                        style={{ width: 300, height: 328, position: 'absolute', top: 0 }}
+                    />
+                    <View style={{ height: 350 }} />
+                    <Text style={styles.Names}>{founder.name}</Text>
+                    <View style={{ height: 30 }} />
+                    <Text style={[styles.text, { textAlign: textAlignment }]}>
+                        {founder.desc}
+                    </Text>
+                    <View style={{ height: 20 }} />
+                </View>
+            </View>
+        ));
+    };
+
+    const renderCoFounders = (cofounders) => {
+        return cofounders.map((cofounder, index) => (
+            <View key={index} style={{ paddingHorizontal: 20 }}>
+                <View style={styles.squ}>
+                    <Image
+                        source={getImageSource(cofounder.image)}
+                        style={{ width: 300, height: 328, position: 'absolute', top: 0 }}
+                    />
+                    <View style={{ height: 350 }} />
+                    <Text style={styles.Names}>{cofounder.name}</Text>
+                    <View style={{ height: 30 }} />
+                    <Text style={[styles.text, { textAlign: textAlignment }]}>
+                        {cofounder.desc}
+                    </Text>
+                    <View style={{ height: 20 }} />
+                </View>
+            </View>
+        ));
+    };
+    const getImageSource = (image) => {
+        // Handle the case when the image path is empty
+        return image ? { uri: image } : require('../../assets/blank-profile-picture-973460_640.png');
+    };
     const scrollViewRef = useRef(null);
     return (
         <I18nextProvider i18n={i18n}>
@@ -279,36 +323,11 @@ export default function App({navigation}) {
                     <View style={{marginTop: 40, paddingHorizontal: 20}}>
                         <Text style={[styles.title, {fontSize: 35},{ textAlign: textAlignment }]}>{t('homepage.founder.title')}</Text>
                     </View>
-                    <View style={{paddingHorizontal: 20,}}>
-                        <View style={styles.squ}>
-                            <Image
-                                source={require('../../assets/Alaa.png')}
-                                style={{width: 300, height: 328, position: 'absolute', top: 0,}}
-                            />
-                            <View style={{height: 350}}/>
-                            <Text style={styles.Names}>{t('homepage.founders.1.name')}</Text>
-                            <View style={{height: 30}}/>
-                            <Text style={[styles.text,{ textAlign: textAlignment }]}>{t('homepage.founders.1.desc')}</Text>
-                            <View style={{height: 20}}/>
-                        </View>
+                    {renderFounders(founders)}
+                    <View style={{marginTop: 40, paddingHorizontal: 20}}>
+                        <Text style={[styles.title, {fontSize: 35},{ textAlign: textAlignment }]}>{t('homepage.cofounder.title')}</Text>
                     </View>
-                    <View style={{flex: 1}}>
-                        <View style={{height: 30}}/>
-                    </View>
-                    <View style={{marginTop: 20, paddingHorizontal: 20,}}>
-                        <View style={styles.squ}>
-                            <View style={{height: 20}}/>
-                            <Image
-                                source={require('../../assets/hassan.png')}
-                                style={{width: 300, height: 360, position: 'absolute', top: 0,}}
-                            />
-                            <View style={{height: 350}}/>
-                            <Text style={styles.Names}>{t('homepage.founders.0.name')}</Text>
-                            <View style={{height: 20}}/>
-                            <Text style={[styles.text,{ textAlign: textAlignment }]}>{t('homepage.founders.0.desc')}</Text>
-                            <View style={{height: 20}}/>
-                        </View>
-                    </View>
+                    {renderCoFounders(cofounders)}
                     <Modal isVisible={isConfirmed}>
                     <View style={styles.modalContainer}>
                       <Text style={styles.modalText}>{message}</Text>
@@ -318,7 +337,6 @@ export default function App({navigation}) {
                     </View>
                     </Modal>
                     <End style={styles.end} navigation={navigation}/>
-                    
                 </ScrollView>
             </SafeAreaView>
         </I18nextProvider>
