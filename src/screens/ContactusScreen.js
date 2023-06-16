@@ -14,6 +14,7 @@ import {
     Alert,
     Platform,
 } from 'react-native';
+import { API_URL } from '@env';
 import { StatusBar } from 'expo-status-bar';
 import TextInput from '../components/TextInput';
 import Dropdown from "../components/DropDown";
@@ -54,7 +55,7 @@ import Modal from 'react-native-modal';
         return;
       }
         try {
-          const response = await axios.post('https://almuntada.onrender.com/api/v1/contact', {
+          const response = await axios.post(`${API_URL}/contact`, {
             fullName: fullName.value,
             email: email.value,
             subject: subject,
@@ -64,10 +65,10 @@ import Modal from 'react-native-modal';
         if (response.status === 201) {
             setIsSuccessModalVisible(true);
             // Clear form fields after successful submission
-            setFullName('');
-            setEmail('');
-            setSubject('');
-            setMessage('');
+            setFullName({value: '', error: ''});
+            setEmail({value: '', error: ''});
+            setSubject({value: '', error: ''});
+            setMessage({value: '', error: ''});
           } else {
             Alert.alert('Error', 'Failed to send the form. Please try again.');
           }

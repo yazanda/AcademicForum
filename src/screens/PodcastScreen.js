@@ -11,6 +11,7 @@ import {
     Dimensions,
     Platform,
 } from 'react-native';
+import { API_URL } from '@env';
 import { StatusBar } from 'expo-status-bar';
 import { useTranslation } from 'react-i18next';
 import { Video } from 'expo-av';
@@ -42,7 +43,7 @@ export default function PodcastScreen({navigation}) {
 
     const fetchVideos = async () => {
         try {
-          const response = await axios.get('https://almuntada.onrender.com/api/v1/podcasts/isActive/true');
+          const response = await axios.get(`${API_URL}/podcasts/isActive/true`);
           setVideos(response.data);
         } catch (error) {
           console.error(error);

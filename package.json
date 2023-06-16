@@ -40,6 +40,7 @@
     "react-native-date-picker": "^4.2.13",
     "react-native-datepicker": "^1.7.2",
     "react-native-device-info": "^10.6.0",
+    "react-native-dotenv": "^3.4.8",
     "react-native-element-dropdown": "^2.9.0",
     "react-native-elements": "^3.4.3",
     "react-native-file-viewer": "^2.1.5",
@@ -63,7 +64,8 @@
     "@babel/core": "^7.20.0",
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
     "@types/react-native-datepicker": "^1.7.1",
-    "@types/react-native-video": "^5.0.14"
+    "@types/react-native-video": "^5.0.14",
+    "dotenv": "^16.2.0"
   },
   "private": true
 }

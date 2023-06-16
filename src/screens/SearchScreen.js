@@ -5,6 +5,7 @@ import LanguageContext from '../components/LanguageContext';
 import {I18nManager, Platform, TouchableWithoutFeedback} from "react-native";
 import { StatusBar } from 'expo-status-bar';
 import axios from 'axios';
+import { API_URL } from '@env';
 import {
     StyleSheet,
     Text,
@@ -54,11 +55,10 @@ export default function SearchScreen({navigation}) {
     useEffect(() => {
         fetchAcademics();
     }, []);
-
     const fetchAcademics = async () => {
         try {
-            const response = await axios.get(`https://almuntada.onrender.com/api/v1/academic/isApproved/true`);
-            const subjects = await axios.get(`https://almuntada.onrender.com/api/v1/academic/subjects`);
+            const response = await axios.get(`${API_URL}/academic/isApproved/true`);
+            const subjects = await axios.get(`${API_URL}/academic/subjects`);
             setSubject(subjects.data);
             setAcademics(response.data);
         } catch (error) {
@@ -227,7 +227,7 @@ export default function SearchScreen({navigation}) {
             <Modal isVisible={isConfirmed}>
                 <View style={styles.modalContainer}>
                     <Text style={styles.modalText}>{message}</Text>
-                      <TouchableOpacity style={errorResponse? styles.modalButtonError : styles.modalButton} onPress={() => setSentSuccessfully(false)}>
+                      <TouchableOpacity style={errorResponse? styles.modalButtonError : styles.modalButton} onPress={() => setIsConfirmed(false)}>
                         <Text style={styles.modalButtonText}>Close</Text>
                     </TouchableOpacity>
                 </View>

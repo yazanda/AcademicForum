@@ -312,7 +312,7 @@ export default function App({navigation}) {
                     <Modal isVisible={isConfirmed}>
                     <View style={styles.modalContainer}>
                       <Text style={styles.modalText}>{message}</Text>
-                      <TouchableOpacity style={errorResponse? styles.modalButtonError : styles.modalButton} onPress={() => setSentSuccessfully(false)}>
+                      <TouchableOpacity style={errorResponse? styles.modalButtonError : styles.modalButton} onPress={() => setIsConfirmed(false)}>
                         <Text style={styles.modalButtonText}>Close</Text>
                       </TouchableOpacity>
                     </View>

@@ -24,6 +24,7 @@ import {
     imageUrlValidator,
     companyValidator,
 } from '../Validators/Validator';
+import { API_URL } from '@env';
 import Dropdown from './DropDown';
 import DatePicker from './DatePicker';
 import TextInput from './TextInput';
@@ -91,9 +92,9 @@ const MyModal = ({modalVisible, toggleModal, setIsConfirmed, setMessage, setErro
 
     const fetchAcademics = async () => {
         try {
-            const subjects = await axios.get(`https://almuntada.onrender.com/api/v1/academic/subjects`);
-            const careers = await axios.get(`https://almuntada.onrender.com/api/v1/academic/careers`);
-            const companies = await axios.get(`https://almuntada.onrender.com/api/v1/academic/companies`);
+            const subjects = await axios.get(`${API_URL}/academic/subjects`);
+            const careers = await axios.get(`${API_URL}/academic/careers`);
+            const companies = await axios.get(`${API_URL}/academic/companies`);
             setSubjects(subjects.data);
             setCareers(careers.data);
             setCompanies(companies.data);
@@ -130,10 +131,11 @@ const MyModal = ({modalVisible, toggleModal, setIsConfirmed, setMessage, setErro
             setPhoneNumber({ ...phoneNumber, error: phoneError});
             setGender({ ...gender, error: genderError});
             setImage({ ...image, error: imageError});
+            setChecked(false);
             return;
         }
         try {
-            const response = await axios.post('https://almuntada.onrender.com/api/v1/academic', {
+            const response = await axios.post(`${API_URL}/academic`, {
                 firstName: firstName.value,
                 lastName: lastName.value,
                 email: email.value,
