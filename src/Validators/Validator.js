@@ -43,11 +43,12 @@ export function lastNameValidator(lastName) {
 }
 
 export function emailValidator(email) {
-  const emailRegex = /\S+@\S+\.\S+/
+  const emailRegex = /\S+@\S+\.\S+/;
   const schema = Yup.string()
-    .required("Phone number is required.")
+    .required("Email is required.")
     .matches(emailRegex, 'Invalid email.')
     .email('Email Address is not valid.');
+
   try {
     schema.validateSync(email);
     return '';

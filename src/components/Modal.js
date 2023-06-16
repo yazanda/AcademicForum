@@ -143,7 +143,7 @@ const MyModal = ({modalVisible, toggleModal, setIsConfirmed, setMessage, setErro
             return;
         }
         try {
-            await new Promise(resolve => setTimeout(resolve, 10000));
+            // await new Promise(resolve => setTimeout(resolve, 10000));
             const response = await axios.post(`${API_URL}/academic`, {
                 firstName: firstName.value,
                 lastName: lastName.value,

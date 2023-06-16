@@ -16,6 +16,7 @@ import {
     TouchableOpacity,
 } from "react-native";
 import Modal from 'react-native-modal';
+import blankProfileImage from '../../assets/blank-profile-picture-973460_640.png';
 
 const window = Dimensions.get('window');
 
@@ -93,10 +94,10 @@ export default function App({navigation}) {
       };
     const renderFounders = (founders) => {
         return founders.map((founder, index) => (
-            <View key={index} style={{ paddingHorizontal: 20 }}>
+            <View key={index} style={{ padding: 20 }}>
                 <View style={styles.squ}>
                     <Image
-                        source={getImageSource(founder.image)}
+                        source={{uri: founder.image}}
                         style={{ width: 300, height: 328, position: 'absolute', top: 0 }}
                     />
                     <View style={{ height: 350 }} />
@@ -113,10 +114,10 @@ export default function App({navigation}) {
 
     const renderCoFounders = (cofounders) => {
         return cofounders.map((cofounder, index) => (
-            <View key={index} style={{ paddingHorizontal: 20 }}>
+            <View key={index} style={{ padding: 20 }}>
                 <View style={styles.squ}>
                     <Image
-                        source={getImageSource(cofounder.image)}
+                        source={{uri: cofounder.image}}
                         style={{ width: 300, height: 328, position: 'absolute', top: 0 }}
                     />
                     <View style={{ height: 350 }} />
@@ -132,7 +133,7 @@ export default function App({navigation}) {
     };
     const getImageSource = (image) => {
         // Handle the case when the image path is empty
-        return image ? { uri: image } : require('../../assets/blank-profile-picture-973460_640.png');
+        return image ? {uri: image} : require('../../assets/blank-profile-picture-973460_640.png');
     };
     const scrollViewRef = useRef(null);
     return (
@@ -205,7 +206,6 @@ export default function App({navigation}) {
                 <ScrollView
                     nestedScrollEnabled
                     contentContainerStyle={styles.pageContainer}
-                    //   ref={scrollViewRef}
                     showsVerticalScrollIndicator={false}
                 >
                     <Image source={require("../../assets/FinalLogo.png")} style={styles.logo}/>
@@ -325,7 +325,7 @@ export default function App({navigation}) {
                     </View>
                     {renderFounders(founders)}
                     <View style={{marginTop: 40, paddingHorizontal: 20}}>
-                        <Text style={[styles.title, {fontSize: 35},{ textAlign: textAlignment }]}>{t('homepage.cofounder.title')}</Text>
+                        <Text style={[styles.title, {fontSize: 35},{ textAlign: textAlignment }]}>{t('homepage.cofounders.title')}</Text>
                     </View>
                     {renderCoFounders(cofounders)}
                     <Modal isVisible={isConfirmed}>

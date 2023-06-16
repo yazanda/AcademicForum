@@ -37,44 +37,45 @@
     {
       "name": "حسن حسونة",
       "desc": "لقب اول إدارة تنظيم الكلية الاكاديمية تل ابيب يافا",
-      "image": "/hassan.jpeg"
+      "image": "https://res.cloudinary.com/djc1iyjjm/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1686943427/IMG-20230616-WA0007_taz060.jpg?_s=public-apps"
     },
     {
       "name": "الاء حسونة",
       "desc": "لقب اول اقتصاد وإدارة اعمال- الكلية الاكاديمية يافا, لقب ثاني إدارة اعمل – جامعة بن غوريون , رخصة تسويق تامين وتوفير تقاعدي من وزارة المالية , طالبة دكتوارة في الإدارة – جامعة بار ايلان .",
-      "image": "/ala.jpeg"
+      "image": "https://res.cloudinary.com/djc1iyjjm/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1686943427/IMG-20230616-WA0008_f67cb7.jpg?_s=public-apps"
     }
   ],
+  "homepage.cofounders.title": "اعضاء الجمعية",
   "homepage.cofounders": [
     {
       "name": "هناء عدسي",
       "desc": "صاحبة لقب اول , بيولوجيا , لقب ثاني كيمياء حيوية  وطالبة دكتوارة في العلوم البيولوجية التطبيقية جامعة تل ابيب.",
-      "image": ""
+      "image": "https://res.cloudinary.com/djc1iyjjm/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1686943427/IMG-20230616-WA0006_mvjdw2.jpg?_s=public-apps"
     },
     {
       "name": "احمد حسونه",
       "desc": "صاحب لقب اول التربية الاجتماعية كلية اور يهودا,  لقب ثاني إدارة وتنظيم أنظمة التعليم الرسمية وغير الرسمية , كلية كريات اونو",
-      "image": ""
+      "image": "https://res.cloudinary.com/djc1iyjjm/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1686943427/IMG-20230616-WA0004_cm4v8g.jpg?_s=public-apps"
     },
     {
       "name": "كيان بصول",
       "desc": "لقب أول في الصيدلة من الجامعة العبرية في القدس. لقب ثانٍ في المحاماة من جامعة بار إيلان.",
-      "image": ""
+      "image": "https://res.cloudinary.com/dieieuuby/image/upload/v1686944136/npkh6tma4heenzo5wu0x.jpg"
     },
     {
       "name": "ناهد أبو دين",
       "desc": "طالبة لقب أول تربية لامنهجية، ولقب للطبخ العلاجي ،متخصصه دراسات البرمجة اللغوية العصبية.",
-      "image": "/nahed.jpeg"
+      "image": "https://res.cloudinary.com/dieieuuby/image/upload/v1686944231/nahedCo_pzqvvj.jpg"
     },
     {
       "name": "نيكولاس زكاك",
       "desc": "لقب اول تمريض من الكلية الأكاديمية تل أبيب يافا ولقب اول إدارة النظم الصحية في كلية رمات جان الأكاديمية.",
-      "image": "/nicolas.jpeg"
+      "image": "https://res.cloudinary.com/djc1iyjjm/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1686943427/IMG-20230616-WA0005_e0y2ym.jpg?_s=public-apps"
     },
     {
       "name": "صفاء أبو سبيت",
       "desc": "لقب اول من جامعة بن غوريون في مجال الكيمياء وطالبة لقي ثاني إدارة الأعمال",
-      "image": ""
+      "image": "https://res.cloudinary.com/djc1iyjjm/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1686943427/IMG-20230616-WA0003_dpl9qd.jpg?_s=public-apps"
     }
   ],
   "academicpage.title": "قائمة الاكاديميين العرب",
