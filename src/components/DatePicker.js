@@ -163,9 +163,6 @@ const styles = StyleSheet.create({
         height: '100%',
         paddingHorizontal: 16,
     },
-    closeButton: {
-
-    },
 });
 
 export default DatePicker;
