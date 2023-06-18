@@ -55,7 +55,7 @@ export default function PodcastScreen({navigation}) {
           <Video
             source={{ uri: item.podcastUrl }}
             style={styles.video}
-            shouldPlay
+            // shouldPlay
             resizeMode="cover"
             useNativeControls 
           />

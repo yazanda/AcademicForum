@@ -16,7 +16,6 @@ import {
     TouchableOpacity,
 } from "react-native";
 import Modal from 'react-native-modal';
-import blankProfileImage from '../../assets/blank-profile-picture-973460_640.png';
 
 const window = Dimensions.get('window');
 
@@ -131,10 +130,7 @@ export default function App({navigation}) {
             </View>
         ));
     };
-    const getImageSource = (image) => {
-        // Handle the case when the image path is empty
-        return image ? {uri: image} : require('../../assets/blank-profile-picture-973460_640.png');
-    };
+
     const scrollViewRef = useRef(null);
     return (
         <I18nextProvider i18n={i18n}>
