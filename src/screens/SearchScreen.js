@@ -73,7 +73,8 @@ export default function SearchScreen({navigation}) {
                 <Text style={styles.fullName}>{`${item.firstName} ${item.lastName}`}</Text>
                 <Text style={styles.email}>{item.email}</Text>
                 <Text style={styles.city}>{item.city}</Text>
-                <Text style={styles.degree}>{`${item.degree} : ${item.career.career}`}</Text>
+                <Text style={styles.degree}>{`${item.degree} : ${item.subject.subject}`}</Text>
+                <Text style={styles.degree}>{`${item.career.career}`}</Text>
             </View>
         </View>
     );
@@ -375,7 +376,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         elevation: 2,
         width: '70%',
-        height: 320,
+        height: 380,
         alignSelf: 'center'
     },
     image: {
@@ -403,7 +404,7 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     degree: {
-        fontSize: 14,
+        fontSize: 12,
         color: 'gray',
     },
 
