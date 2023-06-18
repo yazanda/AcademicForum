@@ -58,7 +58,7 @@ import Modal from 'react-native-modal';
           const response = await axios.post(`${API_URL}/contact`, {
             fullName: fullName.value,
             email: email.value,
-            subject: subject,
+            subject: subject.value,
             message: message.value,
           });
           console.log(response.data);
