@@ -27,7 +27,7 @@
     "expo-image-picker": "~14.1.1",
     "expo-intent-launcher": "~10.5.2",
     "expo-localization": "~14.1.1",
-    "expo-sharing": "~11.2.2",
+    "expo-sharing": "~11.4.0",
     "expo-status-bar": "~1.4.4",
     "i18next": "^22.5.0",
     "intl": "^1.2.5",
